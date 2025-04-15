@@ -17,7 +17,11 @@ GSPlay::~GSPlay()
 
 
 void GSPlay::Init()
-{
+{	
+	// map init
+	newMap = std::make_shared<Map>();
+	newMap->init("Data\\Asset\\home\\home2.tmx");
+
 	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
 
 	// background

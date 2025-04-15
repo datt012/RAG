@@ -22,6 +22,15 @@
     <Filter Include="Source Files\GameObjects">
       <UniqueIdentifier>{b61357b4-8507-48e7-95d0-cba6485693e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MainSrc">
+      <UniqueIdentifier>{2a32f89c-c84c-4ee8-be6a-43147c35f9f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MainSrc\Map">
+      <UniqueIdentifier>{b2d60ce2-8451-47eb-9531-d69d84617fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MainSrc\Map\Tinyxml2">
+      <UniqueIdentifier>{2febec8f-ec37-4f4a-98f9-b61c84914381}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\Camera.cpp">
@@ -77,6 +86,18 @@
     </ClCompile>
     <ClCompile Include="src\GameStates\GSPlay.cpp">
       <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Map\Tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\MainSrc\Map\Tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Map\Pixel.cpp">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Map\TileSet.cpp">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Map\Map.cpp">
+      <Filter>Source Files\MainSrc\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +163,18 @@
     </ClInclude>
     <ClInclude Include="src\GameObject\KeyState.h">
       <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Map\Tinyxml2\tinyxml2.h">
+      <Filter>Source Files\MainSrc\Map\Tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Map\Pixel.h">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Map\TileSet.h">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Map\Map.h">
+      <Filter>Source Files\MainSrc\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameStateBase.h"
-
+#include "MainSrc/Map/Map.h"
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
@@ -32,7 +32,8 @@ private:
 	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
 	std::shared_ptr<SpriteAnimation> obj;
 	std::shared_ptr<MouseButton> button;
-	
+	std::shared_ptr<Map> newMap;
+
 	float time = 0.0f;
 	float m_Velocity = 10.0f;
 };

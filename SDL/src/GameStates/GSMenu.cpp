@@ -77,8 +77,8 @@ void GSMenu::Init()
 	
 	/// sound
 	
-	Sound::GetInstance()->LoadSound("Alarm01.wav");
-	Sound::GetInstance()->PlaySound("Alarm01.wav");
+	/*Sound::GetInstance()->LoadSound("Alarm01.wav");
+	Sound::GetInstance()->PlaySound("Alarm01.wav");*/
 	
 }
 

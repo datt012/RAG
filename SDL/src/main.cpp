@@ -1,5 +1,6 @@
-#include"Game.h"
+﻿#include"Game.h"
 #include <stdio.h>
+
 int main(int argc, char* args[])
 {
 	//Start up SDL and create window
