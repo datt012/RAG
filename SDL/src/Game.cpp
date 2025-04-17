@@ -7,7 +7,6 @@
 #include"KeyState.h"
 #include "ResourceManagers.h"
 #include "Renderer.h"
-const Uint32 targetTime = 1 / LIMIT_FPS;
 Game::Game()
 {
 	//Init create window for rendering
@@ -15,7 +14,7 @@ Game::Game()
 }
 bool Game::Init()
 {
-	bool success=	Renderer::GetInstance()->Init();
+	bool success = Renderer::GetInstance()->Init();
 	GameStateMachine::GetInstance()->PushState(StateType::STATE_INTRO);
 	return success;
 }
@@ -26,9 +25,12 @@ void Game::Run()
 			bool quit = false;
 			//Event handler
 			SDL_Event e;
-			Uint32 lastUpdate = SDL_GetTicks();
+			const float targetTime = 1.0f / LIMIT_FPS;
+			float dT = 0;
+			Uint32 begin;
 			while (!quit)
 			{
+				begin = SDL_GetTicks();
 				//Handle events on queue
 				while (SDL_PollEvent(&e) != 0)
 				{
@@ -50,26 +52,20 @@ void Game::Run()
 					}
 
 				}
-	
 				KeyState::HandleKeyState();
-				
-				Uint32 current = SDL_GetTicks();
-
-				float dT = (current - lastUpdate) / 1000.0f; // to convert to seconds
-
-				lastUpdate = current;
-				////Limit FPS
-				if (dT < targetTime)
+				//Update
+				if (dT < targetTime) ////Limit FPS
 				{
-					Update(targetTime);
-					SDL_Delay(targetTime - dT);
+					Update(dT);
+					SDL_Delay((targetTime - dT) * 1000.0f);
 				}
 				else
 				{
-					Update(dT);	
+					Update(dT);
 				}
-				//Update screen
-				SDL_RenderPresent(Renderer::GetInstance()->GetRenderer());
+				//Render screen
+				Render();
+				dT = (SDL_GetTicks() - begin) / 1000.0f; // to convert to seconds
 			}
 }
 
@@ -79,13 +75,20 @@ void Game::Update(float deltaTime)
 	if (GameStateMachine::GetInstance()->HasState())
 	{
 		GameStateMachine::GetInstance()->CurrentState()->Update(deltaTime);
+	}
+}
+
+void Game::Render()
+{
+	if (GameStateMachine::GetInstance()->HasState())
+	{
 		//Clear screen
 		SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(Renderer::GetInstance()->GetRenderer());  // function fills the screen with the color that was last set with SDL_SetRenderDrawColor
 		GameStateMachine::GetInstance()->CurrentState()->Draw(Renderer::GetInstance()->GetRenderer());
+		SDL_RenderPresent(Renderer::GetInstance()->GetRenderer());
 	}
 }
-
 
 Game::~Game()
 {
