@@ -1,14 +1,32 @@
-#include "Pixel.h"
+﻿#include "Pixel.h"
 #include "Define.h"
-Pixel::Pixel( int pID, SDL_Texture* pTexture, SDL_Rect pRect) {
+#include "iostream"
+void Pixel::Init() {
 	pixelWidth = PIXEL_WIDTH;
-	pixelHeight = PIXEL_HEIGHT;
-	pixelID = pID;
-	pixelTexture = pTexture;
-	pixelSceenRect = pRect;
+	pixelHeight = PIXEL_WIDTH;
+	pixelType = "g";// mặc định
+	pixelSrcRect = { 0,0,0 ,0 };
 }
-void Pixel::draw(SDL_Renderer* renderer, SDL_Rect srcRect) {
-	if (renderer && pixelTexture) {
-		SDL_RenderCopy(renderer, pixelTexture, &srcRect, &pixelSceenRect);
-	}
+void Pixel::Update(float deltaTime) {
+	//
+}
+void Pixel::Draw(SDL_Renderer* renderer, SDL_Rect* clip) {
+    if (m_pTexture == NULL) {
+        return;
+    }
+
+    SDL_Texture* texture = m_pTexture->GetTextureObj();
+    if (texture == NULL) {
+        return;
+    }
+
+    SDL_Rect sceenRect;
+    sceenRect.x = (int)m_position.x;
+    sceenRect.y = (int)m_position.y;
+    sceenRect.w = PIXEL_WIDTH;
+    sceenRect.h = PIXEL_HEIGHT;
+
+    if (SDL_RenderCopy(renderer, texture, &pixelSrcRect, &sceenRect) != 0) {
+        std::cerr << "SDL_RenderCopy failed! Error: " << SDL_GetError() << std::endl;
+    }
 }

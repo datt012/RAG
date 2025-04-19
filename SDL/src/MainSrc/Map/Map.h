@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Pixel.h"
 #include "TileSet.h"
 #include <vector>
@@ -7,31 +7,30 @@
 
 class Map {
 private:
-    int mapWidth;
-    int mapHeight;
+    int mapColumn;
+    int mapRow;
     std::vector<TileSet> dsTileSet;
     std::vector<std::vector<int>> dsData;
-    std::vector<std::vector<Pixel>> dsMap;
+    std::vector<std::string > dsMapPixelType; // type các pixel của layer trên cùng 
+    std::vector<std::vector<Pixel>> dsMapPixel;
     std::string tmxFilePath;
 
     bool loadTilesets();
     bool loadMapData();
-    bool createMapPixels();
+    bool createMapPixel();
 
 public:
     Map();
     ~Map();
 
-    // Getters
-    int getMapWidth() const { return mapWidth; }
-    int getMapHeight() const { return mapHeight; }
+    
+    int getMapColumn() const { return mapColumn; }
+    int getMapRow() const { return mapRow; }
     const std::vector<TileSet>& getTilesets() const { return dsTileSet; }
     const std::vector<std::vector<int>>& getMapData() const { return dsData; }
-    const std::vector<std::vector<Pixel>>& getMapPixels() const { return dsMap; }
-
-    // Main methods
+    const std::vector<std::vector<Pixel>>& getMapPixel() const { return dsMapPixel; }
+    
+    
     bool init(const std::string& path);
     bool render(SDL_Renderer* renderer);
-
-
 };

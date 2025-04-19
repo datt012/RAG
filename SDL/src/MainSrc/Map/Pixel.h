@@ -1,14 +1,16 @@
 ﻿#pragma once
 #include "SDL.h"
-using namespace std;
-class Pixel {
+#include "GameObject/BaseObject.h"
+#include "GameObject/BaseObject2d.h"
+#include <string>
+class Pixel : public BaseObject2d {
 public:
 	int pixelWidth;
 	int pixelHeight;
-	int pixelID; // id của pixel trong tập tileset
-	SDL_Texture* pixelTexture;
-	SDL_Rect pixelSceenRect;
+	SDL_Rect pixelSrcRect;
+	std::string pixelType; // grall,wall,...
 
-	Pixel(int pID, SDL_Texture* pTexture, SDL_Rect pRect);
-	void draw(SDL_Renderer* renderer, SDL_Rect srcRect);
+	void Init() override;
+	void Update(float deltaTime) override;
+	void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
 };

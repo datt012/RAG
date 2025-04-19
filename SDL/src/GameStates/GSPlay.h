@@ -32,7 +32,7 @@ private:
 	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
 	std::shared_ptr<SpriteAnimation> obj;
 	std::shared_ptr<MouseButton> button;
-	std::shared_ptr<Map> newMap;
+	std::shared_ptr<Map> mapp;
 
 	float time = 0.0f;
 	float m_Velocity = 10.0f;

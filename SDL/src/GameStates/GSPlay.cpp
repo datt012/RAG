@@ -18,9 +18,9 @@ GSPlay::~GSPlay()
 
 void GSPlay::Init()
 {	
-	// map init
-	newMap = std::make_shared<Map>();
-	newMap->init("Data\\Asset\\home\\home2.tmx");
+	//// map init
+	mapp = std::make_shared<Map>();
+	mapp->init("Data\\Asset\\test\\main.tmx");
 
 	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
 
@@ -154,7 +154,7 @@ void GSPlay::Update(float deltaTime)
 
 void GSPlay::Draw(SDL_Renderer* renderer)
 {
-	m_background->Draw(renderer);
+	/*m_background->Draw(renderer);
 	for (auto it : m_listButton)
 	{
 		it->Draw(renderer);
@@ -162,5 +162,7 @@ void GSPlay::Draw(SDL_Renderer* renderer)
 	for (auto it : m_listAnimation)
 	{
 		it->Draw(renderer);
-	}
+	}*/
+
+	mapp->render(renderer);
 }
