@@ -111,6 +111,12 @@
     <ClCompile Include="src\MainSrc\Characters\Player.cpp">
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="src\MainSrc\Map\MapLoader.cpp">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Map\Layer.cpp">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject\BaseObject.h">
@@ -201,6 +207,21 @@
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\KeyDirection.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Map\MapLoader.h">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Map\Layer.h">
+      <Filter>Source Files\MainSrc\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\CharacterDirection.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\CharacterAction.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\DirectionGun.h">
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
   </ItemGroup>

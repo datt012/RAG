@@ -1,34 +1,42 @@
 ﻿#include "TileSet.h"
-#include "Define.h"
 
-TileSet::TileSet(int tsColumn, int tsRow, SDL_Texture* tsTexture, string tsxPath, string imgPath, int fID, int lsID) {
+TileSet::TileSet(int columns, int rows, SDL_Texture* texture, const std::string& tsxPath, const std::string& imgPath, int firstID, int lastID)
+    : m_Columns(columns), m_Rows(rows), m_TsxPath(tsxPath), m_ImagePath(imgPath), m_FirstID(firstID), m_LastID(lastID) {
+    m_TileWidth = 32; // Default tile size, can be parameterized
+    m_TileHeight = 32;
 
-    pixelWidth = PIXEL_WIDTH;
-    pixelHeight = PIXEL_HEIGHT;
-
-    tileSetColumn = tsColumn;
-    tileSetRow = tsRow;
-    tileSetTexture = tsTexture;
-    tsxFilePath = tsxPath;
-    imgFilePath = imgPath;
-    firstTileSetID = fID;
-    lastTileSetID = lsID;
-
-
+	if (texture) {
+		if (!m_pTexture) {
+			m_pTexture = std::make_shared<TextureManager>();
+		}
+        m_pTexture->SetTextureObj(texture);
+		SDL_QueryTexture(texture, NULL, NULL, &m_TileWidth, &m_TileHeight);
+		m_TileWidth /= columns;
+		m_TileHeight /= rows;
+	}
 }
 
+TileSet::~TileSet() {
+}
 
-SDL_Rect TileSet::getSrcRect(int pixelID) {
-    
-    SDL_Rect srcRect = { 0, 0, pixelWidth, pixelHeight };
-    int localID = pixelID - firstTileSetID ;
+SDL_Rect TileSet::GetSourceRect(int tileID) const {
+    SDL_Rect srcRect = { 0, 0, m_TileWidth, m_TileHeight };
+    int localID = tileID - m_FirstID;
 
-
-    int column = localID % tileSetColumn;
-    int row = localID / tileSetColumn;
-    srcRect.x = column * pixelWidth;
-    srcRect.y = row * pixelHeight;
-
+    srcRect.x = (localID % m_Columns) * m_TileWidth;
+    srcRect.y = (localID / m_Columns) * m_TileHeight;
 
     return srcRect;
+}
+
+void TileSet::Init() {
+	// Initialization logic (if needed)
+}
+
+void TileSet::Draw(SDL_Renderer* renderer, SDL_Rect* clip) {
+    // TileSet-specific drawing logic (if needed)
+}
+
+void TileSet::Update(float deltaTime) {
+    // TileSet-specific update logic (if needed)
 }

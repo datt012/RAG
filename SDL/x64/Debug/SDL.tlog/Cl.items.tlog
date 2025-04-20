@@ -19,7 +19,9 @@ C:\Users\Admin\Desktop\Internship\SDL\src\GameStates\GSPlay.cpp;C:\Users\Admin\D
 C:\Users\Admin\Desktop\Internship\SDL\src\main.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\main.obj
 C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Characters\Character.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\Character.obj
 C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Characters\Player.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\Player.obj
+C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Map\Layer.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\Layer.obj
 C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Map\Map.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\Map.obj
+C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Map\MapLoader.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\MapLoader.obj
 C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Map\Pixel.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\Pixel.obj
 C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Map\TileSet.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\TileSet.obj
 C:\Users\Admin\Desktop\Internship\SDL\src\MainSrc\Map\Tinyxml2\tinyxml2.cpp;C:\Users\Admin\Desktop\Internship\SDL\x64\Debug\tinyxml2.obj

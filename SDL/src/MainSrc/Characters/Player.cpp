@@ -12,12 +12,12 @@ Player::~Player()
 
 void Player::Init()
 {
-	m_animationPlayer->Init();
-	m_animationPlayer->SetFrame(0, 0); // Set initial frame to idle frame
-	m_animationPlayer->Set2DPosition(100, 100); // Set initial position
-	m_animationPlayer->SetSize(50, 50); // Set size
-	m_animationPlayer->SetRotation(0.0f); // Set rotation
-	m_animationPlayer->SetFlip(SDL_FLIP_NONE); // Set flip
+	//m_animationPlayer->Init();
+	//m_animationPlayer->SetFrame(0, 0); // Set initial frame to idle frame
+	//m_animationPlayer->Set2DPosition(100, 100); // Set initial position
+	//m_animationPlayer->SetSize(50, 50); // Set size
+	//m_animationPlayer->SetRotation(0.0f); // Set rotation
+	//m_animationPlayer->SetFlip(SDL_FLIP_NONE); // Set flip
 }
 
 void Player::SetCurrentAction(Action action)
@@ -149,7 +149,7 @@ void Player::UpdateAnimation(float deltaTime)
 	}
 
 	// IDLE
-	if (m_CurrentAction == IDLE)
+	if (m_CurrentAction == IDLE && m_CurrentDirectionGun == DIR_HORIZONTAL)
 	{
 		if (m_IsShooting)
 		{
@@ -175,7 +175,7 @@ void Player::UpdateAnimation(float deltaTime)
 	}
 
 	// RUN
-	if (m_CurrentAction == RUN)
+	if (m_CurrentAction == RUN && m_CurrentDirectionGun == DIR_HORIZONTAL)
 	{
 		if (m_IsShooting)
 		{
@@ -192,16 +192,16 @@ void Player::UpdateAnimation(float deltaTime)
 	{
 		if (m_IsShooting)
 		{
-			m_animationPlayer->SetFrame(40, 43);
+			m_animationPlayer->SetFrame(56, 63);
 		}
 		else
 		{
-			m_animationPlayer->SetFrame(15, 15);
+			m_animationPlayer->SetFrame(6, 13);
 		}
 	}
 
 	// CROUCH
-	if (m_CurrentAction == CROUCH)
+	if (m_CurrentAction == CROUCH && m_CurrentDirectionGun == DIR_HORIZONTAL)
 	{
 		if (m_IsShooting)
 		{
@@ -218,11 +218,11 @@ void Player::UpdateAnimation(float deltaTime)
 	{
 		if (m_IsShooting)
 		{
-			m_animationPlayer->SetFrame(14, 15);
+			m_animationPlayer->SetFrame(64, 71);
 		}
 		else
 		{
-			m_animationPlayer->SetFrame(11, 14);
+			m_animationPlayer->SetFrame(6, 13);
 		}
 	}
 

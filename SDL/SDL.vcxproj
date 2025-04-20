@@ -187,7 +187,9 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Character.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Player.cpp" />
+    <ClCompile Include="src\MainSrc\Map\Layer.cpp" />
     <ClCompile Include="src\MainSrc\Map\Map.cpp" />
+    <ClCompile Include="src\MainSrc\Map\MapLoader.cpp" />
     <ClCompile Include="src\MainSrc\Map\Pixel.cpp" />
     <ClCompile Include="src\MainSrc\Map\TileSet.cpp" />
     <ClCompile Include="src\MainSrc\Map\Tinyxml2\tinyxml2.cpp" />
@@ -217,9 +219,14 @@
     <ClInclude Include="src\GameStates\GSMenu.h" />
     <ClInclude Include="src\GameStates\GSPlay.h" />
     <ClInclude Include="src\MainSrc\Characters\Character.h" />
+    <ClInclude Include="src\MainSrc\Characters\CharacterAction.h" />
+    <ClInclude Include="src\MainSrc\Characters\CharacterDirection.h" />
+    <ClInclude Include="src\MainSrc\Characters\DirectionGun.h" />
     <ClInclude Include="src\MainSrc\Characters\KeyDirection.h" />
     <ClInclude Include="src\MainSrc\Characters\Player.h" />
+    <ClInclude Include="src\MainSrc\Map\Layer.h" />
     <ClInclude Include="src\MainSrc\Map\Map.h" />
+    <ClInclude Include="src\MainSrc\Map\MapLoader.h" />
     <ClInclude Include="src\MainSrc\Map\Pixel.h" />
     <ClInclude Include="src\MainSrc\Map\TileSet.h" />
     <ClInclude Include="src\MainSrc\Map\Tinyxml2\tinyxml2.h" />

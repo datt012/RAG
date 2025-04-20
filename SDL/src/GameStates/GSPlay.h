@@ -15,40 +15,38 @@ class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
 class Sound;
-class GSPlay :
-	public GameStateBase
-{
+
+class GSPlay : public GameStateBase {
 public:
-	GSPlay();
-	~GSPlay();
+    GSPlay();
+    ~GSPlay();
 
-	void	Init() override;
-	void	Exit() override;
+    void Init() override;
+    void Exit() override;
 
-	void	Pause() override;
-	void	Resume() override;
+    void Pause() override;
+    void Resume() override;
 
-	void	HandleEvents() override;
-	void	HandleKeyEvents(SDL_Event& e) override;
-	void	HandleTouchEvents(SDL_Event& e) override;
-	void	HandleMouseMoveEvents(int x, int y) override;
-	void	Update(float deltaTime) override;
-	void	Draw(SDL_Renderer* renderer) override;
-	int m_KeyPress;
+    void HandleEvents() override;
+    void HandleKeyEvents(SDL_Event& e) override;
+    void HandleTouchEvents(SDL_Event& e) override;
+    void HandleMouseMoveEvents(int x, int y) override;
+    void Update(float deltaTime) override;
+    void Draw(SDL_Renderer* renderer) override;
 
 private:
-	std::shared_ptr<Sprite2D>	m_background;
-	std::shared_ptr<SpriteAnimation> obj;
-	std::shared_ptr<SpriteAnimationPlayer> animation;
-	std::shared_ptr<Player> player;
-	std::shared_ptr<MouseButton> button;
-	std::shared_ptr<Map> mapp;
+    std::shared_ptr<Sprite2D> m_background;
+    std::shared_ptr<SpriteAnimation> obj;
+    std::shared_ptr<SpriteAnimationPlayer> animation;
+    std::shared_ptr<Player> player;
+    std::shared_ptr<MouseButton> button;
+    std::shared_ptr<Map> m_map; 
 
-	std::list<std::shared_ptr<MouseButton>>	m_listButton;
-	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
-	std::list<std::shared_ptr<Player>> m_listPlayer;
+    std::list<std::shared_ptr<MouseButton>> m_listButton;
+    std::list<std::shared_ptr<SpriteAnimation>> m_listAnimation;
+    std::list<std::shared_ptr<Player>> m_listPlayer;
 
-	float time = 0.0f;
-	float m_Velocity = 10.0f;
+    int m_KeyPress;
+    float time = 0.0f;
+    float m_Velocity = 10.0f;
 };
-
