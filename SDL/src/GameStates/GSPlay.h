@@ -1,6 +1,16 @@
 #pragma once
 #include "GameStateBase.h"
 #include "MainSrc/Map/Map.h"
+#include "ResourceManagers.h"
+#include "GameObject/MouseButton.h"
+#include "GameObject/Sprite2D.h"
+#include "GameObject/SpriteAnimation.h"
+#include "GameObject/Camera.h"
+#include "KeyState.h"
+#include "Sound.h"
+#include "MainSrc/Characters/Player.h"
+#include "MainSrc/Characters/KeyDirection.h"
+
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
@@ -28,11 +38,15 @@ public:
 
 private:
 	std::shared_ptr<Sprite2D>	m_background;
-	std::list<std::shared_ptr<MouseButton>>	m_listButton;
-	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
 	std::shared_ptr<SpriteAnimation> obj;
+	std::shared_ptr<SpriteAnimationPlayer> animation;
+	std::shared_ptr<Player> player;
 	std::shared_ptr<MouseButton> button;
 	std::shared_ptr<Map> mapp;
+
+	std::list<std::shared_ptr<MouseButton>>	m_listButton;
+	std::list<std::shared_ptr<SpriteAnimation>>	m_listAnimation;
+	std::list<std::shared_ptr<Player>> m_listPlayer;
 
 	float time = 0.0f;
 	float m_Velocity = 10.0f;

@@ -15,14 +15,14 @@ protected:
 public:
 	BaseObject() : m_pTexture(nullptr), m_position(Vector3(0.0f, 0.0f, 0.0f)), m_scale(Vector3(1.0f, 1.0f, 1.0f)) {}
 	BaseObject(std::shared_ptr<TextureManager> texture)
-		:m_pTexture(texture), m_position(Vector3(0.0f, 0.0f, 0.0f)) , m_scale(Vector3(1.0f, 1.0f, 1.0f) ){}
+		:m_pTexture(texture), m_position(Vector3(0.0f, 0.0f, 0.0f)), m_scale(Vector3(1.0f, 1.0f, 1.0f)) {
+	}
 	virtual void Init() = 0;
-	virtual void Draw(SDL_Renderer* renderer, SDL_Rect *clip = NULL) = 0;
+	virtual void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) = 0;
 	virtual void Update(float deltatime) = 0;
-	void SetPosition(Vector3 position) { m_position = position; }
-	Vector3 GetPosition() { return m_position; }
-	void SetTexture(std::shared_ptr<TextureManager> texture) { m_pTexture = texture; }
-	 
+	virtual void SetPosition(Vector3 position) { m_position = position; }
+	virtual Vector3 GetPosition() { return m_position; }
+	virtual void SetTexture(std::shared_ptr<TextureManager> texture) { m_pTexture = texture; }
+	virtual std::shared_ptr<TextureManager> GetTexture() { return m_pTexture; }
 };
 
- 

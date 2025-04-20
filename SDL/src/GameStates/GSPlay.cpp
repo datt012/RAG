@@ -1,11 +1,5 @@
 #include "GSPlay.h"
-#include "ResourceManagers.h"
-#include "GameObject/MouseButton.h"
-#include "GameObject/Sprite2D.h"
-#include "GameObject/SpriteAnimation.h"
-#include "GameObject/Camera.h"
-#include "KeyState.h"
-#include "Sound.h"
+
 GSPlay::GSPlay()
 {
 }
@@ -39,13 +33,16 @@ void GSPlay::Init()
 		});
 	m_listButton.push_back(button);
 
-   // Animation 
-	texture = ResourceManagers::GetInstance()->GetTexture("Actor1_2.tga");
-	obj = std::make_shared<SpriteAnimation>( texture, 2, 9, 6, 0.2f);
-	obj->SetFlip(SDL_FLIP_HORIZONTAL);
-	obj->SetSize(40, 50);
-	obj->Set2DPosition(240, 400);
-	m_listAnimation.push_back(obj);
+
+	texture = ResourceManagers::GetInstance()->GetTexture("SpriteSheet_player_7_8.tga");
+	animation = std::make_shared<SpriteAnimationPlayer>(texture, 7, 8, 0, 0, 30);
+	player = std::make_shared<Player>(animation);
+	player->SetSize(70, 70);
+	player->Set2DPosition(300, 300);
+	m_listPlayer.push_back(player);
+
+	Camera::GetInstance()->SetLevelDimension(SCREEN_WIDTH * 5, SCREEN_HEIDHT * 5);
+	Camera::GetInstance()->SetTarget(player);
 	
 	m_KeyPress = 0;
 }
@@ -71,46 +68,64 @@ void GSPlay::HandleEvents()
 void GSPlay::HandleKeyEvents(SDL_Event& e)
 {
 	//If a key was pressed
-	if (e.type == SDL_KEYDOWN )//&& e.key.repeat == 0) //For e.key.repeat it's because key repeat is enabled by default and if you press and hold a key it will report multiple key presses. That means we have to check if the key press is the first one because we only care when the key was first pressed.
+	if (e.type == SDL_KEYDOWN)//&& e.key.repeat == 0) //For e.key.repeat it's because key repeat is enabled by default and if you press and hold a key it will report multiple key presses. That means we have to check if the key press is the first one because we only care when the key was first pressed.
 	{
 		//Adjust the velocity
 		switch (e.key.keysym.sym)                                                                                            
-		{                                                                                                                     
+		{
+		case SDLK_a:
 		case SDLK_LEFT:
-			printf("MOVE LEFT");
-			m_KeyPress |= 1;
+			m_KeyPress |= KEY_LEFT;
 			break;
+		case SDLK_s:
 		case SDLK_DOWN:
-			printf("MOVE BACK");
-			m_KeyPress |= 1 << 1;
+			m_KeyPress |= KEY_DOWN;
 			break;
+		case SDLK_d:
 		case SDLK_RIGHT:
-			m_KeyPress |= 1 << 2;
+			m_KeyPress |= KEY_RIGHT;
 			break;
+		case SDLK_w:
 		case SDLK_UP:
-			m_KeyPress |= 1 << 3;
+			m_KeyPress |= KEY_UP;
+			break;
+		case SDLK_j:
+			m_KeyPress |= KEY_SHOOT;
+			break;
+		case SDLK_k:
+			m_KeyPress |= KEY_JUMP;
 			break;
 		default:
 			break;
 		}
 	}
 	////Key Up
-	else if (e.type == SDL_KEYUP )//&& e.key.repeat == 0)
+	else if (e.type == SDL_KEYUP)//&& e.key.repeat == 0)
 	{
 		//Adjust the velocity
 		switch (e.key.keysym.sym)
 		{
+		case SDLK_a:
 		case SDLK_LEFT:
-			m_KeyPress ^= 1;
+			m_KeyPress ^= KEY_LEFT;
 			break;
+		case SDLK_s:
 		case SDLK_DOWN:
-			m_KeyPress ^= 1 << 1;
+			m_KeyPress ^= KEY_DOWN;
 			break;
+		case SDLK_d:
 		case SDLK_RIGHT:
-			m_KeyPress ^= 1 << 2;
+			m_KeyPress ^= KEY_RIGHT;
 			break;
+		case SDLK_w:
 		case SDLK_UP:
-			m_KeyPress ^= 1 << 3;
+			m_KeyPress ^= KEY_UP;
+			break;
+		case SDLK_j:
+			m_KeyPress ^= KEY_SHOOT;
+			break;
+		case SDLK_k:
+			m_KeyPress ^= KEY_JUMP;
 			break;
 		default:
 			break;
@@ -142,6 +157,14 @@ void GSPlay::Update(float deltaTime)
 	}
 	// Key State event end
 
+
+	for (auto it : m_listPlayer)
+	{
+		it->HandleInput(m_KeyPress);
+	}
+	printf("Key Press: %d\n", m_KeyPress);
+
+	// Update
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
@@ -150,11 +173,19 @@ void GSPlay::Update(float deltaTime)
 	{
 		it->Update(deltaTime);
 	}
+	for (auto it : m_listPlayer)
+	{
+		it->Update(deltaTime);
+	}
+
+	Camera::GetInstance()->Update(deltaTime);
 }
 
 void GSPlay::Draw(SDL_Renderer* renderer)
 {
-	/*m_background->Draw(renderer);
+	// m_background->Draw(renderer);
+	mapp->render(renderer);
+
 	for (auto it : m_listButton)
 	{
 		it->Draw(renderer);
@@ -162,7 +193,9 @@ void GSPlay::Draw(SDL_Renderer* renderer)
 	for (auto it : m_listAnimation)
 	{
 		it->Draw(renderer);
-	}*/
-
-	mapp->render(renderer);
+	}
+	for (auto it : m_listPlayer)
+	{
+		it->Draw(renderer);
+	}
 }

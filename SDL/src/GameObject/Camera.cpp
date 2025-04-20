@@ -1,4 +1,5 @@
 #include"Camera.h"
+#include <MainSrc/Characters/Player.h>
 
 SDL_Rect Camera::GetViewBox()
 {
@@ -21,7 +22,14 @@ void Camera::Update(float deltaTime)
 	{
 		//Center the camera over the dot
 		m_ViewBox.x = (m_target->GetPosition().x - SCREEN_WIDTH / 2);
-		m_ViewBox.y = (m_target->GetPosition().y  - SCREEN_HEIDHT / 2) ;
+		m_ViewBox.y = (m_target->GetPosition().y  - SCREEN_HEIDHT / 2);
+
+		std::shared_ptr<Player> player = std::dynamic_pointer_cast<Player>(m_target);
+		if (player != nullptr)
+		{
+			m_ViewBox.x += player->GetWidth() / 2;
+			m_ViewBox.y += player->GetHeight() / 2;
+		}
 		
 		//Keep the camera in bounds
 		if (m_ViewBox.x < 0)

@@ -31,6 +31,9 @@
     <Filter Include="Source Files\MainSrc\Map\Tinyxml2">
       <UniqueIdentifier>{2febec8f-ec37-4f4a-98f9-b61c84914381}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MainSrc\Characters">
+      <UniqueIdentifier>{7391be40-89f4-46e5-a4dd-5b6c3289dec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\Camera.cpp">
@@ -98,6 +101,15 @@
     </ClCompile>
     <ClCompile Include="src\MainSrc\Map\Map.cpp">
       <Filter>Source Files\MainSrc\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject\SpriteAnimationPlayer.cpp">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Characters\Character.cpp">
+      <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Characters\Player.cpp">
+      <Filter>Source Files\MainSrc\Characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +187,21 @@
     </ClInclude>
     <ClInclude Include="src\MainSrc\Map\Map.h">
       <Filter>Source Files\MainSrc\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\BaseObject2d.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObject\SpriteAnimationPlayer.h">
+      <Filter>Source Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\Character.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\Player.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\KeyDirection.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

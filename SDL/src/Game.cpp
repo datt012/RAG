@@ -7,6 +7,9 @@
 #include"KeyState.h"
 #include "ResourceManagers.h"
 #include "Renderer.h"
+
+const float targetTime = 1000.f / LIMIT_FPS;
+
 Game::Game()
 {
 	//Init create window for rendering
@@ -21,52 +24,69 @@ bool Game::Init()
 
 void Game::Run()
 {
-			//Main loop flag
-			bool quit = false;
-			//Event handler
-			SDL_Event e;
-			const float targetTime = 1.0f / LIMIT_FPS;
-			float dT = 0;
-			Uint32 begin;
-			while (!quit)
+	//Main loop flag
+	bool quit = false;
+	//Event handler
+	SDL_Event e;
+
+	fpsTimer = std::make_shared<Timer>();
+	capTimer = std::make_shared<Timer>();
+
+	int countedFrames = 0;
+	fpsTimer->Start();
+
+	while (!quit)
+	{
+		//Start cap timer
+		capTimer->Start();
+
+		//Handle events on queue
+		while (SDL_PollEvent(&e) != 0)
+		{
+
+			//User requests quit
+			if (e.type == SDL_QUIT)
 			{
-				begin = SDL_GetTicks();
-				//Handle events on queue
-				while (SDL_PollEvent(&e) != 0)
-				{
-
-					//User requests quit
-					if (e.type == SDL_QUIT)
-					{
-						quit = true;
-					}
-					if (GameStateMachine::GetInstance()->HasState())
-					{
-						GameStateMachine::GetInstance()->CurrentState()->HandleKeyEvents(e);
-					}
-
-					//Handle Touch Event
-					if (GameStateMachine::GetInstance()->HasState())
-					{
-						GameStateMachine::GetInstance()->CurrentState()->HandleTouchEvents(e);
-					}
-
-				}
-				KeyState::HandleKeyState();
-				//Update
-				if (dT < targetTime) ////Limit FPS
-				{
-					Update(dT);
-					SDL_Delay((targetTime - dT) * 1000.0f);
-				}
-				else
-				{
-					Update(dT);
-				}
-				//Render screen
-				Render();
-				dT = (SDL_GetTicks() - begin) / 1000.0f; // to convert to seconds
+				quit = true;
 			}
+
+			if (GameStateMachine::GetInstance()->HasState())
+			{
+				GameStateMachine::GetInstance()->CurrentState()->HandleKeyEvents(e);
+			}
+
+			//Handle Touch Event
+			if (GameStateMachine::GetInstance()->HasState())
+			{
+				GameStateMachine::GetInstance()->CurrentState()->HandleTouchEvents(e);
+			}
+
+		}
+
+		KeyState::HandleKeyState();
+
+		//Calculate and correct fps
+		float avgFPS = countedFrames / (fpsTimer->GetTicks() / 1000.f);
+		if (fpsTimer->GetTicks() > 1000)
+		{
+			fpsTimer->Start();
+			countedFrames = 0;
+		}
+		printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
+
+		//Update screen
+		Update(targetTime);
+		Render();
+		++countedFrames;
+
+		//If frame finished early
+		int frameTicks = capTimer->GetTicks();
+		if (frameTicks < targetTime)
+		{
+			//Wait remaining time
+			SDL_Delay(targetTime - frameTicks);
+		}
+	}
 }
 
 void Game::Update(float deltaTime)

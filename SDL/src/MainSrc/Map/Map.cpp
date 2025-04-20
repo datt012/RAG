@@ -264,6 +264,7 @@ bool Map::createMapPixel() {
     }
     return !dsMapPixel.empty();
 }
+
 bool Map::render(SDL_Renderer* renderer) {
     for (int i = 0; i < dsMapPixel.size(); i++) {
         for (int j = 0; j < dsMapPixel[i].size(); j++) {

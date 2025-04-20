@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "GameObject/BaseObject.h"
 #include "GameObject/BaseObject2d.h"
+#include "Camera.h"
 #include <string>
 class Pixel : public BaseObject2d {
 public:

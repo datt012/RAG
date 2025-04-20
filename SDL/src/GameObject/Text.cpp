@@ -2,7 +2,7 @@
 
 #include "TextureManager.h"
 #include "ResourceManagers.h"
-Text::Text( std::string text, TTF_Font* font, SDL_Color color) :m_text(text), m_font(font), m_color(color)
+Text::Text(std::string text, TTF_Font* font, SDL_Color color) :m_text(text), m_font(font), m_color(color)
 {
 	Init();
 }
@@ -11,7 +11,7 @@ void Text::Init()
 {
 	m_position = Vector3(-1.0f, 1.0f, 1.0f);
 	m_pTexture = std::make_shared<TextureManager>();
-	GetTexture();
+	GetTextureText();
 }
 
 void Text::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
@@ -33,7 +33,7 @@ void Text::Update(float deltatime)
 
 }
 
-void Text::GetTexture()
+void Text::GetTextureText()
 {
 	if (m_pTexture != nullptr)
 	{
@@ -48,19 +48,19 @@ void Text::GetTexture()
 void Text::SetText(std::string text)
 {
 	m_text = text;
-	GetTexture();
+	GetTextureText();
 }
 
 void Text::SetFont(TTF_Font* font)
 {
 	m_font = font;
-	GetTexture();
+	GetTextureText();
 }
 
 void Text::SetColor(SDL_Color color)
 {
 	m_color = color;
-	GetTexture();
+	GetTextureText();
 }
 
 
