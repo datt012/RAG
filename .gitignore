@@ -1,0 +1,12 @@
+/.vs
+/Debug
+/x64/Debug
+/SDL/Debug
+/SDL/x64/Debug
+/SDL/SDL.vcxproj.user
+/SDL/SDL.vcxproj.filters
+/SDL/SDL.vcxproj
+/SDL/SDL2.dll
+/SDL/SDL2_image.dll
+/SDL/SDL2_mixer.dll
+/SDL/SDL2_ttf.dll
