@@ -1,0 +1,28 @@
+﻿cl : command line  warning D9035: option 'Zc:forScope-' has been deprecated and will be removed in a future release
+  Game.cpp
+  ResourceManagers.cpp
+  Camera.cpp
+  CMath.cpp
+  MouseButton.cpp
+  Renderer.cpp
+  Sound.cpp
+  Sprite2D.cpp
+  SpriteAnimation.cpp
+  Text.cpp
+  TextureManager.cpp
+  Timer.cpp
+  GameStateBase.cpp
+  GameStateMachine.cpp
+  GSIntro.cpp
+  GSMenu.cpp
+  GSPlay.cpp
+  main.cpp
+  Map.cpp
+  Pixel.cpp
+  Generating Code...
+  Compiling...
+  TileSet.cpp
+  tinyxml2.cpp
+  Generating Code...
+  SDL.vcxproj -> D:\Internship\x64\Debug\SDL.exe
+  0 File(s) copied
