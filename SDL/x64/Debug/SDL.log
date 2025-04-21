@@ -1,32 +1,60 @@
 ﻿cl : command line  warning D9035: option 'Zc:forScope-' has been deprecated and will be removed in a future release
+  Game.cpp
+  ResourceManagers.cpp
   Camera.cpp
+  CMath.cpp
+  MouseButton.cpp
+  Renderer.cpp
+  Sound.cpp
+  Sprite2D.cpp
+  SpriteAnimation.cpp
+  SpriteAnimationPlayer.cpp
+  Text.cpp
+  TextureManager.cpp
+  Timer.cpp
+  GameStateBase.cpp
+  GameStateMachine.cpp
+  GSIntro.cpp
+  GSMenu.cpp
   GSPlay.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\xutility(506,82): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\xutility(506,82): warning C4244:         with
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\xutility(506,82): warning C4244:         [
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\xutility(506,82): warning C4244:             _Ty=int
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\xutility(506,82): warning C4244:         ]
+  main.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\xutility(403,82): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\xutility(403,82): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\xutility(403,82): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\xutility(403,82): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\xutility(403,82): warning C4244:         ]
   (compiling source file 'src/GameStates/GSPlay.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\xutility(506,82):
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\xutility(403,82):
       the template instantiation context (the oldest one first) is
-          C:\Users\Admin\Desktop\Internship\SDL\src\GameStates\GSPlay.cpp(33,22):
+          C:\Users\GLSchool\Documents\Internship\SDL\src\GameStates\GSPlay.cpp(33,22):
           see reference to function template instantiation 'std::shared_ptr<SpriteAnimationPlayer> std::make_shared<SpriteAnimationPlayer,std::shared_ptr<TextureManager>&,int,int,int,int,int>(std::shared_ptr<TextureManager> &,int &&,int &&,int &&,int &&,int &&)' being compiled
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\memory(2903,46):
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\memory(2906,46):
           see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<std::shared_ptr<TextureManager>&,int,int,int,int,int>(std::shared_ptr<TextureManager> &,int &&,int &&,int &&,int &&,int &&)' being compiled
           with
           [
               _Ty=SpriteAnimationPlayer
           ]
-          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\memory(2092,18):
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\memory(2095,18):
           see reference to function template instantiation 'void std::_Construct_in_place<_Ty,std::shared_ptr<TextureManager>&,int,int,int,int,int>(_Ty &,std::shared_ptr<TextureManager> &,int &&,int &&,int &&,int &&,int &&) noexcept(false)' being compiled
           with
           [
               _Ty=SpriteAnimationPlayer
           ]
   
-  GameStateBase.cpp
   Character.cpp
-  Player.cpp
   Generating Code...
-  SDL.vcxproj -> C:\Users\Admin\Desktop\Internship\x64\Debug\SDL.exe
-  0 File(s) copied
+  Compiling...
+  Player.cpp
+  Layer.cpp
+  Map.cpp
+  MapLoader.cpp
+  Pixel.cpp
+  TileSet.cpp
+  tinyxml2.cpp
+  Generating Code...
+  SDL.vcxproj -> C:\Users\GLSchool\Documents\Internship\x64\Debug\SDL.exe
+  C:\Users\GLSchool\Documents\Internship\SDLLib\DynamicLib\SDL2.dll
+  C:\Users\GLSchool\Documents\Internship\SDLLib\DynamicLib\SDL2_image.dll
+  C:\Users\GLSchool\Documents\Internship\SDLLib\DynamicLib\SDL2_mixer.dll
+  C:\Users\GLSchool\Documents\Internship\SDLLib\DynamicLib\SDL2_ttf.dll
+  4 File(s) copied
