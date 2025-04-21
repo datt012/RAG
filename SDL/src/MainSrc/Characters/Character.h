@@ -4,6 +4,7 @@
 #include "SpriteAnimation.h"
 #include <SpriteAnimationPlayer.h>
 #include <Timer.h>
+#include <map>
 
 class Character : public BaseObject
 {
@@ -36,9 +37,9 @@ protected:
     float       m_VelocityY = 0.0f;       // Velocity along the Y-axis
 
     float m_Speed = 0.3f;           // Running speed
-    float m_JumpForce = 0.45f;      // Jumping force
+    float m_JumpForce = 0.3f;      // Jumping force
     float m_JumpDuration = 0.4f;    // Jumping duration
-    float m_Gravity = 0.001f;       // Gravity
+    float m_Gravity = 0.0007f;       // Gravity
 
     bool m_IsJumping = false;       // Flag for jumping
     bool m_IsShooting = false;      // Flag for shooting

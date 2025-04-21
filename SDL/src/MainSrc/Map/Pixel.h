@@ -1,17 +1,23 @@
 ﻿#pragma once
-#include "SDL.h"
-#include "GameObject/BaseObject.h"
-#include "GameObject/BaseObject2d.h"
-#include "Camera.h"
+#include <SDL.h>
+#include <memory>
 #include <string>
-class Pixel : public BaseObject2d {
-public:
-	int pixelWidth;
-	int pixelHeight;
-	SDL_Rect pixelSrcRect;
-	std::string pixelType; // grall,wall,...
+#include "Define.h"
+#include "Camera.h"
+#include "BaseObject.h"
 
-	void Init() override;
-	void Update(float deltaTime) override;
-	void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
+class Pixel : public BaseObject {
+public:
+    Pixel();
+    ~Pixel();
+
+    void SetSourceRect(const SDL_Rect& srcRect);
+
+    void Init() override;
+    void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
+    void Update(float deltaTime) override;
+
+private:
+    SDL_Rect m_SrcRect;
+    SDL_Rect m_DestRect;
 };

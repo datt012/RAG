@@ -1,20 +1,31 @@
-﻿#include <string>
+﻿#pragma once
+#include <string>
 #include <SDL.h>
-using namespace std;
-class TileSet {
+#include "BaseObject.h"
+
+class TileSet : public BaseObject {
 public:
-    int pixelWidth;
-    int pixelHeight;
-    int tileSetColumn;// số cột 
-    int tileSetRow;// số hàng 
+    TileSet(int columns, int rows, SDL_Texture* texture, const std::string& tsxPath, const std::string& imgPath, int firstID, int lastID);
+    ~TileSet();
 
-    SDL_Texture* tileSetTexture;
-    string tsxFilePath;
-    string imgFilePath;
+    SDL_Rect GetSourceRect(int tileID) const;
 
-    int firstTileSetID;
-    int lastTileSetID;
-    TileSet(int tsColumn, int tsRow, SDL_Texture* tsTexture, string tsxPath, string imgPath, int fID, int lsID);
-    SDL_Rect getSrcRect(int pixelID);
+    int GetFirstID() const { return m_FirstID; }
+    int GetLastID() const { return m_LastID; }
 
+    void Init() override;
+    void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
+    void Update(float deltaTime) override;
+
+private:
+    int m_TileWidth;
+    int m_TileHeight;
+    int m_Columns;
+    int m_Rows;
+
+    std::string m_TsxPath;
+    std::string m_ImagePath;
+
+    int m_FirstID;
+    int m_LastID;
 };
