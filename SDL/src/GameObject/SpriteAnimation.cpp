@@ -39,7 +39,7 @@ void SpriteAnimation::Draw(SDL_Renderer* renderer, SDL_Rect * clip)
 void SpriteAnimation::Update(float deltatime)
 {
 	m_currentTicks += deltatime;
-		if(m_currentTicks  >= m_frameTime) {
+	if (m_currentTicks >= m_frameTime) {
 		m_currentFrame++;
 		if (m_currentFrame >= m_frameCount) {
 			m_currentFrame = 0;

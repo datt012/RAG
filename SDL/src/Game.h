@@ -10,5 +10,6 @@ public:
 	Game();
 	~Game();
 private:
-
+	std::shared_ptr<Timer> fpsTimer;
+	std::shared_ptr<Timer> capTimer;
 };

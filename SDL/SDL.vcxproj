@@ -175,6 +175,7 @@
     <ClCompile Include="src\GameObject\Sound.cpp" />
     <ClCompile Include="src\GameObject\Sprite2D.cpp" />
     <ClCompile Include="src\GameObject\SpriteAnimation.cpp" />
+    <ClCompile Include="src\GameObject\SpriteAnimationPlayer.cpp" />
     <ClCompile Include="src\GameObject\Text.cpp" />
     <ClCompile Include="src\GameObject\TextureManager.cpp" />
     <ClCompile Include="src\GameObject\Timer.cpp" />
@@ -184,7 +185,11 @@
     <ClCompile Include="src\GameStates\GSMenu.cpp" />
     <ClCompile Include="src\GameStates\GSPlay.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MainSrc\Characters\Character.cpp" />
+    <ClCompile Include="src\MainSrc\Characters\Player.cpp" />
+    <ClCompile Include="src\MainSrc\Map\Layer.cpp" />
     <ClCompile Include="src\MainSrc\Map\Map.cpp" />
+    <ClCompile Include="src\MainSrc\Map\MapLoader.cpp" />
     <ClCompile Include="src\MainSrc\Map\Pixel.cpp" />
     <ClCompile Include="src\MainSrc\Map\TileSet.cpp" />
     <ClCompile Include="src\MainSrc\Map\Tinyxml2\tinyxml2.cpp" />
@@ -194,6 +199,7 @@
     <ClInclude Include="src\GameManager\ResourceManagers.h" />
     <ClInclude Include="src\GameManager\Singleton.h" />
     <ClInclude Include="src\GameObject\BaseObject.h" />
+    <ClInclude Include="src\GameObject\BaseObject2d.h" />
     <ClInclude Include="src\GameObject\Camera.h" />
     <ClInclude Include="src\GameObject\CMath.h" />
     <ClInclude Include="src\GameObject\Define.h" />
@@ -203,6 +209,7 @@
     <ClInclude Include="src\GameObject\Sound.h" />
     <ClInclude Include="src\GameObject\Sprite2D.h" />
     <ClInclude Include="src\GameObject\SpriteAnimation.h" />
+    <ClInclude Include="src\GameObject\SpriteAnimationPlayer.h" />
     <ClInclude Include="src\GameObject\Text.h" />
     <ClInclude Include="src\GameObject\TextureManager.h" />
     <ClInclude Include="src\GameObject\Timer.h" />
@@ -211,7 +218,15 @@
     <ClInclude Include="src\GameStates\GSIntro.h" />
     <ClInclude Include="src\GameStates\GSMenu.h" />
     <ClInclude Include="src\GameStates\GSPlay.h" />
+    <ClInclude Include="src\MainSrc\Characters\Character.h" />
+    <ClInclude Include="src\MainSrc\Characters\CharacterAction.h" />
+    <ClInclude Include="src\MainSrc\Characters\CharacterDirection.h" />
+    <ClInclude Include="src\MainSrc\Characters\DirectionGun.h" />
+    <ClInclude Include="src\MainSrc\Characters\KeyDirection.h" />
+    <ClInclude Include="src\MainSrc\Characters\Player.h" />
+    <ClInclude Include="src\MainSrc\Map\Layer.h" />
     <ClInclude Include="src\MainSrc\Map\Map.h" />
+    <ClInclude Include="src\MainSrc\Map\MapLoader.h" />
     <ClInclude Include="src\MainSrc\Map\Pixel.h" />
     <ClInclude Include="src\MainSrc\Map\TileSet.h" />
     <ClInclude Include="src\MainSrc\Map\Tinyxml2\tinyxml2.h" />

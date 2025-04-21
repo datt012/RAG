@@ -12,12 +12,12 @@ private:
 	TTF_Font* m_font;
 	SDL_Color m_color;
 public:
-	Text(std::string text, TTF_Font* font,SDL_Color color);
+	Text(std::string text, TTF_Font* font, SDL_Color color);
 	void		Init();
 	void SetText(std::string text);
-	void		Draw(SDL_Renderer* renderer, SDL_Rect *clip = NULL) ;
-	void		Update(float deltatime) ;
-	void GetTexture();
+	void		Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL);
+	void		Update(float deltatime);
+	void GetTextureText();
 	void SetFont(TTF_Font* font);
 	void SetColor(SDL_Color color);
 

@@ -1,36 +1,43 @@
 ﻿#pragma once
-#include "Pixel.h"
-#include "TileSet.h"
 #include <vector>
 #include <string>
-#include <stdexcept>
+#include <memory>
+#include "Layer.h"
+#include "TileSet.h"
+#include "BaseObject.h"
+#include <SDL.h>
 
-class Map {
-private:
-    int mapColumn;
-    int mapRow;
-    std::vector<TileSet> dsTileSet;
-    std::vector<std::vector<int>> dsData;
-    std::vector<std::string > dsMapPixelType; // type các pixel của layer trên cùng 
-    std::vector<std::vector<Pixel>> dsMapPixel;
-    std::string tmxFilePath;
-
-    bool loadTilesets();
-    bool loadMapData();
-    bool createMapPixel();
-
+class Map : public BaseObject {
 public:
     Map();
     ~Map();
 
-    
-    int getMapColumn() const { return mapColumn; }
-    int getMapRow() const { return mapRow; }
-    const std::vector<TileSet>& getTilesets() const { return dsTileSet; }
-    const std::vector<std::vector<int>>& getMapData() const { return dsData; }
-    const std::vector<std::vector<Pixel>>& getMapPixel() const { return dsMapPixel; }
-    
-    
-    bool init(const std::string& path);
-    bool render(SDL_Renderer* renderer);
+    bool LoadFromFile(const std::string& filePath, SDL_Renderer* renderer);
+
+    void Init() override;
+    void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
+    void Update(float deltaTime) override;
+
+    // Add tilesets and layers
+    void AddTileSet(const TileSet& tileset);
+    void AddLayer(const Layer& layer);
+
+    // Getters
+    const std::vector<TileSet>& GetTileSets() const;
+    const std::vector<Layer>& GetLayers() const;
+    int GetWidth() const;
+    int GetHeight() const;
+
+    // Setters
+    void SetWidth(int width);
+    void SetHeight(int height);
+    void SetFilePath(const std::string& filePath);
+    const std::string& GetFilePath() const;
+
+private:
+    std::string m_FilePath;               // Path to the map file
+    int m_Width;                          // Map width in tiles
+    int m_Height;                         // Map height in tiles
+    std::vector<TileSet> m_TileSets;      // List of tilesets
+    std::vector<Layer> m_Layers;          // List of layers
 };
