@@ -17,10 +17,11 @@ bool Map::LoadFromFile(const std::string& filePath, SDL_Renderer* renderer) {
 
     // Copy data from the loaded map
     m_FilePath = filePath;
-    m_TileSets = loadedMap->GetTileSets();
-    m_Layers = loadedMap->GetLayers();
     m_Width = loadedMap->GetWidth();
     m_Height = loadedMap->GetHeight();
+    m_TileSets = loadedMap->GetTileSets();
+    m_Layers = loadedMap->GetLayers();
+    m_CollisionLayer = loadedMap->GetCollisionLayer();
 
     return true;
 }
@@ -82,4 +83,12 @@ void Map::SetWidth(int width) {
 
 void Map::SetHeight(int height) {
     m_Height = height;
+}
+
+std::shared_ptr<Layer> Map::GetCollisionLayer() const {
+	return m_CollisionLayer;
+}
+
+void Map::SetCollisionLayer(std::shared_ptr<Layer> collisionLayer) {
+	m_CollisionLayer = collisionLayer;
 }

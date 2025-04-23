@@ -7,7 +7,7 @@ GSPlay::~GSPlay() {}
 void GSPlay::Init() {
     // Initialize the map
     m_map = std::make_shared<Map>();
-    if (!m_map->LoadFromFile("Data/Asset/test/main.tmx", Renderer::GetInstance()->GetRenderer())) {
+    if (!m_map->LoadFromFile("Data/Asset/test/main2.tmx", Renderer::GetInstance()->GetRenderer())) {
         printf("Failed to load map!\n");
         return;
     }
@@ -33,7 +33,7 @@ void GSPlay::Init() {
     animation = std::make_shared<SpriteAnimationPlayer>(texture, 9, 8, 0, 0, 30);
     player = std::make_shared<Player>(animation);
     player->SetSize(60, 60);
-    player->Set2DPosition(300, 485);
+    player->Set2DPosition(150, 485);
     m_listPlayer.push_back(player);
 
     // Set up camera
@@ -142,6 +142,8 @@ void GSPlay::Update(float deltaTime) {
     for (auto it : m_listPlayer) {
         it->Update(deltaTime);
     }
+
+	player->CheckCollisionAndResolve(m_map);
 
     // Update camera
     Camera::GetInstance()->Update(deltaTime);
