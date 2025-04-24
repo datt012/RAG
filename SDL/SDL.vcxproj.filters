@@ -34,6 +34,9 @@
     <Filter Include="Source Files\MainSrc\Characters">
       <UniqueIdentifier>{7391be40-89f4-46e5-a4dd-5b6c3289dec9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MainSrc\Collision">
+      <UniqueIdentifier>{4189cfaa-acc2-484d-917e-a66f02c9734d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\Camera.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="src\MainSrc\Map\Layer.cpp">
       <Filter>Source Files\MainSrc\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Collision\Collision.cpp">
+      <Filter>Source Files\MainSrc\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\DirectionGun.h">
       <Filter>Source Files\MainSrc\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Collision\Collision.h">
+      <Filter>Source Files\MainSrc\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
