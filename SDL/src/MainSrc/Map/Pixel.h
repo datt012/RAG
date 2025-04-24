@@ -11,11 +11,13 @@ public:
     Pixel();
     ~Pixel();
 
-    void SetSourceRect(const SDL_Rect& srcRect);
-
     void Init() override;
     void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
     void Update(float deltaTime) override;
+
+    SDL_Rect GetDestRect() const;
+
+    void SetSourceRect(const SDL_Rect& srcRect);
 
 private:
     SDL_Rect m_SrcRect;

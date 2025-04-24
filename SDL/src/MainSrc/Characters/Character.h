@@ -71,8 +71,8 @@ public:
     }
     virtual void    SetVelocityX(float vx) { m_VelocityX = vx; }
     virtual void    SetVelocityY(float vy) { m_VelocityY = vy; }
-    virtual int     GetVelocityX() { return m_VelocityX; }
-    virtual int     GetVelocityY() { return m_VelocityY; }
+    virtual float     GetVelocityX() { return m_VelocityX; }
+    virtual float     GetVelocityY() { return m_VelocityY; }
 
     // Handle input in bitmask format from external class (GSPlay)
     virtual void HandleInput(int keyMask) = 0;
