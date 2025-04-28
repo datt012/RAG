@@ -1,10 +1,20 @@
-#include "GSPlay.h"
+﻿#include "GSPlay.h"
 
 GSPlay::GSPlay() : m_KeyPress(0) {}
 
 GSPlay::~GSPlay() {}
 
 void GSPlay::Init() {
+    // init enemy
+    auto textureEnemy = ResourceManagers::GetInstance()->GetTexture("ARMob.png");
+
+    // Khởi tạo Enemy
+    m_enemy = std::make_shared<Enemy>();
+    m_enemy->SetPosition(Vector2(420, 465));
+    m_enemy->SetFPositon(Vector2(420, 465));
+    m_enemy->Init2(textureEnemy, 0.1f, 0.2f);
+
+
     // Initialize the map
     m_map = std::make_shared<Map>();
     if (!m_map->LoadFromFile("Data/Asset/test/main2.tmx", Renderer::GetInstance()->GetRenderer())) {
@@ -36,6 +46,7 @@ void GSPlay::Init() {
     player->Set2DPosition(150, 485);
     m_listPlayer.push_back(player);
 
+    m_enemy->SetTargetPlayer(player);
     // Set up camera
     Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
     Camera::GetInstance()->SetTarget(player);
@@ -142,6 +153,7 @@ void GSPlay::Update(float deltaTime) {
     for (auto it : m_listPlayer) {
         it->Update(deltaTime);
     }
+    m_enemy->Update(deltaTime);
 
 	player->CheckCollisionAndResolve(m_map);
 
@@ -170,4 +182,5 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
     for (auto it : m_listPlayer) {
         it->Draw(renderer);
     }
+    m_enemy->Draw(renderer);
 }

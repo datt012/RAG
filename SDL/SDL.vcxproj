@@ -188,6 +188,9 @@
     <ClCompile Include="src\MainSrc\Characters\Character.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Player.cpp" />
     <ClCompile Include="src\MainSrc\Collision\Collision.cpp" />
+    <ClCompile Include="src\MainSrc\Entities\Enemy.cpp" />
+    <ClCompile Include="src\MainSrc\Entities\ExplosiveBullet .cpp" />
+    <ClCompile Include="src\MainSrc\Entities\SpriteEnemy.cpp" />
     <ClCompile Include="src\MainSrc\Map\Layer.cpp" />
     <ClCompile Include="src\MainSrc\Map\Map.cpp" />
     <ClCompile Include="src\MainSrc\Map\MapLoader.cpp" />
@@ -226,6 +229,9 @@
     <ClInclude Include="src\MainSrc\Characters\KeyDirection.h" />
     <ClInclude Include="src\MainSrc\Characters\Player.h" />
     <ClInclude Include="src\MainSrc\Collision\Collision.h" />
+    <ClInclude Include="src\MainSrc\Entities\Enemy.h" />
+    <ClInclude Include="src\MainSrc\Entities\ExplosiveBullet .h" />
+    <ClInclude Include="src\MainSrc\Entities\SpriteEnemy.h" />
     <ClInclude Include="src\MainSrc\Map\Layer.h" />
     <ClInclude Include="src\MainSrc\Map\Map.h" />
     <ClInclude Include="src\MainSrc\Map\MapLoader.h" />
