@@ -257,28 +257,49 @@ void Player::UpdateAnimation(float deltaTime)
 	}
 }
 
-bool Player::CheckCollisionAndResolve(std::shared_ptr<Map> map)
+void Player::SolveCollision(std::shared_ptr<Map> map)
 {
-	bool res = false;
-	bool isOnGround = false;
+	SDL_Rect playerRect;
 
+	// Let the player in map
 	m_animationPlayer->Set2DPosition(
 		std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().x), map->GetWidth() - GetWidth() * 1.0f),
 		std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().y), map->GetHeight() - GetHeight() * 1.0f)
 	);
 	m_position = m_animationPlayer->GetPosition();
 
-	SDL_Rect playerRect = {
-		static_cast<int>(m_position.x),
-		static_cast<int>(m_position.y),
-		GetWidth(),
-		GetHeight()
-	};
-
-	if (!map) return false;
-
+	if (!map) return;
 	auto layer = map->GetCollisionLayer();
-	if (!layer) return false;
+	if (!layer) return;
+
+	// Check collision with the map
+	std::vector<SDL_Rect> obstacles = std::vector<SDL_Rect>();
+	playerRect = {
+			static_cast<int>(m_position.x),
+			static_cast<int>(m_position.y),
+			GetWidth(),
+			GetHeight()
+	};
+	for (Pixel& pixel : layer->GetPixels()) {
+		SDL_Rect pixelRect = {
+			static_cast<int>(pixel.GetPosition().x),
+			static_cast<int>(pixel.GetPosition().y),
+			PIXEL_WIDTH,
+			PIXEL_HEIGHT
+		};
+		obstacles.push_back(pixelRect);
+	}
+	if (Collision::CheckAABB(playerRect, obstacles)) {
+		Vector2 push = Collision::GetPushVector(playerRect, obstacles, Vector2(m_VelocityX, m_VelocityY));
+		m_position.x += push.x;
+		m_position.y += push.y;
+		m_VelocityX += push.x;
+		m_VelocityY += push.y;
+		m_animationPlayer->Set2DPosition(m_position.x, m_position.y);
+	}
+
+	// Check if the player is on the ground
+	bool isOnGround = false;
 
 	for (Pixel& pixel : layer->GetPixels()) {
 		SDL_Rect pixelRect = {
@@ -288,25 +309,18 @@ bool Player::CheckCollisionAndResolve(std::shared_ptr<Map> map)
 			PIXEL_HEIGHT
 		};
 
-		if (Collision::CheckAABB(playerRect, pixelRect)) {
-			SDL_Point push = Collision::GetPushVector(playerRect, pixelRect);
-			m_position.x += push.x;
-			m_position.y += push.y;
-			m_animationPlayer->Set2DPosition(m_position.x, m_position.y);
-			playerRect = {
-				static_cast<int>(m_position.x),
-				static_cast<int>(m_position.y),
-				GetWidth(),
-				GetHeight()
-			};
+		playerRect = {
+		static_cast<int>(m_position.x),
+		static_cast<int>(m_position.y),
+		GetWidth(),
+		GetHeight()
+		};
 
-			if (Collision::IsOnGround(playerRect, pixelRect)) {
-				isOnGround = true;
-			}
-
-			res = true;
+		if (Collision::IsOnGround(playerRect, pixelRect)) {
+			isOnGround = true;
 		}
 	}
+
 	if (isOnGround) {
 		m_VelocityY = 0;
 		m_IsJumping = false;
@@ -316,12 +330,35 @@ bool Player::CheckCollisionAndResolve(std::shared_ptr<Map> map)
 		m_IsJumping = true;
 		//m_CurrentAction = FALL;
 	}
-
-	return res;
 }
 
 void Player::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 {
-	printf("Player velocity: %f, %f\n", m_VelocityX, m_VelocityY);
 	m_animationPlayer->Draw(renderer, clip);
+
+	// Get the bounding box of the player
+	SDL_Rect playerRect = {
+		static_cast<int>(m_position.x),
+		static_cast<int>(m_position.y),
+		GetWidth(),
+		GetHeight()
+	};
+
+	// Set color (eg: red)
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+	// Position draw
+	SDL_Rect drawRect = {
+		playerRect.x - Camera::GetInstance()->GetPosition().x,
+		playerRect.y - Camera::GetInstance()->GetPosition().y,
+		playerRect.w,
+		playerRect.h
+	};
+
+	// Draw the bounding box
+	SDL_RenderDrawRect(renderer, &drawRect);
+
+	// Reset color to default (eg: black)
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
 }

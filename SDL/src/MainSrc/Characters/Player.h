@@ -20,5 +20,5 @@ public:
 
 	void HandleInput(int keyMask) override;
 
-	bool CheckCollisionAndResolve(std::shared_ptr<Map> map);
+	void SolveCollision(std::shared_ptr<Map> map);
 };

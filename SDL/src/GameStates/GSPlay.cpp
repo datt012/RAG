@@ -143,7 +143,7 @@ void GSPlay::Update(float deltaTime) {
         it->Update(deltaTime);
     }
 
-	player->CheckCollisionAndResolve(m_map);
+	player->SolveCollision(m_map);
 
     // Update camera
     Camera::GetInstance()->Update(deltaTime);
