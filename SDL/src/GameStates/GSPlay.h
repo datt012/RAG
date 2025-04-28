@@ -10,7 +10,7 @@
 #include "Sound.h"
 #include "MainSrc/Characters/Player.h"
 #include "MainSrc/Characters/KeyDirection.h"
-
+#include "MainSrc/Entities/Enemy.h"
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
@@ -45,6 +45,8 @@ private:
     std::list<std::shared_ptr<MouseButton>> m_listButton;
     std::list<std::shared_ptr<SpriteAnimation>> m_listAnimation;
     std::list<std::shared_ptr<Player>> m_listPlayer;
+
+    std::shared_ptr<Enemy> m_enemy;
 
     int m_KeyPress;
     float time = 0.0f;

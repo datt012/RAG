@@ -37,6 +37,9 @@
     <Filter Include="Source Files\MainSrc\Collision">
       <UniqueIdentifier>{4189cfaa-acc2-484d-917e-a66f02c9734d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MainSrc\Entities">
+      <UniqueIdentifier>{e9e9961b-5512-40c0-8ef8-909f84bd28da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\Camera.cpp">
@@ -122,6 +125,15 @@
     </ClCompile>
     <ClCompile Include="src\MainSrc\Collision\Collision.cpp">
       <Filter>Source Files\MainSrc\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Entities\Enemy.cpp">
+      <Filter>Source Files\MainSrc\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Entities\ExplosiveBullet .cpp">
+      <Filter>Source Files\MainSrc\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Entities\SpriteEnemy.cpp">
+      <Filter>Source Files\MainSrc\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +244,15 @@
     </ClInclude>
     <ClInclude Include="src\MainSrc\Collision\Collision.h">
       <Filter>Source Files\MainSrc\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Entities\Enemy.h">
+      <Filter>Source Files\MainSrc\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Entities\ExplosiveBullet .h">
+      <Filter>Source Files\MainSrc\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Entities\SpriteEnemy.h">
+      <Filter>Source Files\MainSrc\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
