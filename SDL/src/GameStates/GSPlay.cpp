@@ -29,8 +29,8 @@ void GSPlay::Init() {
     m_listButton.push_back(button);
 
     // Initialize player
-    texture = ResourceManagers::GetInstance()->GetTexture("SpriteSheet_player_9_8.png");
-    animation = std::make_shared<SpriteAnimationPlayer>(texture, 9, 8, 0, 0, 30);
+    texture = ResourceManagers::GetInstance()->GetTexture("SpriteSheet_player_12_8.png");
+    animation = std::make_shared<SpriteAnimationPlayer>(texture, 12, 8, 0, 0, 30);
     player = std::make_shared<Player>(animation);
     player->SetSize(60, 60);
     player->Set2DPosition(150, 485);

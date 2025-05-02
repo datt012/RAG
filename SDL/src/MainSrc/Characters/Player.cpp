@@ -3,6 +3,49 @@
 #include <algorithm>
 #include <MainSrc/Collision/Collision.h>
 
+const std::unordered_map<AnimationKey, std::pair<int, int>> Player::s_AnimationMap = {
+	{{true, false, DirectionGun::NONE}, {0, 5}},
+	{{true, false, DirectionGun::LEFT}, {6, 13}},
+	{{true, false, DirectionGun::RIGHT}, {6, 13}},
+	{{true, false, DirectionGun::UP}, {21, 21}},
+	{{true, false, DirectionGun::DOWN}, {14, 14}},
+	{{true, false, DirectionGun::LEFT_UP}, {56, 63}},		// NEED EDIT
+	{{true, false, DirectionGun::RIGHT_UP}, {56, 63}},		// NEED EDIT
+	{{true, false, DirectionGun::LEFT_DOWN}, {64, 71}},		// NEED EDIT
+	{{true, false, DirectionGun::RIGHT_DOWN}, {64, 71}},	// NEED EDIT
+
+	{{true, true, DirectionGun::NONE}, {18, 19}},
+	{{true, true, DirectionGun::LEFT}, {24, 31}},
+	{{true, true, DirectionGun::RIGHT}, {24, 31}},
+	{{true, true, DirectionGun::UP}, {20, 21}},
+	{{true, true, DirectionGun::DOWN}, {22, 23}},
+	{{true, true, DirectionGun::LEFT_UP}, {72, 79}},		// NEED EDIT
+	{{true, true, DirectionGun::RIGHT_UP}, {72, 79}},		// NEED EDIT
+	{{true, true, DirectionGun::LEFT_DOWN}, {80, 87}},		// NEED EDIT
+	{{true, true, DirectionGun::RIGHT_DOWN}, {80, 87}},		// NEED EDIT
+
+	{{false, false, DirectionGun::NONE}, {15, 15}},
+	{{false, false, DirectionGun::LEFT}, {15, 15}},
+	{{false, false, DirectionGun::RIGHT}, {15, 15}},
+	{{false, false, DirectionGun::UP}, {17, 17}},
+	{{false, false, DirectionGun::DOWN}, {16, 16}},
+	{{false, false, DirectionGun::LEFT_UP}, {51, 51}},		// NEED EDIT
+	{{false, false, DirectionGun::RIGHT_UP}, {51, 51}},		// NEED EDIT
+	{{false, false, DirectionGun::LEFT_DOWN}, {88, 88}},	// NEED EDIT
+	{{false, false, DirectionGun::RIGHT_DOWN}, {88, 88}},	// NEED EDIT
+
+	{{false, true, DirectionGun::NONE}, {40, 41}},
+	{{false, true, DirectionGun::LEFT}, {40, 41}},
+	{{false, true, DirectionGun::RIGHT}, {40, 41}},
+	{{false, true, DirectionGun::UP}, {42, 43}},
+	{{false, true, DirectionGun::DOWN}, {44, 45}},
+	{{false, true, DirectionGun::LEFT_UP}, {52, 53}},		// NEED EDIT
+	{{false, true, DirectionGun::RIGHT_UP}, {52, 53}},		// NEED EDIT
+	{{false, true, DirectionGun::LEFT_DOWN}, {54, 55}},		// NEED EDIT
+	{{false, true, DirectionGun::RIGHT_DOWN}, {54, 55}},	// NEED EDIT
+	// ...
+};
+
 Player::Player(std::shared_ptr<SpriteAnimationPlayer> sprite) :
 	Character(sprite)
 {
@@ -22,341 +65,66 @@ void Player::Init()
 	//m_animationPlayer->SetFlip(SDL_FLIP_NONE); // Set flip
 }
 
-void Player::SetCurrentAction(Action action)
-{
-	if (m_CurrentAction != FALL)
-	{
-		m_CurrentAction = action;
-	}
-}
-
 void Player::HandleInput(int keyMask)
 {
-	// Handle input for movement
-	if ((keyMask & KEY_LEFT) && (keyMask & KEY_RIGHT) == false)
+	m_IsShooting = keyMask & KEY_SHOOT;
+	m_CurrentDirectionGun = DirectionGun::FromKeyMask(keyMask);
+	printf("Direction Gun: %s\n", m_CurrentDirectionGun.to_string());
+
+	SetFlip(
+		m_CurrentDirectionGun & DirectionGun::LEFT ? SDL_FLIP_HORIZONTAL :
+		m_CurrentDirectionGun & DirectionGun::RIGHT ? SDL_FLIP_NONE : m_flip
+	);
+	
+	m_Velocity.x = 
+		m_CurrentDirectionGun & DirectionGun::LEFT ? -m_Speed :
+		m_CurrentDirectionGun & DirectionGun::RIGHT ? m_Speed : 0;
+
+	if ((keyMask & KEY_JUMP) && m_IsOnGround)
 	{
-		m_Facing = LEFT;
-		m_CurrentDirectionGun = DIR_HORIZONTAL;
-		this->SetCurrentAction(RUN);
-
-		m_VelocityX = -m_Speed;
-	}
-	if ((keyMask & KEY_RIGHT) && (keyMask & KEY_LEFT) == false)
-	{
-		m_Facing = RIGHT;
-		m_CurrentDirectionGun = DIR_HORIZONTAL;
-		this->SetCurrentAction(RUN);
-
-		m_VelocityX = m_Speed;
-	}
-	if ((keyMask & KEY_RIGHT) == false && (keyMask & KEY_LEFT) == false)
-	{
-		m_CurrentDirectionGun = DIR_HORIZONTAL;
-
-		m_VelocityX = 0;
-	}
-
-
-	if ((keyMask & KEY_UP))
-	{
-		this->SetCurrentAction(IDLE);
-		m_CurrentDirectionGun = DIR_UP;
-	}
-	if ((keyMask & KEY_UP) && ((keyMask & KEY_LEFT) ^ (keyMask & KEY_RIGHT)))
-	{
-		this->SetCurrentAction(RUN);
-		m_CurrentDirectionGun = DIR_DIAGONAL_UP;
-	}
-
-	if ((keyMask & KEY_DOWN))
-	{
-		this->SetCurrentAction(CROUCH);
-		m_CurrentDirectionGun = DIR_HORIZONTAL;
-	}
-
-	if ((keyMask & KEY_DOWN) && ((keyMask & KEY_LEFT) ^ (keyMask & KEY_RIGHT)))
-	{
-		this->SetCurrentAction(RUN);
-		m_CurrentDirectionGun = DIR_DIAGONAL_DOWN;
-	}
-
-	if (keyMask & KEY_JUMP)
-	{
-		if (m_CurrentAction != FALL && !m_IsJumping)
-		{
-			m_CurrentAction = FALL;
-			m_CurrentDirectionGun = DIR_HORIZONTAL;
-
-			m_VelocityY = -m_JumpForce;
-			m_IsJumping = true;
-		}
-	}
-
-	if (keyMask & KEY_SHOOT)
-	{
-		m_IsShooting = true;
-	}
-	else
-	{
-		m_IsShooting = false;
-	}
-
-	if ((keyMask & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT)) == false)
-	{
-		this->SetCurrentAction(IDLE);
-		//m_CurrentDirectionGun = DIR_HORIZONTAL;
-
-		//if (m_CurrentAction != FALL)
-		//{
-		//	m_VelocityX = 0;
-		//	m_VelocityY = 0;
-		//}
+		m_Velocity.y = -m_JumpForce;
 	}
 }
 
 void Player::Update(float deltatime)
 {
-	this->ApplyMovement(deltatime);
-	this->UpdateAnimation(deltatime);
+	m_Velocity.y += m_IsOnGround ? 0 : (m_Gravity * deltatime);
+
+	m_Velocity.x = m_Velocity.x * 0.98f;
+	m_Velocity.y = m_Velocity.y * 0.98f;
+
+	Vector2 position = Get2DPosition();
+	position.x += m_Velocity.x * deltatime;
+	position.y += m_Velocity.y * deltatime;
+	Set2DPosition(position.x, position.y);
 
 	m_animationPlayer->Update(deltatime);
-	//m_animationPlayer->Set2DPosition(
-	//	std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().x), SCREEN_WIDTH * 1.0f),
-	//	std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().y), SCREEN_HEIDHT * 1.0f)
-	//);
-	m_position = m_animationPlayer->GetPosition();
-}
-
-void Player::ApplyMovement(float deltaTime)
-{
-	Vector2 position = m_animationPlayer->Get2DPosition();
-	position.x += m_VelocityX * deltaTime;
-	position.y += m_VelocityY * deltaTime;
-
-	m_animationPlayer->Set2DPosition(position.x, position.y);
-
-	m_VelocityY += m_Gravity * deltaTime;
-	m_VelocityX = m_VelocityX * 0.98f;
-	m_VelocityY = m_VelocityY * 0.98f;
-}
-
-void Player::UpdateAnimation(float deltaTime)
-{
-	// Facing direction
-	if (m_Facing == LEFT)
-	{
-		this->SetFlip(SDL_FLIP_HORIZONTAL);
-	}
-	else
-	{
-		this->SetFlip(SDL_FLIP_NONE);
-	}
-
-	// IDLE
-	if (m_CurrentAction == IDLE && m_CurrentDirectionGun == DIR_HORIZONTAL)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(18, 19);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(0, 5);
-		}
-	}
-
-	// GUN UP
-	if (m_CurrentAction == IDLE && m_CurrentDirectionGun == DIR_UP)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(20, 21);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(21, 21);
-		}
-	}
-
-	// RUN
-	if (m_CurrentAction == RUN && m_CurrentDirectionGun == DIR_HORIZONTAL)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(24, 31);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(6, 13);
-		}
-	}
-
-	// RUN with DIR_DIAGONAL_UP
-	if (m_CurrentAction == RUN && m_CurrentDirectionGun == DIR_DIAGONAL_UP)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(56, 63);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(6, 13);
-		}
-	}
-
-	// CROUCH
-	if (m_CurrentAction == CROUCH && m_CurrentDirectionGun == DIR_HORIZONTAL)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(22, 23);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(14, 14);
-		}
-	}
-
-	// RUN (CROUCH) with DIR_DIAGONAL_DOWN
-	if (m_CurrentAction == RUN && m_CurrentDirectionGun == DIR_DIAGONAL_DOWN)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(64, 71);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(6, 13);
-		}
-	}
-
-	// FALL
-	if (m_CurrentAction == FALL)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(32, 33);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(34, 35);
-		}
-	}
-
-	// JUMP
-	if (m_CurrentAction == FALL && m_IsJumping)
-	{
-		if (m_IsShooting)
-		{
-			m_animationPlayer->SetFrame(40, 41);
-		}
-		else
-		{
-			m_animationPlayer->SetFrame(15, 15);
-		}
-	}
-}
-
-void Player::SolveCollision(std::shared_ptr<Map> map)
-{
-	SDL_Rect playerRect;
-
-	// Let the player in map
-	m_animationPlayer->Set2DPosition(
-		std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().x), map->GetWidth() - GetWidth() * 1.0f),
-		std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().y), map->GetHeight() - GetHeight() * 1.0f)
-	);
-	m_position = m_animationPlayer->GetPosition();
-
-	if (!map) return;
-	auto layer = map->GetCollisionLayer();
-	if (!layer) return;
-
-	// Check collision with the map
-	std::vector<SDL_Rect> obstacles = std::vector<SDL_Rect>();
-	playerRect = {
-			static_cast<int>(m_position.x),
-			static_cast<int>(m_position.y),
-			GetWidth(),
-			GetHeight()
-	};
-	for (Pixel& pixel : layer->GetPixels()) {
-		SDL_Rect pixelRect = {
-			static_cast<int>(pixel.GetPosition().x),
-			static_cast<int>(pixel.GetPosition().y),
-			PIXEL_WIDTH,
-			PIXEL_HEIGHT
-		};
-		obstacles.push_back(pixelRect);
-	}
-	if (Collision::CheckAABB(playerRect, obstacles)) {
-		Vector2 push = Collision::GetPushVector(playerRect, obstacles, Vector2(m_VelocityX, m_VelocityY));
-		m_position.x += push.x;
-		m_position.y += push.y;
-		m_VelocityX += push.x;
-		m_VelocityY += push.y;
-		m_animationPlayer->Set2DPosition(m_position.x, m_position.y);
-	}
-
-	// Check if the player is on the ground
-	bool isOnGround = false;
-
-	for (Pixel& pixel : layer->GetPixels()) {
-		SDL_Rect pixelRect = {
-			static_cast<int>(pixel.GetPosition().x),
-			static_cast<int>(pixel.GetPosition().y),
-			PIXEL_WIDTH,
-			PIXEL_HEIGHT
-		};
-
-		playerRect = {
-		static_cast<int>(m_position.x),
-		static_cast<int>(m_position.y),
-		GetWidth(),
-		GetHeight()
-		};
-
-		if (Collision::IsOnGround(playerRect, pixelRect)) {
-			isOnGround = true;
-		}
-	}
-
-	if (isOnGround) {
-		m_VelocityY = 0;
-		m_IsJumping = false;
-		m_CurrentAction = IDLE;
-	}
-	else {
-		m_IsJumping = true;
-		//m_CurrentAction = FALL;
-	}
 }
 
 void Player::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 {
+
+	AnimationKey key{ m_IsOnGround, m_IsShooting, m_CurrentDirectionGun };
+
+	auto it = s_AnimationMap.find(key);
+	if (it != s_AnimationMap.end())
+	{
+		m_animationPlayer->SetFrame(it->second.first, it->second.second);
+	}
+
 	m_animationPlayer->Draw(renderer, clip);
 
-	// Get the bounding box of the player
-	SDL_Rect playerRect = {
-		static_cast<int>(m_position.x),
-		static_cast<int>(m_position.y),
-		GetWidth(),
-		GetHeight()
-	};
+	m_Displacement = { 0, 0 };
 
 	// Set color (eg: red)
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-	// Position draw
-	SDL_Rect drawRect = {
-		playerRect.x - Camera::GetInstance()->GetPosition().x,
-		playerRect.y - Camera::GetInstance()->GetPosition().y,
-		playerRect.w,
-		playerRect.h
-	};
+	SDL_Rect colliderRect = GetColliderRect();
+	colliderRect.x -= Camera::GetInstance()->GetPosition().x;
+	colliderRect.y -= Camera::GetInstance()->GetPosition().y;
 
 	// Draw the bounding box
-	SDL_RenderDrawRect(renderer, &drawRect);
+	SDL_RenderDrawRect(renderer, &colliderRect);
 
 	// Reset color to default (eg: black)
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

@@ -19,6 +19,9 @@ public:
 
     void SetSourceRect(const SDL_Rect& srcRect);
 
+    SDL_Rect GetRectBox();
+    SDL_FRect GetFRectBox();
+
 private:
     SDL_Rect m_SrcRect;
     SDL_Rect m_DestRect;

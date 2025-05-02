@@ -4,9 +4,104 @@ bool Collision::CheckAABB(const SDL_Rect& a, const SDL_Rect& b) {
     return SDL_HasIntersection(&a, &b);
 }
 
+bool Collision::CheckAABB(const SDL_FRect& a, const SDL_Rect& b) {
+    SDL_FRect f_b = {
+        static_cast<float>(b.x),
+        static_cast<float>(b.y),
+        static_cast<float>(b.w),
+        static_cast<float>(b.h)
+    };
+
+    return CheckAABB(a, f_b);
+}
+
+bool Collision::CheckAABB(const SDL_Rect& a, const SDL_FRect& b) {
+    SDL_FRect f_a = {
+        static_cast<float>(a.x),
+        static_cast<float>(a.y),
+        static_cast<float>(a.w),
+        static_cast<float>(a.h)
+    };
+
+    return CheckAABB(f_a, b);
+}
+
+bool Collision::CheckAABB(const SDL_FRect& a, const SDL_FRect& b) {
+    float left = std::max(a.x, b.x);
+    float right = std::min(a.x + a.w, b.x + b.w);
+    float top = std::max(a.y, b.y);
+    float bottom = std::min(a.y + a.h, b.y + b.h);
+
+    bool overlap_x = left < right;
+    bool overlap_y = top < bottom;
+
+    return overlap_x && overlap_y;
+}
+
 bool Collision::CheckAABB(const SDL_Rect& a, const std::vector<SDL_Rect>& others) {
     for (const auto& b : others) {
-        if (SDL_HasIntersection(&a, &b)) return true;
+        if (CheckAABB(a, b)) return true;
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_FRect& a, const std::vector<SDL_Rect>& others) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) return true;
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_Rect& a, const std::vector<SDL_FRect>& others) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) return true;
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_FRect& a, const std::vector<SDL_FRect>& others) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) return true;
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_Rect& a, const std::vector<SDL_Rect>& others, SDL_Rect& collidedRect) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) {
+            collidedRect = b;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_FRect& a, const std::vector<SDL_Rect>& others, SDL_Rect& collidedRect) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) {
+            collidedRect = b;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_Rect& a, const std::vector<SDL_FRect>& others, SDL_FRect& collidedRect) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) {
+            collidedRect = b;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Collision::CheckAABB(const SDL_FRect& a, const std::vector<SDL_FRect>& others, SDL_FRect& collidedRect) {
+    for (const auto& b : others) {
+        if (CheckAABB(a, b)) {
+            collidedRect = b;
+            return true;
+        }
     }
     return false;
 }
@@ -31,7 +126,7 @@ Vector2 Collision::GetPushVector(const SDL_Rect& moving, const SDL_Rect& obstacl
     return push;
 }
 
-Vector2 Collision::GetPushVector(const SDL_Rect& moving, const SDL_Rect& obstacle, const Vector2& velocity) {
+Vector2 Collision::GetPushVector(const SDL_Rect& moving, const SDL_Rect& obstacle, Vector2 displacement) {
     Vector2 push(0, 0);
 
     int dx1 = obstacle.x + obstacle.w - moving.x;     // from right
@@ -39,23 +134,23 @@ Vector2 Collision::GetPushVector(const SDL_Rect& moving, const SDL_Rect& obstacl
     int dy1 = obstacle.y + obstacle.h - moving.y;     // from bottom
     int dy2 = moving.y + moving.h - obstacle.y;       // from top
 
-    if (velocity.x < 0) {
+    if (displacement.x < 0) {
         push.x = dx1;  // from right
     }
-    else if (velocity.x > 0) {
+    else if (displacement.x > 0) {
         push.x = -dx2; // from left
     }
 
-    if (velocity.y < 0) {
+    if (displacement.y < 0) {
         push.y = dy1;  // from bottom
     }
-    else if (velocity.y > 0) {
+    else if (displacement.y > 0) {
         push.y = -dy2; // from top
     }
 
     Vector2 step;
-    step.x = (abs(push.x) + abs(velocity.x)) / abs(velocity.x);
-    step.y = (abs(push.y) + abs(velocity.y)) / abs(velocity.y);
+    step.x = (abs(push.x) + abs(displacement.x)) / abs(displacement.x);
+    step.y = (abs(push.y) + abs(displacement.y)) / abs(displacement.y);
      
     if (step.x < step.y) {
         push.y = 0;
@@ -67,47 +162,142 @@ Vector2 Collision::GetPushVector(const SDL_Rect& moving, const SDL_Rect& obstacl
     return push;
 }
 
-Vector2 Collision::GetPushVector(const SDL_Rect& moving, const std::vector<SDL_Rect>& obstacles, const Vector2& velocity) {
-    SDL_Rect rect = { moving.x - velocity.x, moving.y - velocity.y, moving.w, moving.h };
-    float x_step = velocity.x / std::min(abs(velocity.x), abs(velocity.y));
-    float y_step = velocity.y / std::min(abs(velocity.x), abs(velocity.y));
+Vector2 Collision::GetPushVector(const SDL_Rect& moving, const std::vector<SDL_Rect>& obstacles, Vector2 displacement) {
+    SDL_Rect rect = { moving.x - displacement.x, moving.y - displacement.y, moving.w, moving.h };
+    SDL_Rect collidedRect;
+    const float moveStep = 4.0f;
+    const float total = displacement.Length();
+    const int steps = ceil(total / moveStep);
+    float stepX = displacement.x / steps;
+    float stepY = displacement.y / steps;
 
-    bool x_increase = x_step;
-    bool y_increase = y_step;
-
-    while ((x_increase || y_increase) && rect.x * (velocity.x > 0 ? 1 : -1) < moving.x * (velocity.x > 0 ? 1 : -1) &&
-        rect.y * (velocity.y > 0 ? 1 : -1) < moving.y * (velocity.y > 0 ? 1 : -1)) {
-
-        if (x_increase) {
-            rect.x += x_step;
-            if (CheckAABB(rect, obstacles)) {
-                x_increase = false;
-                rect.x -= x_step;
-            }
+    for (int i = 0; i < steps; ++i) {
+        rect.x += static_cast<int>(stepX);
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int leftSide = collidedRect.x - rect.w;
+            int rightSide = collidedRect.x + collidedRect.w;
+            rect.x = stepX > 0 ? leftSide : rightSide;
+            stepX = 0; 
         }
-
-        if (y_increase) {
-            rect.y += y_step;
-            if (CheckAABB(rect, obstacles)) {
-                y_increase = false;
-                rect.y -= y_step;
-            }
+        rect.y += static_cast<int>(stepY);
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int topSide = collidedRect.y - rect.h;
+            int bottomSide = collidedRect.y + collidedRect.h;
+            rect.y = stepY > 0 ? topSide : bottomSide;
+            stepY = 0;
         }
     }
 
-    if (rect.x == moving.x) {
-        rect.x -= x_step;
+    return {static_cast<float>(rect.x - moving.x), static_cast<float>(rect.y - moving.y)};
+}
+
+Vector2 Collision::GetPushVector(const SDL_FRect& moving, const std::vector<SDL_Rect>& obstacles, Vector2 displacement) {
+    SDL_FRect rect = { moving.x - displacement.x, moving.y - displacement.y, moving.w, moving.h };
+    SDL_Rect collidedRect;
+    const float moveStep = 4.0f;
+    const float total = displacement.Length();
+    const int steps = ceil(total / moveStep);
+    float stepX = displacement.x / steps;
+    float stepY = displacement.y / steps;
+
+    for (int i = 0; i < steps; ++i) {
+        rect.x += stepX;
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int leftSide = collidedRect.x - rect.w;
+            int rightSide = collidedRect.x + collidedRect.w;
+            rect.x = stepX > 0 ? leftSide : rightSide;
+            stepX = 0;
+        }
+        rect.y += stepY;
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int topSide = collidedRect.y - rect.h;
+            int bottomSide = collidedRect.y + collidedRect.h;
+            rect.y = stepY > 0 ? topSide : bottomSide;
+            stepY = 0;
+        }
     }
 
-    if (rect.y == moving.y) {
-        rect.y -= y_step;
+    return { static_cast<float>(rect.x - moving.x), static_cast<float>(rect.y - moving.y) };
+}
+
+Vector2 Collision::GetPushVector(const SDL_Rect& moving, const std::vector<SDL_FRect>& obstacles, Vector2 displacement) {
+    SDL_Rect rect = { moving.x - displacement.x, moving.y - displacement.y, moving.w, moving.h };
+    SDL_FRect collidedRect;
+    const float moveStep = 4.0f;
+    const float total = displacement.Length();
+    const int steps = ceil(total / moveStep);
+    float stepX = displacement.x / steps;
+    float stepY = displacement.y / steps;
+
+    for (int i = 0; i < steps; ++i) {
+        rect.x += static_cast<int>(stepX);
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int leftSide = collidedRect.x - rect.w;
+            int rightSide = collidedRect.x + collidedRect.w;
+            rect.x = stepX > 0 ? leftSide : rightSide;
+            stepX = 0;
+        }
+        rect.y += static_cast<int>(stepY);
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int topSide = collidedRect.y - rect.h;
+            int bottomSide = collidedRect.y + collidedRect.h;
+            rect.y = stepY > 0 ? topSide : bottomSide;
+            stepY = 0;
+        }
     }
 
-    return Vector2(rect.x - moving.x, rect.y - moving.y);
+    return { static_cast<float>(rect.x - moving.x), static_cast<float>(rect.y - moving.y) };
+}
+
+Vector2 Collision::GetPushVector(const SDL_FRect& moving, const std::vector<SDL_FRect>& obstacles, Vector2 displacement) {
+    SDL_FRect rect = { moving.x - displacement.x, moving.y - displacement.y, moving.w, moving.h };
+    SDL_FRect collidedRect;
+    const float moveStep = 4.0f;
+    const float total = displacement.Length();
+    const int steps = ceil(total / moveStep);
+    float stepX = displacement.x / steps;
+    float stepY = displacement.y / steps;
+
+    for (int i = 0; i < steps; ++i) {
+        rect.x += stepX;
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int leftSide = collidedRect.x - rect.w;
+            int rightSide = collidedRect.x + collidedRect.w;
+            rect.x = stepX > 0 ? leftSide : rightSide;
+            stepX = 0;
+        }
+        rect.y += stepY;
+        if (CheckAABB(rect, obstacles, collidedRect)) {
+            int topSide = collidedRect.y - rect.h;
+            int bottomSide = collidedRect.y + collidedRect.h;
+            rect.y = stepY > 0 ? topSide : bottomSide;
+            stepY = 0;
+        }
+    }
+
+    return { static_cast<float>(rect.x - moving.x), static_cast<float>(rect.y - moving.y) };
 }
 
 bool Collision::IsOnGround(const SDL_Rect& player, const SDL_Rect& tile) {
-    int threshold = 2;
+    float threshold = 1;
+    return (player.y + player.h <= tile.y + threshold && player.y + player.h >= tile.y - threshold) &&
+        (player.x + player.w > tile.x && player.x < tile.x + tile.w);
+}
+
+bool Collision::IsOnGround(const SDL_FRect& player, const SDL_Rect& tile) {
+    float threshold = 1;
+    return (player.y + player.h <= tile.y + threshold && player.y + player.h >= tile.y - threshold) &&
+        (player.x + player.w > tile.x && player.x < tile.x + tile.w);
+}
+
+bool Collision::IsOnGround(const SDL_Rect& player, const SDL_FRect& tile) {
+    float threshold = 1;
+    return (player.y + player.h <= tile.y + threshold && player.y + player.h >= tile.y - threshold) &&
+        (player.x + player.w > tile.x && player.x < tile.x + tile.w);
+}
+
+bool Collision::IsOnGround(const SDL_FRect& player, const SDL_FRect& tile) {
+    float threshold = 1;
     return (player.y + player.h <= tile.y + threshold && player.y + player.h >= tile.y - threshold) &&
         (player.x + player.w > tile.x && player.x < tile.x + tile.w);
 }

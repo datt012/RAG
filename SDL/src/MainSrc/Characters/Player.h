@@ -1,15 +1,11 @@
 #pragma once
-#include "Character.h"
 #include <MainSrc/Map/Map.h>
+#include <unordered_map>
+#include "Character.h"
+#include "AnimationKey.h"
 
 class Player : public Character
 {
-protected:
-	void SetCurrentAction(Action action);
-
-	void ApplyMovement(float deltaTime) override;
-	void UpdateAnimation(float deltaTime) override;
-
 public:
 	Player(std::shared_ptr<SpriteAnimationPlayer> sprite);
 	~Player();
@@ -20,5 +16,6 @@ public:
 
 	void HandleInput(int keyMask) override;
 
-	void SolveCollision(std::shared_ptr<Map> map);
+private:
+	static const std::unordered_map<AnimationKey, std::pair<int, int>> s_AnimationMap;
 };
