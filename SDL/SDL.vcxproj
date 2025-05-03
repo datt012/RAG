@@ -187,7 +187,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Character.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Player.cpp" />
-    <ClCompile Include="src\MainSrc\Collision\Collision.cpp" />
+    <ClCompile Include="src\MainSrc\Entities\Laser.cpp" />
     <ClCompile Include="src\MainSrc\Entities\Enemy.cpp" />
     <ClCompile Include="src\MainSrc\Entities\ExplosiveBullet .cpp" />
     <ClCompile Include="src\MainSrc\Entities\SpriteEnemy.cpp" />
@@ -228,7 +228,7 @@
     <ClInclude Include="src\MainSrc\Characters\DirectionGun.h" />
     <ClInclude Include="src\MainSrc\Characters\KeyDirection.h" />
     <ClInclude Include="src\MainSrc\Characters\Player.h" />
-    <ClInclude Include="src\MainSrc\Collision\Collision.h" />
+    <ClInclude Include="src\MainSrc\Entities\Laser.h" />
     <ClInclude Include="src\MainSrc\Entities\Enemy.h" />
     <ClInclude Include="src\MainSrc\Entities\ExplosiveBullet .h" />
     <ClInclude Include="src\MainSrc\Entities\SpriteEnemy.h" />

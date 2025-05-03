@@ -21,7 +21,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const std::string& filePath) {
         return nullptr;
     }
 
-    std::shared_ptr<Map> map = std::make_shared<Map>();
+    auto map = std::make_shared<Map>();
     map->SetFilePath(filePath);
 
     // Read width and height from the <map> element
@@ -124,10 +124,6 @@ bool MapLoader::LoadLayers(tinyxml2::XMLElement* mapElement, Map& map) {
         layerElement;
         layerElement = layerElement->NextSiblingElement("layer")) {
 
-		int idLayer = layerElement->IntAttribute("id");
-        const char* name = layerElement->Attribute("name");
-		bool visible = layerElement->BoolAttribute("visible", true);
-
         auto* dataElement = layerElement->FirstChildElement("data");
         if (!dataElement) {
             continue;
@@ -178,14 +174,6 @@ bool MapLoader::LoadLayers(tinyxml2::XMLElement* mapElement, Map& map) {
 
             layer->AddPixel(*pixel);
         }
-
-        layer->SetID(idLayer);
-        layer->SetVisible(visible);
-        layer->SetName(name ? name : "");
-
-		if (layer->GetName() == MAP_COLLISION_LAYER_NAME) {
-			map.SetCollisionLayer(layer);
-		}
 
         map.AddLayer(*layer);
     }

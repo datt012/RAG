@@ -5,7 +5,7 @@ GSPlay::GSPlay() : m_KeyPress(0) {}
 GSPlay::~GSPlay() {}
 
 void GSPlay::Init() {
-    // init enemy
+    // Lấy texture Enemy
     auto textureEnemy = ResourceManagers::GetInstance()->GetTexture("ARMob.png");
 
     // Khởi tạo Enemy
@@ -14,10 +14,16 @@ void GSPlay::Init() {
     m_enemy->SetFPositon(Vector2(420, 465));
     m_enemy->Init2(textureEnemy, 0.1f, 0.2f);
 
+    
+
+
+
+
+
 
     // Initialize the map
     m_map = std::make_shared<Map>();
-    if (!m_map->LoadFromFile("Data/Asset/test/main2.tmx", Renderer::GetInstance()->GetRenderer())) {
+    if (!m_map->LoadFromFile("Data/Asset/test/main.tmx", Renderer::GetInstance()->GetRenderer())) {
         printf("Failed to load map!\n");
         return;
     }
@@ -43,13 +49,17 @@ void GSPlay::Init() {
     animation = std::make_shared<SpriteAnimationPlayer>(texture, 9, 8, 0, 0, 30);
     player = std::make_shared<Player>(animation);
     player->SetSize(60, 60);
-    player->Set2DPosition(150, 485);
+    player->Set2DPosition(300, 485);
     m_listPlayer.push_back(player);
 
     m_enemy->SetTargetPlayer(player);
+
     // Set up camera
     Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
     Camera::GetInstance()->SetTarget(player);
+
+
+
 }
 
 void GSPlay::Exit() {}
@@ -134,7 +144,7 @@ void GSPlay::Update(float deltaTime) {
     for (auto it : m_listPlayer) {
         it->HandleInput(m_KeyPress);
     }
-	printf("KeyPress: %d\n", m_KeyPress);
+	//printf("KeyPress: %d\n", m_KeyPress);
 
     // Update map
     m_map->Update(deltaTime);
@@ -154,8 +164,8 @@ void GSPlay::Update(float deltaTime) {
         it->Update(deltaTime);
     }
     m_enemy->Update(deltaTime);
-
-	player->CheckCollisionAndResolve(m_map);
+    //printf("enemy %d %d\n", m_enemy->GetPosition().x, m_enemy->GetPosition().y);
+   
 
     // Update camera
     Camera::GetInstance()->Update(deltaTime);
@@ -182,5 +192,6 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
     for (auto it : m_listPlayer) {
         it->Draw(renderer);
     }
+
     m_enemy->Draw(renderer);
 }

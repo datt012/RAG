@@ -4,10 +4,13 @@
 #include "GameObject/CMath.h"
 #include "MainSrc/Characters/Player.h"
 #include "GameObject/BaseObject2d.h"
+#include "MainSrc/Entities/Laser.h"
+#include <vector>
+
 class TextureManager;
 
 class Enemy : public BaseObject2d{
-protected:
+private:
     int m_health;
     float m_speed;
     bool m_isAlive;
@@ -22,6 +25,9 @@ protected:
     
     std::shared_ptr<Player> m_targetPlayer;
     
+    std::vector<std::shared_ptr<Laser>> m_listLaser;
+    float attackCountDown = 0.0f;
+
     float dsPlayer();
     Vector2 m_Fpositon;
 public:
@@ -57,7 +63,8 @@ public:
     void moveLeft(float deltaTime);
     void moveRight(float deltaTime);
     void followPlayer(float deltaTime);
-    void dongBoViTri();// đồng bộ vị trí của post enemy và animation
+    void dongBoViTri();
+    void Attack();
 
     
 };

@@ -1,7 +1,5 @@
 #include "Player.h"
 #include "KeyDirection.h"
-#include <algorithm>
-#include <MainSrc/Collision/Collision.h>
 
 Player::Player(std::shared_ptr<SpriteAnimationPlayer> sprite) :
 	Character(sprite)
@@ -82,7 +80,7 @@ void Player::HandleInput(int keyMask)
 
 	if (keyMask & KEY_JUMP)
 	{
-		if (m_CurrentAction != FALL && !m_IsJumping)
+		if (m_CurrentAction != FALL)
 		{
 			m_CurrentAction = FALL;
 			m_CurrentDirectionGun = DIR_HORIZONTAL;
@@ -106,11 +104,11 @@ void Player::HandleInput(int keyMask)
 		this->SetCurrentAction(IDLE);
 		//m_CurrentDirectionGun = DIR_HORIZONTAL;
 
-		//if (m_CurrentAction != FALL)
-		//{
-		//	m_VelocityX = 0;
-		//	m_VelocityY = 0;
-		//}
+		if (m_CurrentAction != FALL)
+		{
+			m_VelocityX = 0;
+			m_VelocityY = 0;
+		}
 	}
 }
 
@@ -120,11 +118,8 @@ void Player::Update(float deltatime)
 	this->UpdateAnimation(deltatime);
 
 	m_animationPlayer->Update(deltatime);
-	//m_animationPlayer->Set2DPosition(
-	//	std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().x), SCREEN_WIDTH * 1.0f),
-	//	std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().y), SCREEN_HEIDHT * 1.0f)
-	//);
 	m_position = m_animationPlayer->GetPosition();
+
 }
 
 void Player::ApplyMovement(float deltaTime)
@@ -132,12 +127,13 @@ void Player::ApplyMovement(float deltaTime)
 	Vector2 position = m_animationPlayer->Get2DPosition();
 	position.x += m_VelocityX * deltaTime;
 	position.y += m_VelocityY * deltaTime;
-
 	m_animationPlayer->Set2DPosition(position.x, position.y);
 
-	m_VelocityY += m_Gravity * deltaTime;
-	m_VelocityX = m_VelocityX * 0.98f;
-	m_VelocityY = m_VelocityY * 0.98f;
+	if (m_CurrentAction == FALL)
+	{
+		m_VelocityY += m_Gravity * deltaTime;
+		m_VelocityY = m_VelocityY * 0.98f;
+	}
 }
 
 void Player::UpdateAnimation(float deltaTime)
@@ -257,71 +253,7 @@ void Player::UpdateAnimation(float deltaTime)
 	}
 }
 
-bool Player::CheckCollisionAndResolve(std::shared_ptr<Map> map)
-{
-	bool res = false;
-	bool isOnGround = false;
-
-	m_animationPlayer->Set2DPosition(
-		std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().x), map->GetWidth() - GetWidth() * 1.0f),
-		std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().y), map->GetHeight() - GetHeight() * 1.0f)
-	);
-	m_position = m_animationPlayer->GetPosition();
-
-	SDL_Rect playerRect = {
-		static_cast<int>(m_position.x),
-		static_cast<int>(m_position.y),
-		GetWidth(),
-		GetHeight()
-	};
-
-	if (!map) return false;
-
-	auto layer = map->GetCollisionLayer();
-	if (!layer) return false;
-
-	for (Pixel& pixel : layer->GetPixels()) {
-		SDL_Rect pixelRect = {
-			static_cast<int>(pixel.GetPosition().x),
-			static_cast<int>(pixel.GetPosition().y),
-			PIXEL_WIDTH,
-			PIXEL_HEIGHT
-		};
-
-		if (Collision::CheckAABB(playerRect, pixelRect)) {
-			SDL_Point push = Collision::GetPushVector(playerRect, pixelRect);
-			m_position.x += push.x;
-			m_position.y += push.y;
-			m_animationPlayer->Set2DPosition(m_position.x, m_position.y);
-			playerRect = {
-				static_cast<int>(m_position.x),
-				static_cast<int>(m_position.y),
-				GetWidth(),
-				GetHeight()
-			};
-
-			if (Collision::IsOnGround(playerRect, pixelRect)) {
-				isOnGround = true;
-			}
-
-			res = true;
-		}
-	}
-	if (isOnGround) {
-		m_VelocityY = 0;
-		m_IsJumping = false;
-		m_CurrentAction = IDLE;
-	}
-	else {
-		m_IsJumping = true;
-		//m_CurrentAction = FALL;
-	}
-
-	return res;
-}
-
 void Player::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 {
-	printf("Player velocity: %f, %f\n", m_VelocityX, m_VelocityY);
 	m_animationPlayer->Draw(renderer, clip);
 }

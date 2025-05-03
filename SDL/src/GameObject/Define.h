@@ -7,4 +7,6 @@
 #define PIXEL_WIDTH 16
 #define PIXEL_HEIGHT 16
 
-#define MAP_COLLISION_LAYER_NAME "collider"
+#define LASER_SPEED 0.1f
+
+

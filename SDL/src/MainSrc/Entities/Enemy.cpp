@@ -1,6 +1,7 @@
 ﻿#include "Enemy.h"
 #include "TextureManager.h"
-
+#include "GameManager/ResourceManagers.h"
+#include "Define.h"
 Enemy::Enemy()
     : m_health(100), m_speed(0.1f), m_isAlive(true)
 {
@@ -72,6 +73,9 @@ void Enemy::Update(float deltaTime)
     {
         m_currentAnimation->Update(deltaTime);
     }
+    for (auto& laser : m_listLaser) {
+        laser->Update(deltaTime);
+    }
 }
 
 void Enemy::Draw(SDL_Renderer* renderer, SDL_Rect* clip )
@@ -79,6 +83,9 @@ void Enemy::Draw(SDL_Renderer* renderer, SDL_Rect* clip )
     if (m_currentAnimation)
     {
         m_currentAnimation->Draw(renderer);
+    }
+    for (auto& laser : m_listLaser) {
+        laser->Draw(renderer);
     }
 }
 
@@ -181,11 +188,17 @@ void Enemy::followPlayer(float deltaTime)
         Vector2 playerPos = { m_targetPlayer->GetPosition().x, m_targetPlayer->GetPosition().y };
         Vector2 enemyPos = m_position;
         if (abs(playerPos.x - enemyPos.x) <= 60.0f) {
-            m_currentAnimation = m_idleAnimation;
+            if (playerPos.x > enemyPos.x) {
+                m_currentAnimation->SetFlip(SDL_FLIP_NONE);
+            }
+            else {
+                m_currentAnimation->SetFlip(SDL_FLIP_HORIZONTAL);
+            }
+            Attack();
             dongBoViTri();
         }
         else {
-            if (playerPos.x < enemyPos.x)
+            if (playerPos.x <= enemyPos.x)
             {
 
                 moveLeft(deltaTime);
@@ -198,4 +211,30 @@ void Enemy::followPlayer(float deltaTime)
         }
         
     }
+}
+void Enemy::Attack()
+{
+    dongBoViTri();
+    auto laserTexture = ResourceManagers::GetInstance()->GetTexture("a13.png");
+    std::shared_ptr<Laser> laser = std::make_shared<Laser>();
+    laser->Init2(laserTexture, LASER_SPEED);
+    Vector2 laserPos = m_position;
+    laserPos.y += 20;
+    laser->SetPosition(laserPos);
+    laser->SetSize(0.1f, 0.1f);
+    if (m_position.x < m_targetPlayer->GetPosition().x) {
+        
+        
+        laser->SetFlip(SDL_FLIP_NONE);
+        laser->SetDirection(Vector2(1, 0));
+        m_listLaser.push_back(laser);
+    }
+    else {
+        laser->SetFlip(SDL_FLIP_HORIZONTAL);
+        laser->SetDirection(Vector2(-1, 0));
+        m_listLaser.push_back(laser);
+    }
+
+    m_currentAnimation = m_attackAnimation;
+    dongBoViTri();
 }

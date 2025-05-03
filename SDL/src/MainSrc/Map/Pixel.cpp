@@ -7,6 +7,10 @@ Pixel::Pixel() {
 
 Pixel::~Pixel() {}
 
+void Pixel::SetSourceRect(const SDL_Rect& srcRect) {
+    m_SrcRect = srcRect;
+}
+
 void Pixel::Init() {
 	// Initialize the pixel (if needed)
 	if (m_pTexture) {
@@ -26,12 +30,4 @@ void Pixel::Update(float deltaTime) {
     m_DestRect.y = m_position.y - Camera::GetInstance()->GetPosition().y;
     m_DestRect.w = PIXEL_WIDTH;
     m_DestRect.h = PIXEL_HEIGHT;
-}
-
-SDL_Rect Pixel::GetDestRect() const {
-    return m_DestRect;
-}
-
-void Pixel::SetSourceRect(const SDL_Rect& srcRect) {
-    m_SrcRect = srcRect;
 }

@@ -34,11 +34,8 @@
     <Filter Include="Source Files\MainSrc\Characters">
       <UniqueIdentifier>{7391be40-89f4-46e5-a4dd-5b6c3289dec9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\MainSrc\Collision">
-      <UniqueIdentifier>{4189cfaa-acc2-484d-917e-a66f02c9734d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\MainSrc\Entities">
-      <UniqueIdentifier>{e9e9961b-5512-40c0-8ef8-909f84bd28da}</UniqueIdentifier>
+      <UniqueIdentifier>{a4966388-58eb-4481-b31d-8889cdecf101}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,8 +120,8 @@
     <ClCompile Include="src\MainSrc\Map\Layer.cpp">
       <Filter>Source Files\MainSrc\Map</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainSrc\Collision\Collision.cpp">
-      <Filter>Source Files\MainSrc\Collision</Filter>
+    <ClCompile Include="src\MainSrc\Entities\SpriteEnemy.cpp">
+      <Filter>Source Files\MainSrc\Entities</Filter>
     </ClCompile>
     <ClCompile Include="src\MainSrc\Entities\Enemy.cpp">
       <Filter>Source Files\MainSrc\Entities</Filter>
@@ -132,7 +129,7 @@
     <ClCompile Include="src\MainSrc\Entities\ExplosiveBullet .cpp">
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainSrc\Entities\SpriteEnemy.cpp">
+    <ClCompile Include="src\MainSrc\Entities\Laser.cpp">
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,8 +239,8 @@
     <ClInclude Include="src\MainSrc\Characters\DirectionGun.h">
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainSrc\Collision\Collision.h">
-      <Filter>Source Files\MainSrc\Collision</Filter>
+    <ClInclude Include="src\MainSrc\Entities\SpriteEnemy.h">
+      <Filter>Source Files\MainSrc\Entities</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Entities\Enemy.h">
       <Filter>Source Files\MainSrc\Entities</Filter>
@@ -251,7 +248,7 @@
     <ClInclude Include="src\MainSrc\Entities\ExplosiveBullet .h">
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainSrc\Entities\SpriteEnemy.h">
+    <ClInclude Include="src\MainSrc\Entities\Laser.h">
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClInclude>
   </ItemGroup>

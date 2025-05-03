@@ -1,6 +1,5 @@
 #pragma once
 #include "Character.h"
-#include <MainSrc/Map/Map.h>
 
 class Player : public Character
 {
@@ -20,5 +19,5 @@ public:
 
 	void HandleInput(int keyMask) override;
 
-	bool CheckCollisionAndResolve(std::shared_ptr<Map> map);
+
 };
