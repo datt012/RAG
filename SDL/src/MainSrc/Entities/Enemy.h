@@ -20,8 +20,7 @@ private:
     std::shared_ptr<SpriteEnemy> m_attackAnimation;
     std::shared_ptr<SpriteEnemy> m_hitAnimation;
     std::shared_ptr<SpriteEnemy> m_dieAnimation;
-
-    std::shared_ptr<SpriteEnemy> m_currentAnimation;
+    std::shared_ptr<SpriteEnemy> m_Animation;
     
     std::shared_ptr<Player> m_targetPlayer;
     
@@ -63,8 +62,8 @@ public:
     void moveLeft(float deltaTime);
     void moveRight(float deltaTime);
     void followPlayer(float deltaTime);
-    void dongBoViTri();
-    void Attack();
-
-    
+    void UpdateAnimation();
+    void Attack(float deltaTime);
+    void Move(Vector2 pos, float deltaTime);
+    void Handle(float deltaTime);
 };

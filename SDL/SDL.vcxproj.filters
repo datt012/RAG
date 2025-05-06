@@ -132,6 +132,9 @@
     <ClCompile Include="src\MainSrc\Entities\Laser.cpp">
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\MainSrc\Entities\Enemy2.cpp">
+      <Filter>Source Files\MainSrc\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject\BaseObject.h">
@@ -249,6 +252,9 @@
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Entities\Laser.h">
+      <Filter>Source Files\MainSrc\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Entities\Enemy2.h">
       <Filter>Source Files\MainSrc\Entities</Filter>
     </ClInclude>
   </ItemGroup>

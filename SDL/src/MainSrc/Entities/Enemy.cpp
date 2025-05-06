@@ -2,6 +2,9 @@
 #include "TextureManager.h"
 #include "GameManager/ResourceManagers.h"
 #include "Define.h"
+#include <iostream>
+#include "Camera.h"
+using namespace std;
 Enemy::Enemy()
     : m_health(100), m_speed(0.1f), m_isAlive(true)
 {
@@ -49,7 +52,7 @@ void Enemy::Init2(std::shared_ptr<TextureManager> texture, int health, float spe
        
 
         // Đặt animation hiện tại là Idle
-        m_currentAnimation = m_idleAnimation;
+        m_Animation = m_idleAnimation;
 
         if (m_idleAnimation) m_idleAnimation->Set2DPosition(m_position.x, m_position.y);
         if (m_runAnimation) m_runAnimation->Set2DPosition(m_position.x, m_position.y);
@@ -59,19 +62,21 @@ void Enemy::Init2(std::shared_ptr<TextureManager> texture, int health, float spe
 
     }
 }
-void Enemy::dongBoViTri() {
+void Enemy::UpdateAnimation() {
     if (m_idleAnimation) m_idleAnimation->Set2DPosition(m_position.x, m_position.y);
     if (m_runAnimation) m_runAnimation->Set2DPosition(m_position.x, m_position.y);
     if (m_attackAnimation) m_attackAnimation->Set2DPosition(m_position.x, m_position.y);
     if (m_hitAnimation) m_hitAnimation->Set2DPosition(m_position.x, m_position.y);
     if (m_dieAnimation) m_dieAnimation->Set2DPosition(m_position.x, m_position.y);
+
+    if (m_Animation) m_Animation->Set2DPosition(m_position.x, m_position.y);
 }
 void Enemy::Update(float deltaTime)
 {   
-    followPlayer(deltaTime);
-    if (m_currentAnimation)
+    Handle(deltaTime);
+    if (m_Animation)
     {
-        m_currentAnimation->Update(deltaTime);
+        m_Animation->Update(deltaTime);
     }
     for (auto& laser : m_listLaser) {
         laser->Update(deltaTime);
@@ -80,9 +85,9 @@ void Enemy::Update(float deltaTime)
 
 void Enemy::Draw(SDL_Renderer* renderer, SDL_Rect* clip )
 {
-    if (m_currentAnimation)
+    if (m_Animation)
     {
-        m_currentAnimation->Draw(renderer);
+        m_Animation->Draw(renderer);
     }
     for (auto& laser : m_listLaser) {
         laser->Draw(renderer);
@@ -93,27 +98,27 @@ void Enemy::Draw(SDL_Renderer* renderer, SDL_Rect* clip )
 
 void Enemy::PlayIdle()
 {
-    m_currentAnimation = m_idleAnimation;
+    m_Animation = m_idleAnimation;
 }
 
 void Enemy::PlayRun()
 {
-    m_currentAnimation = m_runAnimation;
+    m_Animation = m_runAnimation;
 }
 
 void Enemy::PlayAttack()
 {
-    m_currentAnimation = m_attackAnimation;
+    m_Animation = m_attackAnimation;
 }
 
 void Enemy::PlayHit()
 {
-    m_currentAnimation = m_hitAnimation;
+    m_Animation = m_hitAnimation;
 }
 
 void Enemy::PlayDie()
 {
-    m_currentAnimation = m_dieAnimation;
+    m_Animation = m_dieAnimation;
     m_isAlive = false;
 }
 
@@ -132,17 +137,17 @@ void Enemy::moveLeft(float deltaTime)
     m_flip = SDL_FLIP_HORIZONTAL;
    
     
-    m_position.x = m_position.x -  m_speed * deltaTime/5;
+    m_position.x = m_position.x -  m_speed * deltaTime/3;
 
     
-    if (m_currentAnimation) {
-        m_currentAnimation->SetFlip(SDL_FLIP_HORIZONTAL);
-        dongBoViTri();
+    if (m_Animation) {
+        m_Animation->SetFlip(SDL_FLIP_HORIZONTAL);
+        UpdateAnimation();
     }
        
 
    
-    if (m_currentAnimation != m_runAnimation)
+    if (m_Animation != m_runAnimation)
     {
         PlayAttack();
     }
@@ -151,17 +156,17 @@ void Enemy::moveLeft(float deltaTime)
 void Enemy::moveRight(float deltaTime)
 {   
     m_flip = SDL_FLIP_NONE;
-    m_position.x = m_position.x + m_speed * deltaTime / 5;
+    m_position.x = m_position.x + m_speed * deltaTime / 3;
 
    
-    if (m_currentAnimation) {
-        m_currentAnimation->SetFlip(SDL_FLIP_NONE);
-        dongBoViTri();
+    if (m_Animation) {
+        m_Animation->SetFlip(SDL_FLIP_NONE);
+        UpdateAnimation();
     }
         
 
     
-    if (m_currentAnimation != m_runAnimation)
+    if (m_Animation != m_runAnimation)
     {
         PlayAttack();
     }
@@ -189,13 +194,13 @@ void Enemy::followPlayer(float deltaTime)
         Vector2 enemyPos = m_position;
         if (abs(playerPos.x - enemyPos.x) <= 60.0f) {
             if (playerPos.x > enemyPos.x) {
-                m_currentAnimation->SetFlip(SDL_FLIP_NONE);
+                m_Animation->SetFlip(SDL_FLIP_NONE);
             }
             else {
-                m_currentAnimation->SetFlip(SDL_FLIP_HORIZONTAL);
+                m_Animation->SetFlip(SDL_FLIP_HORIZONTAL);
             }
-            Attack();
-            dongBoViTri();
+            Attack(deltaTime);
+            UpdateAnimation();
         }
         else {
             if (playerPos.x <= enemyPos.x)
@@ -212,29 +217,101 @@ void Enemy::followPlayer(float deltaTime)
         
     }
 }
-void Enemy::Attack()
-{
-    dongBoViTri();
-    auto laserTexture = ResourceManagers::GetInstance()->GetTexture("a13.png");
-    std::shared_ptr<Laser> laser = std::make_shared<Laser>();
-    laser->Init2(laserTexture, LASER_SPEED);
-    Vector2 laserPos = m_position;
-    laserPos.y += 20;
-    laser->SetPosition(laserPos);
-    laser->SetSize(0.1f, 0.1f);
-    if (m_position.x < m_targetPlayer->GetPosition().x) {
-        
-        
-        laser->SetFlip(SDL_FLIP_NONE);
-        laser->SetDirection(Vector2(1, 0));
-        m_listLaser.push_back(laser);
-    }
+void Enemy::Attack(float deltaTime)
+{   
+
+    static float timeCount = 0.0f;
+    timeCount += deltaTime;
+    if (timeCount < 300.0f) return;
     else {
-        laser->SetFlip(SDL_FLIP_HORIZONTAL);
-        laser->SetDirection(Vector2(-1, 0));
-        m_listLaser.push_back(laser);
+        UpdateAnimation();
+        auto laserTexture = ResourceManagers::GetInstance()->GetTexture("a13.png");
+        std::shared_ptr<Laser> laser = std::make_shared<Laser>();
+        laser->Init2(laserTexture, LASER_SPEED);
+        laser->SetSize(0.15f, 0.15f);
+        if (m_position.x < m_targetPlayer->GetPosition().x) {
+
+            Vector2 laserPos = m_position;
+            laserPos.y += 17;
+            laserPos.x += 20;
+            laser->SetPosition(laserPos);
+
+
+            laser->SetFlip(SDL_FLIP_NONE);
+            laser->SetDirection(Vector2(1, 0));
+            m_listLaser.push_back(laser);
+        }
+        else {
+
+            Vector2 laserPos = m_position;
+            laserPos.y += 17;
+            laserPos.x -= 20;
+            laser->SetPosition(laserPos);
+
+
+            laser->SetFlip(SDL_FLIP_HORIZONTAL);
+            laser->SetDirection(Vector2(-1, 0));
+            m_listLaser.push_back(laser);
+        }
+
+        m_Animation = m_attackAnimation;
+        UpdateAnimation();
+        timeCount = 0.0f;
     }
 
-    m_currentAnimation = m_attackAnimation;
-    dongBoViTri();
+    
+}
+
+void Enemy::Move(Vector2 pos, float deltaTime) {
+    if (abs(pos.x - m_position.x) < 20) {
+        PlayIdle();
+    }
+    if (pos.x > m_position.x) {
+        moveRight(deltaTime);
+        UpdateAnimation();
+    }
+    if (pos.x < m_position.x) {
+        moveLeft(deltaTime);
+        UpdateAnimation();
+    }
+    
+}
+void Enemy::Handle(float deltaTime)
+{
+    if (!m_targetPlayer || !m_isAlive) return;
+
+    Vector2 playerPos = { m_targetPlayer->GetPosition().x, m_targetPlayer->GetPosition().y };
+
+    float distanceToPlayer = sqrt(pow(playerPos.x - m_position.x, 2) + pow(playerPos.y - m_position.y, 2));
+    float distanceToHome = sqrt(pow(m_Fpositon.x - m_position.x, 2) + pow(m_Fpositon.y - m_position.y, 2));
+
+    const float chaseRange = 1000.0f;
+    const float maxDistance = 200.0f;   
+    const float followRange = 100.0f;    
+    const float attackRange = 70.0f;     
+
+   
+    if (distanceToHome >= chaseRange  || distanceToPlayer >= maxDistance )
+    {
+        Move(m_Fpositon, deltaTime);
+        
+        return;
+    }
+   
+    else if (distanceToPlayer <= followRange)
+    {
+        if (distanceToPlayer <= attackRange)
+        {
+            Attack(deltaTime);
+        }
+        followPlayer(deltaTime);
+
+       
+    }
+    
+    else
+    {
+        PlayIdle();
+        
+    }
 }

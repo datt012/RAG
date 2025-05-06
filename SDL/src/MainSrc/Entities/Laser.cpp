@@ -1,5 +1,6 @@
 ﻿#include "Laser.h"
-
+#include "iostream"
+#include "Camera.h"
 Laser::Laser()
     : m_speed(0.0f), m_filePath("")
 {
@@ -39,13 +40,15 @@ void Laser::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
             SDL_Rect dstRect;
             dstRect.x = static_cast<int>(m_position.x);
             dstRect.y = static_cast<int>(m_position.y);
-
             
             int w, h;
             SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
             dstRect.w = static_cast<int>(w * m_scale.x);
             dstRect.h = static_cast<int>(h * m_scale.y);
 
+            SDL_Rect cam1 = Camera::GetInstance()->GetViewBox();
+            dstRect.x -= cam1.x;
+            dstRect.y -= cam1.y;
             SDL_RenderCopyEx(
                 renderer,
                 texture,

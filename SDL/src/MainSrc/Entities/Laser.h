@@ -36,6 +36,13 @@ public:
     void SetFlip(SDL_RendererFlip flip) {
         m_flip = flip;
     }
+    Vector2 GetPosition() {
+        return m_position;
+    }
+
+    void SetAngle(double angle) {
+        m_angle = angle;
+    }
 private:
     std::string m_filePath;
     float m_speed;

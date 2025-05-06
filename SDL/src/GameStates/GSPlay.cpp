@@ -10,13 +10,18 @@ void GSPlay::Init() {
 
     // Khởi tạo Enemy
     m_enemy = std::make_shared<Enemy>();
-    m_enemy->SetPosition(Vector2(420, 465));
-    m_enemy->SetFPositon(Vector2(420, 465));
-    m_enemy->Init2(textureEnemy, 0.1f, 0.2f);
+    m_enemy->SetPosition(Vector2(300, 495));
+    m_enemy->SetFPositon(Vector2(300, 495));
+    m_enemy->Init2(textureEnemy, 100, 0.2f);
 
     
 
-
+    // enemy2
+    auto textureEnemy2 = ResourceManagers::GetInstance()->GetTexture("sprite.png");
+    m_enemy2 = std::make_shared<Enemy2>();
+    m_enemy2->SetPosition(Vector2(300, 150));
+    m_enemy2->SetFposition(Vector2(300, 150));
+    m_enemy2->Init2(textureEnemy2, 100, 0.2f);
 
 
 
@@ -49,10 +54,11 @@ void GSPlay::Init() {
     animation = std::make_shared<SpriteAnimationPlayer>(texture, 9, 8, 0, 0, 30);
     player = std::make_shared<Player>(animation);
     player->SetSize(60, 60);
-    player->Set2DPosition(300, 485);
+    player->Set2DPosition(100, 485);
     m_listPlayer.push_back(player);
 
     m_enemy->SetTargetPlayer(player);
+    m_enemy2->SetTargetPlayer(player);
 
     // Set up camera
     Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
@@ -164,6 +170,7 @@ void GSPlay::Update(float deltaTime) {
         it->Update(deltaTime);
     }
     m_enemy->Update(deltaTime);
+    m_enemy2->Update(deltaTime);
     //printf("enemy %d %d\n", m_enemy->GetPosition().x, m_enemy->GetPosition().y);
    
 
@@ -194,4 +201,5 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
     }
 
     m_enemy->Draw(renderer);
+    m_enemy2->Draw(renderer);
 }

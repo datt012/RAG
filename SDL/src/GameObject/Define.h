@@ -7,6 +7,6 @@
 #define PIXEL_WIDTH 16
 #define PIXEL_HEIGHT 16
 
-#define LASER_SPEED 0.1f
+#define LASER_SPEED 2.0f
 
 
