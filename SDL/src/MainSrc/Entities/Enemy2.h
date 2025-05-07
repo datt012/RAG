@@ -36,7 +36,7 @@ private:;
 	
 	std::shared_ptr<SpriteAnimation> m_idleAnimation;
 	std::shared_ptr<SpriteAnimation> m_attackAnimation;
-	std::shared_ptr<SpriteAnimation> m_hitAnimation;
+	std::shared_ptr<SpriteAnimation> m_hurtAnimation;
 	std::shared_ptr<SpriteAnimation> m_dieAnimation;
 	std::shared_ptr<SpriteAnimation> m_Animation;
 

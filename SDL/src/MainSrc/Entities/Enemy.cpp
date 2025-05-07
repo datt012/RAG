@@ -27,27 +27,27 @@ void Enemy::Init2(std::shared_ptr<TextureManager> texture, int health, float spe
         // Idle Animation
         m_idleAnimation = std::make_shared<SpriteEnemy>(texture, 24, 50.0f);
         m_idleAnimation->SetFrameRange(0, 3); // Frame 0 -> 3
-        m_idleAnimation->SetSize(48, 48);
+        m_idleAnimation->SetSize(60, 60);
 
         // Run Animation
         m_runAnimation = std::make_shared<SpriteEnemy>(texture, 24, 100.0f);
         m_runAnimation->SetFrameRange(4, 9); // Frame 4 -> 9
-        m_runAnimation->SetSize(48, 48);
+        m_runAnimation->SetSize(60, 60);
 
         // Attack Animation
         m_attackAnimation = std::make_shared<SpriteEnemy>(texture, 24, 30.0f);
         m_attackAnimation->SetFrameRange(10, 15); // Frame 10 -> 15
-        m_attackAnimation->SetSize(48, 48);
+        m_attackAnimation->SetSize(60, 60);
 
         // Hit Animation
         m_hitAnimation = std::make_shared<SpriteEnemy>(texture, 24, 30.0f);
         m_hitAnimation->SetFrameRange(16, 18); // Frame 16 -> 18
-        m_hitAnimation->SetSize(48, 48);
+        m_hitAnimation->SetSize(60, 60);
 
         // Die Animation
         m_dieAnimation = std::make_shared<SpriteEnemy>(texture, 24, 30.0f);
         m_dieAnimation->SetFrameRange(19, 23); // Frame 19 -> 23
-        m_dieAnimation->SetSize(48, 48);
+        m_dieAnimation->SetSize(60, 60);
 
        
 

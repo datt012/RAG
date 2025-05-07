@@ -24,6 +24,22 @@ void GSPlay::Init() {
     m_enemy2->Init2(textureEnemy2, 100, 0.2f);
 
 
+    //
+    auto textureEnemy3 = ResourceManagers::GetInstance()->GetTexture("enemy3.png");
+    m_enemy3 = std::make_shared<Enemy3>();
+    m_enemy3->SetPosition(Vector2(400, 150));
+    m_enemy3->Init2(textureEnemy3, 100, 0.2f);
+
+    //
+
+    auto textureEnemy4 = ResourceManagers::GetInstance()->GetTexture("RPGmob2.png");
+    m_enemy4 = std::make_shared<Enemy4>();
+    m_enemy4->SetPosition(Vector2(500, 150));
+    m_enemy4->Init2(textureEnemy4, 100, 0.2f);
+
+   
+   
+
 
 
     // Initialize the map
@@ -171,6 +187,8 @@ void GSPlay::Update(float deltaTime) {
     }
     m_enemy->Update(deltaTime);
     m_enemy2->Update(deltaTime);
+    m_enemy3->Update(deltaTime);
+    m_enemy4->Update(deltaTime);
     //printf("enemy %d %d\n", m_enemy->GetPosition().x, m_enemy->GetPosition().y);
    
 
@@ -202,4 +220,6 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
 
     m_enemy->Draw(renderer);
     m_enemy2->Draw(renderer);
+    m_enemy3->Draw(renderer);
+    m_enemy4->Draw(renderer);
 }

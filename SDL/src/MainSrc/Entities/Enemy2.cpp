@@ -22,12 +22,12 @@ void Enemy2::Init2(const std::shared_ptr<TextureManager> imgTexture, int health,
         m_idleAnimation = std::make_shared<SpriteAnimation>(imgTexture, 3, 7, 4,  20.0f);
         m_idleAnimation->SetSize(72, 72);
 
-        m_hitAnimation = std::make_shared<SpriteAnimation>(imgTexture, 4, 7, 4, 1.0f);
-        m_hitAnimation->SetSize(72, 72);
+        m_hurtAnimation = std::make_shared<SpriteAnimation>(imgTexture, 4, 7, 4, 1.0f);
+        m_hurtAnimation->SetSize(72, 72);
         
         if (m_idleAnimation) m_idleAnimation->Set2DPosition(m_position.x, m_position.y);
         if (m_attackAnimation) m_attackAnimation->Set2DPosition(m_position.x, m_position.y);
-        if (m_hitAnimation) m_hitAnimation->Set2DPosition(m_position.x, m_position.y);
+        if (m_hurtAnimation) m_hurtAnimation->Set2DPosition(m_position.x, m_position.y);
         if (m_dieAnimation) m_dieAnimation->Set2DPosition(m_position.x, m_position.y);
 
         m_Animation = m_idleAnimation;
@@ -60,7 +60,7 @@ void Enemy2::Draw(SDL_Renderer* renderer, SDL_Rect* clip) {
 void Enemy2::UpdateAnimation() {
     if (m_idleAnimation) m_idleAnimation->Set2DPosition(m_position.x, m_position.y);
     if (m_attackAnimation) m_attackAnimation->Set2DPosition(m_position.x, m_position.y);
-    if (m_hitAnimation) m_hitAnimation->Set2DPosition(m_position.x, m_position.y);
+    if (m_hurtAnimation) m_hurtAnimation->Set2DPosition(m_position.x, m_position.y);
     if (m_dieAnimation) m_dieAnimation->Set2DPosition(m_position.x, m_position.y);
 
     if (m_Animation) m_Animation->Set2DPosition(m_position.x, m_position.y);
@@ -171,15 +171,15 @@ void Enemy2::Attack(float deltaTime) {
     if (timeCount < 1000.0f) return;
     else {
         UpdateAnimation();
-        auto laserTexture = ResourceManagers::GetInstance()->GetTexture("a02.png");
+        auto laserTexture = ResourceManagers::GetInstance()->GetTexture("a.png");
         std::shared_ptr<Laser> laser = std::make_shared<Laser>();
         laser->Init2(laserTexture, LASER_SPEED/20);
-        laser->SetSize(0.5f, 0.5f);
+        laser->SetSize(0.3f, 0.3f);
         if (m_position.x < m_targetPlayer->GetPosition().x) {
 
             Vector2 laserPos = m_position;
             laserPos.y += 20;
-            laserPos.x += 1;
+            laserPos.x += 25;
             laser->SetPosition(laserPos);
             laser->SetFlip(SDL_FLIP_VERTICAL);
             laser->SetAngle(90.0);
@@ -190,7 +190,7 @@ void Enemy2::Attack(float deltaTime) {
 
             Vector2 laserPos = m_position;
             laserPos.y += 20;
-            laserPos.x += 1;
+            laserPos.x += 25;
             laser->SetPosition(laserPos);
             laser->SetAngle(90.0);
             laser->SetDirection(Vector2(0, +1));
