@@ -20,6 +20,7 @@ public:
 
     operator Value() const { return m_Value; }
     bool operator==(DirectionGun other) const { return m_Value == other.m_Value; }
+	bool operator==(Value other) const { return m_Value == other; }
     bool operator!=(DirectionGun other) const { return m_Value != other.m_Value; }
 
     char* to_string() {

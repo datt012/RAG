@@ -96,8 +96,15 @@ SDL_FRect Character::GetColliderFRect() {
 void Character::ClampPositionToMapBounds(std::shared_ptr<Map> map) {
 	if (!map) return;
 
-	float x = std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().x), map->GetWidth() - GetWidth() * 1.0f);
-	float y = std::min(std::max(0.0f, m_animationPlayer->Get2DPosition().y), map->GetHeight() - GetHeight() * 1.0f);
+	SDL_FRect rect = GetColliderFRect();
+
+	float left = rect.x - Get2DPosition().x;
+	float right = (Get2DPosition().x + GetWidth()) - (rect.x + rect.w);
+	float top = rect.y - Get2DPosition().y;
+	float bottom = (Get2DPosition().y + GetHeight()) - (rect.y + rect.h);
+
+	float x = std::min(std::max(0.0f - left, Get2DPosition().x), map->GetWidth() + right - GetWidth());
+	float y = std::min(std::max(0.0f - top, Get2DPosition().y), map->GetHeight() + bottom - GetHeight());
 	Set2DPosition(x, y);
 }
 
@@ -119,10 +126,12 @@ void Character::UpdateIsOnGround(std::shared_ptr<Map> map) {
 	}
 }
 
-void Character::CollisionWithMap(std::shared_ptr<Map> map) {
-	if (!map) return;
+bool Character::CollisionWithMap(std::shared_ptr<Map> map) {
+	bool result = false;
+
+	if (!map) return result;
 	auto layer = map->GetCollisionLayer();
-	if (!layer) return;
+	if (!layer) return result;
 
 	std::vector<SDL_FRect> obstacles = std::vector<SDL_FRect>();
 	for (Pixel& pixel : layer->GetPixels()) {
@@ -135,11 +144,61 @@ void Character::CollisionWithMap(std::shared_ptr<Map> map) {
 		m_position.y += push.y;
 
 		m_animationPlayer->Set2DPosition(m_position.x, m_position.y);
+		result = true;
 	}
+
+	return result;
 }
 
 void Character::SolveCollision(std::shared_ptr<Map> map) {
 	ClampPositionToMapBounds(map);
 	CollisionWithMap(map);
 	UpdateIsOnGround(map);
+}
+
+// Getters
+int Character::GetHP() const {
+	return m_HP;
+}
+
+bool Character::IsAlive() const {
+	return m_HP > 0;
+}
+
+bool Character::IsOnGround() const {
+	return m_IsOnGround;
+}
+
+bool Character::IsJumping() const {
+	return m_IsJumping;
+}
+
+bool Character::IsShooting() const {
+	return m_IsShooting;
+}
+
+std::shared_ptr<BulletPool> Character::GetBulletPool() const {
+	return m_BulletPool;
+}
+
+// Setters
+void Character::SetHP(int hp) {
+	m_HP = hp;
+	m_HP = std::max(0, std::min(m_HP, m_MAX_HP)); 
+}
+
+void Character::TakeDamage(int damage) {
+	SetHP(m_HP - damage);
+}
+
+void Character::SetOnGround(bool isOnGround) {
+	m_IsOnGround = isOnGround;
+}
+
+void Character::SetJumping(bool isJumping) {
+	m_IsJumping = isJumping;
+}
+
+void Character::SetShooting(bool isShooting) {
+	m_IsShooting = isShooting;
 }

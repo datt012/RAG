@@ -1,16 +1,21 @@
 #pragma once
 #include <SDL.h>
 #include <memory>
-#include "SpriteAnimation.h"
-#include <SpriteAnimationPlayer.h>
-#include <Timer.h>
 #include <map>
-#include <MainSrc/Map/Map.h>
+#include "SpriteAnimation.h"
+#include "SpriteAnimationPlayer.h"
+#include "Timer.h"
+#include "MainSrc/Map/Map.h"
 #include "DirectionGun.h"
+#include "MainSrc/Projectiles/BulletPool.h"
 
 class Character : public BaseObject
 {
 protected:
+    int m_HP;
+    int m_MAX_HP;
+    std::shared_ptr<BulletPool> m_BulletPool;
+
     DirectionGun m_CurrentDirectionGun;
 
     // Main sprite (or animation)
@@ -19,14 +24,14 @@ protected:
     Vector2     m_Velocity = { 0, 0 };
     Vector2     m_Displacement = { 0, 0 };
 
-    float m_Speed = 0.17f;           // Running speed
-    float m_JumpForce = 0.3f;      // Jumping force
-    float m_JumpDuration = 0.4f;    // Jumping duration
-    float m_Gravity = 0.0007f;       // Gravity
+    float m_Speed = 0;           // Running speed
+    float m_JumpForce = 0;      // Jumping force
+    float m_Gravity = 0;       // Gravity
 
     bool m_IsOnGround = false;
     bool m_IsJumping = false;       // Flag for jumping
     bool m_IsShooting = false;      // Flag for shooting
+
 
 public:
     Character(std::shared_ptr<SpriteAnimationPlayer> sprite) :
@@ -49,8 +54,8 @@ public:
     virtual void        SetVelocity(float vx, float vy);
     virtual Vector2     GetVelocity();
 
-    // Handle input in bitmask format from external class (GSPlay)
     virtual void HandleInput(int keyMask) = 0;
+    virtual void Shoot() = 0;
 
     // Parameters that can be adjusted or overridden by subclasses
     virtual void SetSpeed(float speed);
@@ -62,9 +67,25 @@ public:
     virtual SDL_Rect GetColliderRect();
     virtual SDL_FRect GetColliderFRect();
 
+	// Collision detection and resolution
     virtual void ClampPositionToMapBounds(std::shared_ptr<Map> map);
-    virtual void CollisionWithMap(std::shared_ptr<Map> map);
+    virtual bool CollisionWithMap(std::shared_ptr<Map> map);
     virtual void UpdateIsOnGround(std::shared_ptr<Map> map);
     virtual void SolveCollision(std::shared_ptr<Map> map);
+
+    // Getters
+    int GetHP() const;
+	bool IsAlive() const;
+    std::shared_ptr<BulletPool> GetBulletPool() const;
+    bool IsOnGround() const;
+    bool IsJumping() const;
+    bool IsShooting() const;
+
+	// Setters
+    void SetHP(int hp);
+    void TakeDamage(int damage);
+    void SetOnGround(bool isOnGround);
+    void SetJumping(bool isJumping);
+    void SetShooting(bool isShooting);
 };
 

@@ -8,8 +8,11 @@
 #include "GameObject/Camera.h"
 #include "KeyState.h"
 #include "Sound.h"
-#include "MainSrc/Characters/Player.h"
+#include "MainSrc/Characters/Player/Player.h"
 #include "MainSrc/Characters/KeyDirection.h"
+#include "MainSrc/Characters/Enemy/Enemy.h"
+#include "MainSrc/Characters/Enemy/ARMob.h"
+#include <MainSrc/Characters/Enemy/Behavior.h>
 
 class Sprite2D;
 class SpriteAnimation;
@@ -39,12 +42,14 @@ private:
     std::shared_ptr<SpriteAnimation> obj;
     std::shared_ptr<SpriteAnimationPlayer> animation;
     std::shared_ptr<Player> player;
+    std::shared_ptr<Enemy> enemy;
     std::shared_ptr<MouseButton> button;
     std::shared_ptr<Map> m_map; 
 
     std::list<std::shared_ptr<MouseButton>> m_listButton;
     std::list<std::shared_ptr<SpriteAnimation>> m_listAnimation;
     std::list<std::shared_ptr<Player>> m_listPlayer;
+    std::list<std::shared_ptr<Enemy>> m_listEnemy;
 
     int m_KeyPress;
     float time = 0.0f;

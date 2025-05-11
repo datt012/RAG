@@ -1,7 +1,4 @@
 #include "Player.h"
-#include "KeyDirection.h"
-#include <algorithm>
-#include <MainSrc/Collision/Collision.h>
 
 const std::unordered_map<AnimationKey, std::pair<int, int>> Player::s_AnimationMap = {
 	{{true, false, DirectionGun::NONE}, {0, 5}},
@@ -57,19 +54,23 @@ Player::~Player()
 
 void Player::Init()
 {
-	//m_animationPlayer->Init();
-	//m_animationPlayer->SetFrame(0, 0); // Set initial frame to idle frame
-	//m_animationPlayer->Set2DPosition(100, 100); // Set initial position
-	//m_animationPlayer->SetSize(50, 50); // Set size
-	//m_animationPlayer->SetRotation(0.0f); // Set rotation
-	//m_animationPlayer->SetFlip(SDL_FLIP_NONE); // Set flip
+	m_MAX_HP = PLAYER_MAX_HP;
+	m_HP = m_MAX_HP;
+	m_Speed = PLAYER_SPEED_X;
+	m_JumpForce = PLAYER_JUMP_FORCE;
+	m_Gravity = GRAVITY;
+
+	std::shared_ptr<TextureManager> texture = ResourceManagers::GetInstance()->GetTexture(PLAYER_BULLET_SPRITE_PATH);
+	m_BulletPool = std::make_shared<BulletPool>(PLAYER_BULLET_POOL_SIZE, texture, SDL_FLIP_NONE);
 }
 
 void Player::HandleInput(int keyMask)
 {
+	m_IsShooting = false;
+	if (!IsAlive()) return;
+
 	m_IsShooting = keyMask & KEY_SHOOT;
 	m_CurrentDirectionGun = DirectionGun::FromKeyMask(keyMask);
-	printf("Direction Gun: %s\n", m_CurrentDirectionGun.to_string());
 
 	SetFlip(
 		m_CurrentDirectionGun & DirectionGun::LEFT ? SDL_FLIP_HORIZONTAL :
@@ -86,8 +87,44 @@ void Player::HandleInput(int keyMask)
 	}
 }
 
+void Player::Shoot()
+{
+	std::shared_ptr<Bullet> bullet = m_BulletPool->SpawnBullet(PLAYER_BULLET_DAMAGE);
+
+	if (bullet) {
+		Vector2 velocityBullet = {
+		m_CurrentDirectionGun & DirectionGun::LEFT ? -1.0f : m_CurrentDirectionGun & DirectionGun::RIGHT ? 1.0f : 0,
+		m_CurrentDirectionGun & DirectionGun::UP ? -1.0f : m_CurrentDirectionGun & DirectionGun::DOWN ? 1.0f : 0
+		};
+		if (m_CurrentDirectionGun == DirectionGun::NONE) {
+			velocityBullet.x = m_flip == SDL_FLIP_HORIZONTAL ? -1.0f : 1.0f;
+		}
+		if (m_CurrentDirectionGun == DirectionGun::DOWN && m_IsOnGround) {
+			velocityBullet.x = m_flip == SDL_FLIP_HORIZONTAL ? -1.0f : 1.0f;
+			velocityBullet.y = 0;
+		}
+		velocityBullet = velocityBullet.Normalize() * PLAYER_BULLET_SPEED;
+
+		Vector2 p;
+		p.x = Get2DPosition().x + GetWidth() / 2 +
+			(m_flip == SDL_FLIP_HORIZONTAL ? -1 : 1) * PLAYER_BULLET_WIDTH / 2;
+		p.y = Get2DPosition().y + GetHeight() * 25 / ORIGINAL_PLAYER_SIZE_H +
+			(-PLAYER_BULLET_HEIGHT) / 2;
+		p += velocityBullet / velocityBullet.Length() * 11 * GetWidth() / ORIGINAL_PLAYER_SIZE_W;
+
+		bullet->SetSize(PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT);
+		bullet->Set2DPosition(p.x, p.y);
+		bullet->SetVelocity(velocityBullet);
+		bullet->SetFlip(m_flip);
+	}
+}
+
 void Player::Update(float deltatime)
 {
+	if (m_IsShooting) {
+		Shoot();
+	}
+
 	m_Velocity.y += m_IsOnGround ? 0 : (m_Gravity * deltatime);
 
 	m_Velocity.x = m_Velocity.x * 0.98f;
@@ -103,13 +140,19 @@ void Player::Update(float deltatime)
 
 void Player::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 {
-
 	AnimationKey key{ m_IsOnGround, m_IsShooting, m_CurrentDirectionGun };
 
 	auto it = s_AnimationMap.find(key);
-	if (it != s_AnimationMap.end())
+	if (!IsAlive()) 
+	{
+		m_animationPlayer->SetFrame(46, 50);
+		m_animationPlayer->SetFrameTime(150);
+		m_animationPlayer->SetLoop(false);
+	}
+	else if (it != s_AnimationMap.end())
 	{
 		m_animationPlayer->SetFrame(it->second.first, it->second.second);
+		m_animationPlayer->SetLoop(true);
 	}
 
 	m_animationPlayer->Draw(renderer, clip);
@@ -129,4 +172,43 @@ void Player::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 	// Reset color to default (eg: black)
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
+}
+
+SDL_Rect Player::GetColliderRect() {
+	SDL_FRect rect = GetColliderFRect();
+
+	return {
+		static_cast<int>(rect.x),
+		static_cast<int>(rect.y),
+		static_cast<int>(rect.w),
+		static_cast<int>(rect.h)
+	};
+}
+
+SDL_FRect Player::GetColliderFRect() {
+	if (!IsAlive()) return { 
+		Get2DPosition().x, 
+		Get2DPosition().y + GetHeight(),
+		static_cast<float>(GetWidth()),
+		0
+	};
+
+	SDL_FRect rect = {
+		Get2DPosition().x,
+		Get2DPosition().y,
+		static_cast<float>(GetWidth()),
+		static_cast<float>(GetHeight())
+	};
+
+	return  m_IsOnGround && m_CurrentDirectionGun == DirectionGun::DOWN ? SDL_FRect{
+		rect.x + ORIGINAL_PLAYER_CROUCH_X * rect.w / ORIGINAL_PLAYER_SIZE_W,
+		rect.y + ORIGINAL_PLAYER_CROUCH_Y * rect.h / ORIGINAL_PLAYER_SIZE_H,
+		rect.w * ORIGINAL_PLAYER_CROUCH_W / ORIGINAL_PLAYER_SIZE_W,
+		rect.h * ORIGINAL_PLAYER_CROUCH_H / ORIGINAL_PLAYER_SIZE_H
+	} : SDL_FRect{
+		rect.x + ORIGINAL_PLAYER_X * rect.w / ORIGINAL_PLAYER_SIZE_W,
+		rect.y + ORIGINAL_PLAYER_Y * rect.h / ORIGINAL_PLAYER_SIZE_H,
+		rect.w * ORIGINAL_PLAYER_W / ORIGINAL_PLAYER_SIZE_W,
+		rect.h * ORIGINAL_PLAYER_H / ORIGINAL_PLAYER_SIZE_H
+	};
 }
