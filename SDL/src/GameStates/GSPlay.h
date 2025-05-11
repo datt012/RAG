@@ -14,6 +14,8 @@
 #include "MainSrc/Entities/Enemy2.h"
 #include "MainSrc/Entities/Enemy3.h"
 #include "MainSrc/Entities/Enemy4.h"
+#include "MainSrc/LevelDesign/Level.h"
+
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
@@ -50,10 +52,12 @@ private:
     std::list<std::shared_ptr<Player>> m_listPlayer;
 
 
-    std::shared_ptr<Enemy> m_enemy;
+    /*std::shared_ptr<Enemy> m_enemy;
     std::shared_ptr<Enemy2> m_enemy2;
     std::shared_ptr<Enemy3> m_enemy3;
-    std::shared_ptr<Enemy4> m_enemy4;
+    std::shared_ptr<Enemy4> m_enemy4;*/
+
+    std::shared_ptr<Level> m_currentLevel;
 
     int m_KeyPress;
     float time = 0.0f;

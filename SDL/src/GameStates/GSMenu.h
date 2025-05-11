@@ -3,6 +3,7 @@
 
 #include"GameObject/Text.h"
 #include "GameObject/Sound.h"
+#include "SpriteAnimation.h"
 class MouseButton;
 class GSMenu :
 	public GameStateBase
@@ -30,6 +31,7 @@ private:
 	std::shared_ptr<Text>					m_textGameName;
 	SDL_Color m_textColor;
 	std::shared_ptr<MouseButton> btnCredit;
+	std::shared_ptr<SpriteAnimation> m_animation;
 	int score = 0;
 	
 };

@@ -4,6 +4,8 @@
 #include "SpriteAnimation.h"
 #include "TextureManager.h"
 #include "MainSrc/Entities/Laser.h"
+#include "MainSrc/LevelDesign/LevelStates.h"
+
 class Enemy2 : public BaseObject2d {
 public:
 	void Init() override;
@@ -45,6 +47,7 @@ private:;
 	void followPlayer(float deltaTime);
 	void Move(Vector2 pos, float deltaTime);
 	void Attack(float deltaTime);
+	void Attack2(float deltaTime);
 	void Handle(float deltaTime);
 	
 };

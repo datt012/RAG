@@ -72,7 +72,7 @@ void Game::Run()
 			fpsTimer->Start();
 			countedFrames = 0;
 		}
-		printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
+		//printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
 
 		//Update screen
 		Update(targetTime);

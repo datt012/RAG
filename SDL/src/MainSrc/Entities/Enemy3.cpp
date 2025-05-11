@@ -15,23 +15,14 @@ void Enemy3::Init2(const std::shared_ptr<TextureManager> imgTexture, int health,
     if (imgTexture) {
         m_attackAnimation = std::make_shared<SpriteAnimation>(imgTexture, 1, 8, 6, 0.15f);
         m_attackAnimation->SetSize(100, 100);
-
         m_dieAnimation = std::make_shared<SpriteAnimation>(imgTexture, 2, 8, 6, 2.0f);
         m_dieAnimation->SetSize(100, 100);
-
-
-
         m_idleAnimation = std::make_shared<SpriteAnimation>(imgTexture, 3, 8, 6, 0.5f);
         m_idleAnimation->SetSize(100, 100);
-
-
         m_spellAnimation = std::make_shared<SpriteAnimation>(imgTexture, 4, 8, 6, 10.0f);
         m_spellAnimation->SetSize(100, 100);
-
         m_runAnimation = std::make_shared<SpriteAnimation>(imgTexture, 5, 8, 6, 0.1f);
         m_runAnimation->SetSize(100, 100);
-
-       
         m_hurtAnimation = std::make_shared<SpriteAnimation>(imgTexture, 6, 8, 6, 0.1f);
         m_hurtAnimation->SetSize(100, 100);
         

@@ -13,7 +13,10 @@ Sound::~Sound()
 }
 
 bool Sound::Init()
-{
+{   
+    m_flag = true;
+    m_SFXFlag = true;
+
     bool ret = true;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) //SDL_INIT_AUDIO for Init SDL audio
     {
@@ -32,8 +35,9 @@ bool Sound::Init()
 }
 
 void Sound::PlaySound(const std::string& name)
-{
-
+{   
+    if (m_flag == false) return;
+    
     Mix_Music* music = NULL;
     auto it = m_Sounds.find(name);
     if (it != m_Sounds.end())
