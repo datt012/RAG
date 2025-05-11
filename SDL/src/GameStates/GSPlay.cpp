@@ -38,14 +38,27 @@ void GSPlay::Init() {
     m_listPlayer.push_back(player);
 
     // Initialize enemy
+    
+	std::vector<Vector2> armobPositions = {
+        {300, 0},
+        {500, 0},
+        {700, 0},
+        {800, 0},
+        {1100, 0},
+        {1300, 0},
+        {1500, 0},
+        {1800, 0},
+	};
     texture = ResourceManagers::GetInstance()->GetTexture(ARMOB_SPRITE_PATH);
-    animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 26, 0, 0, 30);
-    enemy = std::make_shared<ARMob>(animation);
-    enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
-    enemy->Set2DPosition(300, 0);
-	enemy->SetTarget(player);
-    enemy->Init();
-	m_listEnemy.push_back(enemy);
+	for (const auto& pos : armobPositions) {
+        animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 26, 0, 0, 30);
+		enemy = std::make_shared<ARMob>(animation);
+		enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
+		enemy->Set2DPosition(pos.x, pos.y);
+		enemy->SetTarget(player);
+		enemy->Init();
+		m_listEnemy.push_back(enemy);
+	}
 
     // Set up camera
     Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
@@ -130,13 +143,17 @@ void GSPlay::HandleTouchEvents(SDL_Event& e) {
 void GSPlay::HandleMouseMoveEvents(int x, int y) {}
 
 void GSPlay::Update(float deltaTime) {
+    if (deltaTime > 200) return;
+
     // Update key press events
     for (auto it : m_listPlayer) {
         it->HandleInput(m_KeyPress);
     }
 	printf("KeyPress: %d\n", m_KeyPress);
 
-	enemy->HandleInput(Behavior::GenerateKeyMask(enemy, m_map));
+    for (auto it : m_listEnemy) {
+        it->HandleInput(Behavior::GenerateKeyMask(it, m_map));
+    }
 
     // Update map
     m_map->Update(deltaTime);

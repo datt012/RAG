@@ -24,7 +24,8 @@ void Bullet::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 			renderQuad.w = clip->w;
 			renderQuad.h = clip->h;
 		}
-		SDL_RenderCopyEx(Renderer::GetInstance()->GetRenderer(), m_pTexture->GetTextureObj(), clip, &renderQuad, m_angle, nullptr, m_flip);
+		SDL_Point center = { renderQuad.w / 2, renderQuad.h / 2 };
+		SDL_RenderCopyEx(Renderer::GetInstance()->GetRenderer(), m_pTexture->GetTextureObj(), clip, &renderQuad, m_angle, &center, m_flip);
 	}
 }
 

@@ -14,6 +14,8 @@ class Character : public BaseObject
 protected:
     int m_HP;
     int m_MAX_HP;
+    int m_ShootCooldown = 0;
+    int m_ShootCooldownTime;
     std::shared_ptr<BulletPool> m_BulletPool;
 
     DirectionGun m_CurrentDirectionGun;
@@ -32,7 +34,12 @@ protected:
     bool m_IsJumping = false;       // Flag for jumping
     bool m_IsShooting = false;      // Flag for shooting
 
-
+	void DrawCollider(SDL_Renderer* renderer, SDL_Color lineColor = { 255, 0, 0, 255 });
+    void DrawHPBar(SDL_Renderer* renderer, const Vector2& position, int currentHP, int maxHP,
+        int barWidth, int barHeight, 
+        SDL_Color bgColor = { 100, 100, 100, 255 }, 
+        SDL_Color hpColor = { 255, 0, 0, 255 },
+        bool isWorldPosition = true);
 public:
     Character(std::shared_ptr<SpriteAnimationPlayer> sprite) :
         m_animationPlayer(sprite) {

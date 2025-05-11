@@ -62,6 +62,8 @@ void ARMob::Init()
 	m_sightRange = ARMOB_SIGHT_RANGE;
 	m_shootRange = ARMOB_SHOOT_RANGE;
 
+	m_ShootCooldownTime = ARMOB_SHOOT_COOLDOWN_TIME;
+
 	std::shared_ptr<TextureManager> texture = ResourceManagers::GetInstance()->GetTexture(ARMOB_BULLET_SPRITE_PATH);
 	m_BulletPool = std::make_shared<BulletPool>(ARMOB_BULLET_POOL_SIZE, texture, SDL_FLIP_NONE);
 }
@@ -93,7 +95,11 @@ void ARMob::Shoot()
 {
 	std::shared_ptr<Bullet> bullet = m_BulletPool->SpawnBullet(ARMOB_BULLET_DAMAGE);
 
+	bool isCrouch = m_IsOnGround && m_CurrentDirectionGun == DirectionGun::DOWN;
+
 	if (bullet) {
+		bullet->SetSize(ARMOB_BULLET_WIDTH, ARMOB_BULLET_HEIGHT);
+
 		Vector2 velocityBullet = {
 			m_CurrentDirectionGun & DirectionGun::LEFT ? -1.0f : m_CurrentDirectionGun & DirectionGun::RIGHT ? 1.0f : 0,
 			m_CurrentDirectionGun & DirectionGun::UP ? -1.0f : m_CurrentDirectionGun & DirectionGun::DOWN ? 1.0f : 0
@@ -101,31 +107,37 @@ void ARMob::Shoot()
 		if (m_CurrentDirectionGun == DirectionGun::NONE) {
 			velocityBullet.x = m_flip == SDL_FLIP_HORIZONTAL ? -1.0f : 1.0f;
 		}
-		if (m_CurrentDirectionGun == DirectionGun::DOWN && m_IsOnGround) {
+		if (isCrouch) {
 			velocityBullet.x = m_flip == SDL_FLIP_HORIZONTAL ? -1.0f : 1.0f;
 			velocityBullet.y = 0;
 		}
 		velocityBullet = velocityBullet.Normalize() * ARMOB_BULLET_SPEED;
 
 		Vector2 p;
-		p.x = Get2DPosition().x + GetWidth() / 2 +
-			(m_flip == SDL_FLIP_HORIZONTAL ? -1 : 1) * ARMOB_BULLET_WIDTH / 2;
-		p.y = Get2DPosition().y + GetHeight() * 19 / ORIGINAL_ARMOB_SIZE_H +
-			(-ARMOB_BULLET_HEIGHT) / 2;
+		p.x = Get2DPosition().x +
+			GetWidth() / 2.0f +
+			(-bullet->GetWidth() / 2.0f);
+		p.y = Get2DPosition().y + 
+			static_cast<float>(GetHeight()) / ORIGINAL_ARMOB_SIZE_H * 20 +
+			(-bullet->GetHeight() / 2.0f);
 		p += velocityBullet / velocityBullet.Length() * 11 * GetWidth() / ORIGINAL_ARMOB_SIZE_W;
 
-		bullet->SetSize(ARMOB_BULLET_WIDTH, ARMOB_BULLET_HEIGHT);
 		bullet->Set2DPosition(p.x, p.y);
 		bullet->SetVelocity(velocityBullet);
-		bullet->SetFlip(m_flip);
+		bullet->SetRotation(atan2(velocityBullet.y, velocityBullet.x) * (180.0 / M_PI));
 	}
 }
 
 void ARMob::Update(float deltatime)
 {
-	if (m_IsShooting && m_IsOnGround) {
+	if (m_IsShooting && m_ShootCooldown <= 0 && m_IsOnGround) {
 		Shoot();
+		m_ShootCooldown = m_ShootCooldownTime;
 	}
+	else if (m_animationPlayer->GetCurrentFrame() == m_animationPlayer->GetEndFrame()) {
+		m_IsShooting = false;
+	}
+	m_ShootCooldown -= (m_ShootCooldown > 0) ? static_cast<int>(deltatime) : 0;
 
 	m_Velocity.y += m_IsOnGround ? 0 : (m_Gravity * deltatime);
 
@@ -148,7 +160,7 @@ void ARMob::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 	auto it = s_AnimationMap.find(key);
 	if (!IsAlive())
 	{
-		m_animationPlayer->SetFrame(22, 25);
+		m_animationPlayer->SetFrame(21, 24);
 		m_animationPlayer->SetFrameTime(150);
 		m_animationPlayer->SetLoop(false);
 	}
@@ -161,19 +173,11 @@ void ARMob::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 
 	m_Displacement = { 0, 0 };
 
-	// Set color (eg: red)
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
-	SDL_Rect colliderRect = GetColliderRect();
-	colliderRect.x -= Camera::GetInstance()->GetPosition().x;
-	colliderRect.y -= Camera::GetInstance()->GetPosition().y;
-
-	// Draw the bounding box
-	SDL_RenderDrawRect(renderer, &colliderRect);
-
-	// Reset color to default (eg: black)
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
+	SDL_FRect colliderRect = GetColliderFRect();
+	//DrawCollider(renderer);
+	if (IsAlive()) {
+		DrawHPBar(renderer, { colliderRect.x, colliderRect.y - 5 }, m_HP, m_MAX_HP, colliderRect.w, 3);
+	}
 }
 
 SDL_Rect ARMob::GetColliderRect() {

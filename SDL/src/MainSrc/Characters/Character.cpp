@@ -156,6 +156,42 @@ void Character::SolveCollision(std::shared_ptr<Map> map) {
 	UpdateIsOnGround(map);
 }
 
+void Character::DrawCollider(SDL_Renderer* renderer, SDL_Color lineColor) {
+	SDL_Rect colliderRect = GetColliderRect();
+
+	colliderRect.x -= Camera::GetInstance()->GetPosition().x;
+	colliderRect.y -= Camera::GetInstance()->GetPosition().y;
+
+	SDL_SetRenderDrawColor(renderer, lineColor.r, lineColor.g, lineColor.b, lineColor.a);
+	SDL_RenderDrawRect(renderer, &colliderRect);
+
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Reset color to default
+}
+
+void Character::DrawHPBar(SDL_Renderer* renderer, const Vector2& position, int currentHP, int maxHP,
+							int barWidth, int barHeight, SDL_Color bgColor, SDL_Color hpColor, bool isWorldPosition) {
+	float hpPercent = static_cast<float>(currentHP) / maxHP;
+	if (hpPercent < 0) hpPercent = 0;
+	if (hpPercent > 1) hpPercent = 1;
+
+	Vector2 renderPos = position;
+	if (isWorldPosition) {
+		renderPos.x -= Camera::GetInstance()->GetPosition().x;
+		renderPos.y -= Camera::GetInstance()->GetPosition().y;
+	}
+
+	SDL_Rect hpBarRect = { static_cast<int>(renderPos.x), static_cast<int>(renderPos.y), barWidth, barHeight };
+	SDL_Rect hpFillRect = { static_cast<int>(renderPos.x), static_cast<int>(renderPos.y), barWidth * hpPercent, barHeight };
+
+	SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
+	SDL_RenderFillRect(renderer, &hpBarRect);
+
+	SDL_SetRenderDrawColor(renderer, hpColor.r, hpColor.g, hpColor.b, hpColor.a);
+	SDL_RenderFillRect(renderer, &hpFillRect);
+
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Reset color to default
+}
+
 // Getters
 int Character::GetHP() const {
 	return m_HP;
