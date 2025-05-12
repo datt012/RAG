@@ -52,6 +52,10 @@ public:
 	int		GetWidth();
 	int		GetHeight();
 
+	int		GetCurrentFrame() { return m_currentFrame; }
+	int		GetStartFrame() { return m_frameStartIndex; }
+	int		GetEndFrame() { return m_frameEndIndex; }
+
 	float	GetFrameTime() { return m_frameTime; }
 	void	SetFrameTime(float frameTime) { m_frameTime = frameTime; }
 

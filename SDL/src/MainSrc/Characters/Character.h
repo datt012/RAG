@@ -1,86 +1,98 @@
 #pragma once
 #include <SDL.h>
 #include <memory>
-#include "SpriteAnimation.h"
-#include <SpriteAnimationPlayer.h>
-#include <Timer.h>
 #include <map>
+#include "SpriteAnimation.h"
+#include "SpriteAnimationPlayer.h"
+#include "Timer.h"
+#include "MainSrc/Map/Map.h"
+#include "DirectionGun.h"
+#include "MainSrc/Projectiles/BulletPool.h"
 
 class Character : public BaseObject
 {
 protected:
-    // Facing direction
-    enum Direction {
-        LEFT,
-        RIGHT
-    } m_Facing = RIGHT;
+    int m_HP;
+    int m_MAX_HP;
+    int m_ShootCooldown = 0;
+    int m_ShootCooldownTime;
+    std::shared_ptr<BulletPool> m_BulletPool;
 
-    enum Action {
-        IDLE,
-        RUN,
-        CROUCH,
-        FALL
-    } m_CurrentAction = IDLE;
-
-    enum DirectionGun {
-        DIR_HORIZONTAL,
-        DIR_UP,
-        DIR_DOWN,
-        DIR_DIAGONAL_UP,
-        DIR_DIAGONAL_DOWN
-    } m_CurrentDirectionGun = DIR_HORIZONTAL;
+    DirectionGun m_CurrentDirectionGun;
 
     // Main sprite (or animation)
     std::shared_ptr<SpriteAnimationPlayer> m_animationPlayer;
 
-    float       m_VelocityX = 0.0f;       // Velocity along the X-axis
-    float       m_VelocityY = 0.0f;       // Velocity along the Y-axis
+    Vector2     m_Velocity = { 0, 0 };
+    Vector2     m_Displacement = { 0, 0 };
 
-    float m_Speed = 0.3f;           // Running speed
-    float m_JumpForce = 0.3f;      // Jumping force
-    float m_JumpDuration = 0.4f;    // Jumping duration
-    float m_Gravity = 0.0007f;       // Gravity
+    float m_Speed = 0;           // Running speed
+    float m_JumpForce = 0;      // Jumping force
+    float m_Gravity = 0;       // Gravity
 
+    bool m_IsOnGround = false;
     bool m_IsJumping = false;       // Flag for jumping
     bool m_IsShooting = false;      // Flag for shooting
 
-    // Private functions to handle movement/state logic
-    virtual void ApplyMovement(float deltaTime) = 0;
-    virtual void UpdateAnimation(float deltaTime) = 0;
-
+	void DrawCollider(SDL_Renderer* renderer, SDL_Color lineColor = { 255, 0, 0, 255 });
+    void DrawHPBar(SDL_Renderer* renderer, const Vector2& position, int currentHP, int maxHP,
+        int barWidth, int barHeight, 
+        SDL_Color bgColor = { 100, 100, 100, 255 }, 
+        SDL_Color hpColor = { 255, 0, 0, 255 },
+        bool isWorldPosition = true);
 public:
     Character(std::shared_ptr<SpriteAnimationPlayer> sprite) :
         m_animationPlayer(sprite) {
     }
     ~Character() {}
 
-    virtual void	SetSize(int width, int height) { m_animationPlayer->SetSize(width, height); }
-    virtual int     GetWidth() { return m_animationPlayer->GetWidth(); }
-    virtual int     GetHeight() { return m_animationPlayer->GetHeight(); }
+    virtual void	SetSize(int width, int height);
+    virtual int     GetWidth();
+    virtual int     GetHeight();
 
-    virtual Vector3     GetPosition() override { return m_animationPlayer->GetPosition(); }
-    virtual void        SetPosition(Vector3 position) override { m_animationPlayer->SetPosition(position); }
-    virtual Vector2		Get2DPosition() { return m_animationPlayer->Get2DPosition(); }
-    virtual void		Set2DPosition(float x, float y) { this->SetPosition(Vector3((float)x, (float)y, 0.0f)); }
-    virtual void		SetRotation(double angle) { m_animationPlayer->SetRotation(angle); }
-    virtual void		SetFlip(SDL_RendererFlip flip) { m_animationPlayer->SetFlip(flip); }
+    virtual Vector3     GetPosition() override;
+    virtual void        SetPosition(Vector3 position) override;
+    virtual Vector2		Get2DPosition();
+    virtual void		Set2DPosition(float x, float y);
+    virtual void		SetRotation(double angle);
+    virtual void		SetFlip(SDL_RendererFlip flip);
 
-    virtual void SetVelocity(float vx, float vy) {
-        m_VelocityX = vx;
-        m_VelocityY = vy;
-    }
-    virtual void    SetVelocityX(float vx) { m_VelocityX = vx; }
-    virtual void    SetVelocityY(float vy) { m_VelocityY = vy; }
-    virtual int     GetVelocityX() { return m_VelocityX; }
-    virtual int     GetVelocityY() { return m_VelocityY; }
+    virtual void        SetVelocity(Vector2 velocity);
+    virtual void        SetVelocity(float vx, float vy);
+    virtual Vector2     GetVelocity();
 
-    // Handle input in bitmask format from external class (GSPlay)
     virtual void HandleInput(int keyMask) = 0;
+    virtual void Shoot() = 0;
 
     // Parameters that can be adjusted or overridden by subclasses
-    virtual void SetSpeed(float speed) { m_Speed = speed; }
-    virtual void SetJumpForce(float force) { m_JumpForce = force; }
-    virtual void SetJumpDuration(float duration) { m_JumpDuration = duration; }
-    virtual void SetGravity(float gravity) { m_Gravity = gravity; }
+    virtual void SetSpeed(float speed);
+    virtual void SetJumpForce(float force);
+    virtual void SetJumpDuration(float duration);
+    virtual void SetGravity(float gravity);
+
+    // Collider
+    virtual SDL_Rect GetColliderRect();
+    virtual SDL_FRect GetColliderFRect();
+
+	// Collision detection and resolution
+    virtual void ClampPositionToMapBounds(std::shared_ptr<Map> map);
+    virtual bool CollisionWithMap(std::shared_ptr<Map> map);
+    virtual void UpdateIsOnGround(std::shared_ptr<Map> map);
+    virtual void SolveCollision(std::shared_ptr<Map> map);
+
+    // Getters
+    int GetHP() const;
+	bool IsAlive() const;
+    std::shared_ptr<BulletPool> GetBulletPool() const;
+    bool IsOnGround() const;
+    bool IsJumping() const;
+    bool IsShooting() const;
+
+	// Setters
+    void SetHP(int hp);
+    void TakeDamage(int damage);
+    void SetOnGround(bool isOnGround);
+    void SetJumping(bool isJumping);
+    void SetShooting(bool isShooting);
 };
 

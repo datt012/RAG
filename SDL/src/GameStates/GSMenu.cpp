@@ -1,7 +1,6 @@
-﻿#include "GSMenu.h"
+#include "GSMenu.h"
 #include "ResourceManagers.h"
 #include "MouseButton.h"
-#include "Setting.h"
 GSMenu::GSMenu() : GameStateBase(StateType::STATE_MENU),
 m_background(nullptr), m_listButton(std::list<std::shared_ptr<MouseButton>>{}), m_textGameName(nullptr)
 {
@@ -17,7 +16,7 @@ GSMenu::~GSMenu()
 void GSMenu::Init()
 {
 	//auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("navyblue.jpg");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("bg_main_menu.tga");
 
 	// background
 	//auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -30,7 +29,7 @@ void GSMenu::Init()
 	std::shared_ptr<MouseButton> btnPlay = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
 	
 	btnPlay->SetSize(150, 150);
-	btnPlay->Set2DPosition((SCREEN_WIDTH - btnPlay->GetWidth())/2, (SCREEN_HEIDHT - btnPlay->GetHeight()) / 2 + 200);
+	btnPlay->Set2DPosition((SCREEN_WIDTH - btnPlay->GetWidth())/2, (SCREEN_HEIDHT - btnPlay->GetHeight()) / 2);
 	btnPlay->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_PLAY);
 		});
@@ -51,16 +50,16 @@ void GSMenu::Init()
 	texture = ResourceManagers::GetInstance()->GetTexture("btn_settings.tga");
 	std::shared_ptr<MouseButton> btnOption = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
 	btnOption->SetSize(100, 100);
-	btnOption->Set2DPosition((SCREEN_WIDTH - btnOption->GetWidth()) / 2 - 200, (SCREEN_HEIDHT / 3) *2 + 50);
+	btnOption->Set2DPosition((SCREEN_WIDTH - btnOption->GetWidth()) / 2, (SCREEN_HEIDHT / 3) *2 );
 	btnOption->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_OPTION);
 		});
 	m_listButton.push_back(btnOption);
 
 	//CREDIT game
-	texture = ResourceManagers::GetInstance()->GetTexture("about.png");
+	texture = ResourceManagers::GetInstance()->GetTexture("btn_help.tga");
 	btnCredit = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
-	btnCredit->Set2DPosition((SCREEN_WIDTH - btnCredit->GetWidth()) / 2 + 200, SCREEN_HEIDHT / 3*2  + 50);
+	btnCredit->Set2DPosition((SCREEN_WIDTH - btnCredit->GetWidth()) / 2, SCREEN_HEIDHT / 6 *5);
 	btnCredit->SetSize(100, 100);
 	btnCredit->SetOnClick([]() {
 		GameStateMachine::GetInstance()->ChangeState(StateType::STATE_CREDIT);
@@ -70,24 +69,16 @@ void GSMenu::Init()
 	// game title
 	///Set Font
 
-	m_textColor = { 255,153,0 };
-	auto font = ResourceManagers::GetInstance()->GetFont("f1.ttf", 28);
-	m_textGameName = std::make_shared<Text>(" GAME LORD",font,  m_textColor);
+	m_textColor = { 255,0,0 };
+	auto font = ResourceManagers::GetInstance()->GetFont("Brightly Crush Shine.otf", 28);
+	m_textGameName = std::make_shared<Text>("Your Game",font,  m_textColor);
 	m_textGameName->SetSize(300, 150);
 	m_textGameName->Set2DPosition((SCREEN_WIDTH - m_textGameName->GetWidth())/2, SCREEN_HEIDHT / 2 - 300);
 	
-
-	auto texture2 = ResourceManagers::GetInstance()->GetTexture("RPGmob2.png");
-	m_animation = std::make_shared<SpriteAnimation>(texture2, 1, 5, 1, 100.0f);
-	m_animation->SetSize(200, 200);
-	m_animation->Set2DPosition(SCREEN_WIDTH / 2 - m_animation->GetWidth()/2 + 10, SCREEN_HEIDHT / 2 - 150);
 	/// sound
-	Sound::GetInstance()->StopSound();
 	
-	Sound::GetInstance()->LoadSound("Alarm01.wav");
-	Sound::GetInstance()->PlaySound("Alarm01.wav");
-	
-	
+	/*Sound::GetInstance()->LoadSound("Alarm01.wav");
+	Sound::GetInstance()->PlaySound("Alarm01.wav");*/
 	
 }
 
@@ -137,18 +128,15 @@ void GSMenu::HandleMouseMoveEvents(int x, int y)
 void GSMenu::Update(float deltaTime)
 {
 	m_background->Update(deltaTime);
-	m_animation->Update(deltaTime);
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
 	}
-
 }
 
 void GSMenu::Draw(SDL_Renderer* renderer)
 {
 	m_background->Draw(renderer);
-	m_animation->Draw(renderer);
 	for (auto it : m_listButton)
 	{
 		it->Draw(renderer);

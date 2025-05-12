@@ -8,13 +8,11 @@
 #include "GameObject/Camera.h"
 #include "KeyState.h"
 #include "Sound.h"
-#include "MainSrc/Characters/Player.h"
+#include "MainSrc/Characters/Player/Player.h"
 #include "MainSrc/Characters/KeyDirection.h"
-#include "MainSrc/Entities/Enemy.h"
-#include "MainSrc/Entities/Enemy2.h"
-#include "MainSrc/Entities/Enemy3.h"
-#include "MainSrc/Entities/Enemy4.h"
-#include "MainSrc/LevelDesign/Level.h"
+#include "MainSrc/Characters/Enemy/Enemy.h"
+#include "MainSrc/Characters/Enemy/ARMob.h"
+#include <MainSrc/Characters/Enemy/Behavior.h>
 
 class Sprite2D;
 class SpriteAnimation;
@@ -44,20 +42,14 @@ private:
     std::shared_ptr<SpriteAnimation> obj;
     std::shared_ptr<SpriteAnimationPlayer> animation;
     std::shared_ptr<Player> player;
+    std::shared_ptr<Enemy> enemy;
     std::shared_ptr<MouseButton> button;
     std::shared_ptr<Map> m_map; 
 
     std::list<std::shared_ptr<MouseButton>> m_listButton;
     std::list<std::shared_ptr<SpriteAnimation>> m_listAnimation;
     std::list<std::shared_ptr<Player>> m_listPlayer;
-
-
-    /*std::shared_ptr<Enemy> m_enemy;
-    std::shared_ptr<Enemy2> m_enemy2;
-    std::shared_ptr<Enemy3> m_enemy3;
-    std::shared_ptr<Enemy4> m_enemy4;*/
-
-    std::shared_ptr<Level> m_currentLevel;
+    std::list<std::shared_ptr<Enemy>> m_listEnemy;
 
     int m_KeyPress;
     float time = 0.0f;

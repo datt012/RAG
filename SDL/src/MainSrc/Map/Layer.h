@@ -8,14 +8,34 @@ public:
     Layer(int width, int height);
     ~Layer();
 
-    void AddPixel(const Pixel& pixel);
-
 	void Init() override;
     void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
     void Update(float deltaTime) override;
 
+    // Getters
+	int GetID() const { return id; }
+	const std::string& GetName() const { return name; }
+    int GetWidth() const { return m_Width; }
+	int GetHeight() const { return m_Height; }
+	std::vector<Pixel>& GetPixels() { return m_Pixels; }
+	bool IsVisible() const { return visible; }
+
+    //Setters
+	void SetID(int id) { this->id = id; }
+	void SetName(const std::string& name) { this->name = name; }
+	void SetWidth(int width) { m_Width = width; }
+	void SetHeight(int height) { m_Height = height; }
+	void SetVisible(bool visible) { this->visible = visible; }
+
+	// Other methods
+	void AddPixel(const Pixel& pixel);
+	void ClearPixels();
+
 private:
+    int id;
+	std::string name;
     int m_Width;
     int m_Height;
     std::vector<Pixel> m_Pixels;
+    bool visible;
 };

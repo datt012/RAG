@@ -34,12 +34,12 @@ void Game::Run()
 
 	int countedFrames = 0;
 	fpsTimer->Start();
-
+	Uint32 frameTicks = 0;
 	while (!quit)
 	{
 		//Start cap timer
 		capTimer->Start();
-
+		float begin = SDL_GetTicks();
 		//Handle events on queue
 		while (SDL_PollEvent(&e) != 0)
 		{
@@ -72,15 +72,15 @@ void Game::Run()
 			fpsTimer->Start();
 			countedFrames = 0;
 		}
-		//printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
+		printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
 
 		//Update screen
-		Update(targetTime);
+		Update(frameTicks);
 		Render();
 		++countedFrames;
 
 		//If frame finished early
-		int frameTicks = capTimer->GetTicks();
+		frameTicks = capTimer->GetTicks();
 		if (frameTicks < targetTime)
 		{
 			//Wait remaining time

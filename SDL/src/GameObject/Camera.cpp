@@ -1,5 +1,5 @@
 #include"Camera.h"
-#include <MainSrc/Characters/Player.h>
+#include <MainSrc/Characters/Player/Player.h>
 
 SDL_Rect Camera::GetViewBox()
 {

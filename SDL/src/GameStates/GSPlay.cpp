@@ -1,53 +1,16 @@
-﻿#include "GSPlay.h"
+#include "GSPlay.h"
 
 GSPlay::GSPlay() : m_KeyPress(0) {}
 
 GSPlay::~GSPlay() {}
 
 void GSPlay::Init() {
-    //// Lấy texture Enemy
-    //auto textureEnemy = ResourceManagers::GetInstance()->GetTexture("ARMob.png");
-
-    //// Khởi tạo Enemy
-    //m_enemy = std::make_shared<Enemy>();
-    //m_enemy->SetPosition(Vector2(300, 495));
-    //m_enemy->SetFPositon(Vector2(300, 495));
-    //m_enemy->Init2(textureEnemy, 100, 0.2f);
-
-    
-
-    //// enemy2
-    //auto textureEnemy2 = ResourceManagers::GetInstance()->GetTexture("sprite.png");
-    //m_enemy2 = std::make_shared<Enemy2>();
-    //m_enemy2->SetPosition(Vector2(300, 150));
-    //m_enemy2->SetFposition(Vector2(300, 150));
-    //m_enemy2->Init2(textureEnemy2, 100, 0.2f);
-
-
-    ////
-    //auto textureEnemy3 = ResourceManagers::GetInstance()->GetTexture("enemy3.png");
-    //m_enemy3 = std::make_shared<Enemy3>();
-    //m_enemy3->SetPosition(Vector2(400, 150));
-    //m_enemy3->Init2(textureEnemy3, 100, 0.2f);
-
-    ////
-
-    //auto textureEnemy4 = ResourceManagers::GetInstance()->GetTexture("RPGmob2.png");
-    //m_enemy4 = std::make_shared<Enemy4>();
-    //m_enemy4->SetPosition(Vector2(500, 150));
-    //m_enemy4->Init2(textureEnemy4, 100, 0.2f);
-
-   
-   
-
-
-
-    //// Initialize the map
-    //m_map = std::make_shared<Map>();
-    //if (!m_map->LoadFromFile("Data/Asset/test2/main.tmx", Renderer::GetInstance()->GetRenderer())) {
-    //    printf("Failed to load map!\n");
-    //    return;
-    //}
+    // Initialize the map
+    m_map = std::make_shared<Map>();
+    if (!m_map->LoadFromFile("Data/Asset/test/main2.tmx", Renderer::GetInstance()->GetRenderer())) {
+        printf("Failed to load map!\n");
+        return;
+    }
 
     // Load background texture
     auto texture = ResourceManagers::GetInstance()->GetTexture("bg_play1.tga");
@@ -66,30 +29,40 @@ void GSPlay::Init() {
     m_listButton.push_back(button);
 
     // Initialize player
-    texture = ResourceManagers::GetInstance()->GetTexture("SpriteSheet_player_9_8.png");
-    animation = std::make_shared<SpriteAnimationPlayer>(texture, 9, 8, 0, 0, 30);
+    texture = ResourceManagers::GetInstance()->GetTexture(PLAYER_SPRITE_PATH);
+    animation = std::make_shared<SpriteAnimationPlayer>(texture, 12, 8, 0, 0, 30);
     player = std::make_shared<Player>(animation);
-    player->SetSize(60, 60);
-    player->Set2DPosition(100, 485);
+    player->SetSize(PLAYER_SIZE_WIDTH, PLAYER_SIZE_HEIGHT);
+    player->Set2DPosition(150, 0);
+    player->Init();
     m_listPlayer.push_back(player);
 
-
-    m_currentLevel = std::make_shared<Level>(1);
-    m_currentLevel->Init(player);
-   
-   /* m_enemy->SetTargetPlayer(player);
-    m_enemy2->SetTargetPlayer(player);*/
+    // Initialize enemy
+    
+	std::vector<Vector2> armobPositions = {
+        {300, 0},
+        {500, 0},
+        {700, 0},
+        {800, 0},
+        {1100, 0},
+        {1300, 0},
+        {1500, 0},
+        {1800, 0},
+	};
+    texture = ResourceManagers::GetInstance()->GetTexture(ARMOB_SPRITE_PATH);
+	for (const auto& pos : armobPositions) {
+        animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 26, 0, 0, 30);
+		enemy = std::make_shared<ARMob>(animation);
+		enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
+		enemy->Set2DPosition(pos.x, pos.y);
+		enemy->SetTarget(player);
+		enemy->Init();
+		m_listEnemy.push_back(enemy);
+	}
 
     // Set up camera
-    Camera::GetInstance()->SetLevelDimension(
-        m_currentLevel->GetMap()->GetWidth(),
-        m_currentLevel->GetMap()->GetHeight()
-    );
-
+    Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
     Camera::GetInstance()->SetTarget(player);
-
-
-
 }
 
 void GSPlay::Exit() {}
@@ -170,14 +143,20 @@ void GSPlay::HandleTouchEvents(SDL_Event& e) {
 void GSPlay::HandleMouseMoveEvents(int x, int y) {}
 
 void GSPlay::Update(float deltaTime) {
+    if (deltaTime > 200) return;
+
     // Update key press events
     for (auto it : m_listPlayer) {
         it->HandleInput(m_KeyPress);
     }
-	//printf("KeyPress: %d\n", m_KeyPress);
+	printf("KeyPress: %d\n", m_KeyPress);
+
+    for (auto it : m_listEnemy) {
+        it->HandleInput(Behavior::GenerateKeyMask(it, m_map));
+    }
 
     // Update map
-   /* m_map->Update(deltaTime);*/
+    m_map->Update(deltaTime);
 
     // Update buttons
     for (auto it : m_listButton) {
@@ -189,29 +168,78 @@ void GSPlay::Update(float deltaTime) {
         it->Update(deltaTime);
     }
 
-    //// Update players
-    //for (auto it : m_listPlayer) {
-    //    it->Update(deltaTime);
-    //}
-    /*m_enemy->Update(deltaTime);
-    m_enemy2->Update(deltaTime);
-    m_enemy3->Update(deltaTime);
-    m_enemy4->Update(deltaTime);*/
-    //printf("enemy %d %d\n", m_enemy->GetPosition().x, m_enemy->GetPosition().y);
-    m_currentLevel->Update(deltaTime);
+    // Update players
+    for (auto it : m_listPlayer) {
+        it->Update(deltaTime);
+        it->SolveCollision(m_map);
+		printf("hp player : %d\n", it->GetHP());
+    }
+
+    // Update enemy
+	for (auto it : m_listEnemy) {
+		it->Update(deltaTime);
+        it->SolveCollision(m_map);
+		printf("hp : %d\n", it->GetHP());
+	}
+
+	// Update bullets
+    for (auto it : m_listPlayer) {
+		auto bulletPool = it->GetBulletPool();
+		if (bulletPool) {
+			bulletPool->Update(deltaTime);
+
+			for (auto bullet : bulletPool->GetBullets()) {
+				if (bullet->IsActive()) {
+					SDL_FRect rectBullet = bullet->getColliderFRect();
+                    for (auto enemy : m_listEnemy) {
+						if (enemy->IsAlive()) {
+							if (Collision::CheckAABB(rectBullet, enemy->GetColliderFRect())) {
+								enemy->TakeDamage(bullet->GetDamage());
+								bullet->Deactivate();
+							}
+						}
+                    }
+				}
+			}
+
+			bulletPool->SolveCollision(m_map);
+		}
+	}
+    for (auto it : m_listEnemy) {
+        auto bulletPool = it->GetBulletPool();
+        if (bulletPool) {
+            bulletPool->Update(deltaTime);
+
+			for (auto bullet : bulletPool->GetBullets()) {
+				if (bullet->IsActive()) {
+					SDL_FRect rectBullet = bullet->getColliderFRect();
+					for (auto player : m_listPlayer) {
+						if (player->IsAlive()) {
+							if (Collision::CheckAABB(rectBullet, player->GetColliderFRect())) {
+								player->TakeDamage(bullet->GetDamage());
+								bullet->Deactivate();
+							}
+						}
+					}
+				}
+			}
+
+			bulletPool->SolveCollision(m_map);
+        }
+    }
 
     // Update camera
     Camera::GetInstance()->Update(deltaTime);
-
-    
-    int lvState = LevelStates::GetInstance()->GetLevelState();
-    /*if (lvState == 2) {
-        GameStateMachine::GetInstance()->ChangeState(StateType::STATE_COMPLETE);
-    }*/
 }
 
 void GSPlay::Draw(SDL_Renderer* renderer) {
-    
+    // Draw background
+    //m_background->Draw(renderer);
+
+    // Draw map
+    m_map->Draw(renderer);
+
+    // Draw buttons
     for (auto it : m_listButton) {
         it->Draw(renderer);
     }
@@ -221,14 +249,27 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
         it->Draw(renderer);
     }
 
-    //// Draw players
-    //for (auto it : m_listPlayer) {
-    //    it->Draw(renderer);
-    //}
+    // Draw players
+    for (auto it : m_listPlayer) {
+        it->Draw(renderer);
+    }
 
-    /*m_enemy->Draw(renderer);
-    m_enemy2->Draw(renderer);
-    m_enemy3->Draw(renderer);
-    m_enemy4->Draw(renderer);*/
-    m_currentLevel->Draw(renderer);
+    // Draw enemies
+	for (auto it : m_listEnemy) {
+		it->Draw(renderer);
+	}
+
+    // Draw bullets
+    for (auto it : m_listPlayer) {
+        auto bulletPool = it->GetBulletPool();
+        if (bulletPool) {
+            bulletPool->Draw(renderer);
+        }
+    }
+    for (auto it : m_listEnemy) {
+        auto bulletPool = it->GetBulletPool();
+        if (bulletPool) {
+            bulletPool->Draw(renderer);
+        }
+    }
 }
