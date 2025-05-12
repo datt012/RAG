@@ -174,7 +174,8 @@ void Player::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 	SDL_FRect colliderRect = GetColliderFRect();
 	//DrawCollider(renderer);
 	if (IsAlive()) {
-		DrawHPBar(renderer, { colliderRect.x, colliderRect.y - 5 }, m_HP, m_MAX_HP, colliderRect.w, 3,
+		DrawHPBar(renderer, { colliderRect.x, Get2DPosition().y + static_cast<float>(GetHeight()) * ORIGINAL_PLAYER_Y / ORIGINAL_PLAYER_SIZE_H - 6},
+			m_HP, m_MAX_HP, colliderRect.w, 3,
 			{ 100, 100, 100, 255 }, { 0, 255, 0, 255 });
 	}
 }
