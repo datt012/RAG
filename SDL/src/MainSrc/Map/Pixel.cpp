@@ -35,3 +35,23 @@ SDL_Rect Pixel::GetDestRect() const {
 void Pixel::SetSourceRect(const SDL_Rect& srcRect) {
     m_SrcRect = srcRect;
 }
+
+SDL_Rect Pixel::GetRectBox()
+{
+    return {
+        static_cast<int>(m_position.x),
+        static_cast<int>(m_position.y),
+        PIXEL_WIDTH,
+        PIXEL_HEIGHT
+    };
+}
+
+SDL_FRect Pixel::GetFRectBox()
+{
+    return {
+        m_position.x,
+        m_position.y,
+        PIXEL_WIDTH,
+        PIXEL_HEIGHT
+    };
+}

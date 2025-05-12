@@ -37,8 +37,14 @@
     <Filter Include="Source Files\MainSrc\Collision">
       <UniqueIdentifier>{4189cfaa-acc2-484d-917e-a66f02c9734d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\MainSrc\Entities">
-      <UniqueIdentifier>{e9e9961b-5512-40c0-8ef8-909f84bd28da}</UniqueIdentifier>
+    <Filter Include="Source Files\MainSrc\Characters\Player">
+      <UniqueIdentifier>{743185c5-2aee-45d2-8cc9-417f7d74641f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MainSrc\Characters\Enemy">
+      <UniqueIdentifier>{45d04a98-973c-43cd-838b-5d3aca496161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MainSrc\Projectiles">
+      <UniqueIdentifier>{085380df-8093-4171-8e39-8c07d41c7b76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +120,6 @@
     <ClCompile Include="src\MainSrc\Characters\Character.cpp">
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainSrc\Characters\Player.cpp">
-      <Filter>Source Files\MainSrc\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="src\MainSrc\Map\MapLoader.cpp">
       <Filter>Source Files\MainSrc\Map</Filter>
     </ClCompile>
@@ -126,14 +129,26 @@
     <ClCompile Include="src\MainSrc\Collision\Collision.cpp">
       <Filter>Source Files\MainSrc\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainSrc\Entities\Enemy.cpp">
-      <Filter>Source Files\MainSrc\Entities</Filter>
+    <ClCompile Include="src\MainSrc\Characters\AnimationKey.cpp">
+      <Filter>Source Files\MainSrc\Characters</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainSrc\Entities\ExplosiveBullet .cpp">
-      <Filter>Source Files\MainSrc\Entities</Filter>
+    <ClCompile Include="src\MainSrc\Characters\Player\Player.cpp">
+      <Filter>Source Files\MainSrc\Characters\Player</Filter>
     </ClCompile>
-    <ClCompile Include="src\MainSrc\Entities\SpriteEnemy.cpp">
-      <Filter>Source Files\MainSrc\Entities</Filter>
+    <ClCompile Include="src\MainSrc\Characters\Enemy\ARMob.cpp">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Characters\Enemy\Enemy.cpp">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Characters\Enemy\Behavior.cpp">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Projectiles\Bullet.cpp">
+      <Filter>Source Files\MainSrc\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainSrc\Projectiles\BulletPool.cpp">
+      <Filter>Source Files\MainSrc\Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,16 +227,10 @@
     <ClInclude Include="src\MainSrc\Map\Map.h">
       <Filter>Source Files\MainSrc\Map</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObject\BaseObject2d.h">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameObject\SpriteAnimationPlayer.h">
       <Filter>Source Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\Character.h">
-      <Filter>Source Files\MainSrc\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MainSrc\Characters\Player.h">
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\KeyDirection.h">
@@ -233,26 +242,32 @@
     <ClInclude Include="src\MainSrc\Map\Layer.h">
       <Filter>Source Files\MainSrc\Map</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainSrc\Characters\CharacterDirection.h">
-      <Filter>Source Files\MainSrc\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MainSrc\Characters\CharacterAction.h">
-      <Filter>Source Files\MainSrc\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\DirectionGun.h">
       <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Collision\Collision.h">
       <Filter>Source Files\MainSrc\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainSrc\Entities\Enemy.h">
-      <Filter>Source Files\MainSrc\Entities</Filter>
+    <ClInclude Include="src\MainSrc\Characters\AnimationKey.h">
+      <Filter>Source Files\MainSrc\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainSrc\Entities\ExplosiveBullet .h">
-      <Filter>Source Files\MainSrc\Entities</Filter>
+    <ClInclude Include="src\MainSrc\Characters\Player\Player.h">
+      <Filter>Source Files\MainSrc\Characters\Player</Filter>
     </ClInclude>
-    <ClInclude Include="src\MainSrc\Entities\SpriteEnemy.h">
-      <Filter>Source Files\MainSrc\Entities</Filter>
+    <ClInclude Include="src\MainSrc\Characters\Enemy\ARMob.h">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\Enemy\Enemy.h">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\Enemy\Behavior.h">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Projectiles\Bullet.h">
+      <Filter>Source Files\MainSrc\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Projectiles\BulletPool.h">
+      <Filter>Source Files\MainSrc\Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
