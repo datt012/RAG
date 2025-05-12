@@ -27,17 +27,20 @@ public:
     const std::vector<Layer>& GetLayers() const;
     int GetWidth() const;
     int GetHeight() const;
+	std::shared_ptr<Layer> GetCollisionLayer() const;
 
     // Setters
     void SetWidth(int width);
     void SetHeight(int height);
     void SetFilePath(const std::string& filePath);
     const std::string& GetFilePath() const;
+    void SetCollisionLayer(std::shared_ptr<Layer> collisionLayer);
 
 private:
-    std::string m_FilePath;               // Path to the map file
-    int m_Width;                          // Map width in tiles
-    int m_Height;                         // Map height in tiles
-    std::vector<TileSet> m_TileSets;      // List of tilesets
-    std::vector<Layer> m_Layers;          // List of layers
+    std::string m_FilePath;                     // Path to the map file
+    int m_Width;                                // Map width in tiles
+    int m_Height;                               // Map height in tiles
+    std::vector<TileSet> m_TileSets;            // List of tilesets
+    std::vector<Layer> m_Layers;                // List of layers
+	std::shared_ptr<Layer> m_CollisionLayer;     // Collision layer
 };
