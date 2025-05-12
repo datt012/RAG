@@ -60,6 +60,24 @@ void GSPlay::Init() {
 		m_listEnemy.push_back(enemy);
 	}
 
+    texture = ResourceManagers::GetInstance()->GetTexture(SNIPER_SPRITE_PATH);
+    animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 14, 0, 0, 30);
+    enemy = std::make_shared<SniperMob>(animation);
+    enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
+    enemy->Set2DPosition(433, 0);
+    enemy->SetTarget(player);
+    enemy->Init();
+    m_listEnemy.push_back(enemy);
+
+    texture = ResourceManagers::GetInstance()->GetTexture(RPGMOB_SPRITE_PATH);
+    animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 11, 0, 0, 30);
+    enemy = std::make_shared<RPGMob>(animation);
+    enemy->SetSize(RPGMOB_SIZE_WIDTH, RPGMOB_SIZE_HEIGHT);
+    enemy->Set2DPosition(466, 0);
+    enemy->SetTarget(player);
+    enemy->Init();
+    m_listEnemy.push_back(enemy);
+
     // Set up camera
     Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
     Camera::GetInstance()->SetTarget(player);

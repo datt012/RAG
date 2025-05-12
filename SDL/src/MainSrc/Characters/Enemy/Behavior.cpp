@@ -4,10 +4,19 @@ int Behavior::GenerateKeyMask(std::shared_ptr<Enemy> enemy, std::shared_ptr<Map>
 {
 	if (!enemy || !map || !enemy->GetTarget()) return 0;
 	if (!enemy->GetTarget()->IsAlive()) return 0;
+	if (!enemy->IsAlive()) return 0;
 
 	if (auto armob = std::dynamic_pointer_cast<ARMob>(enemy))
 	{
 		return GenerateKeyMask(armob, map);
+	}
+	else if (auto sniperMob = std::dynamic_pointer_cast<SniperMob>(enemy))
+	{
+		return GenerateKeyMask(sniperMob, map);
+	}
+	else if (auto rpgMob = std::dynamic_pointer_cast<RPGMob>(enemy))
+	{
+		return GenerateKeyMask(rpgMob, map);
 	}
 
 	return 0;
@@ -117,6 +126,24 @@ int Behavior::GenerateKeyMask(std::shared_ptr<ARMob> armob, std::shared_ptr<Map>
 	int keyMask = 0;
 
 	keyMask |= foo2(armob, map) ? foo2(armob, map) : foo1(armob, map);
+
+	return keyMask;
+}
+
+int Behavior::GenerateKeyMask(std::shared_ptr<SniperMob> sniperMob, std::shared_ptr<Map> map)
+{
+	int keyMask = 0;
+
+	keyMask |= foo2(sniperMob, map);
+
+	return keyMask;
+}
+
+int Behavior::GenerateKeyMask(std::shared_ptr<RPGMob> rpgMob, std::shared_ptr<Map> map)
+{
+	int keyMask = 0;
+
+	keyMask |= foo2(rpgMob, map);
 
 	return keyMask;
 }
