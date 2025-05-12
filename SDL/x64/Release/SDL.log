@@ -1,0 +1,165 @@
+﻿cl : command line  warning D9035: option 'Zc:forScope-' has been deprecated and will be removed in a future release
+  Game.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,29): error C7525: inline variables require at least '/std:c++17'
+  (compiling source file 'src/Game.cpp')
+  
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,29): error C2864: 'KeyState::keystate': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
+  (compiling source file 'src/Game.cpp')
+      C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,40):
+      type is 'const Uint8 *'
+  
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\Game.cpp(42,15): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\Game.cpp(78,10): warning C4244: 'argument': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\Game.cpp(87,25): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
+  ResourceManagers.cpp
+  Camera.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Camera.cpp(24,44): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Camera.cpp(25,45): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Camera.cpp(51,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Camera.cpp(51,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  CMath.cpp
+  MouseButton.cpp
+  Renderer.cpp
+  Sound.cpp
+  Sprite2D.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Sprite2D.cpp(24,37): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Sprite2D.cpp(24,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Sprite2D.cpp(24,51): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Sprite2D.cpp(24,51): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  SpriteAnimation.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(30,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(31,19): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,33): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,61): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,61): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,86): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,86): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,96): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(32,96): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(33,37): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(33,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(33,92): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimation.cpp(33,92): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  SpriteAnimationPlayer.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(35,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(36,19): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,33): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,55): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,55): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,67): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,67): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,77): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(41,77): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(42,37): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(42,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(42,92): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\SpriteAnimationPlayer.cpp(42,92): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Text.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Text.cpp(21,34): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Text.cpp(21,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Text.cpp(21,49): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\Text.cpp(21,49): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  TextureManager.cpp
+  Timer.cpp
+  GameStateBase.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,29): error C7525: inline variables require at least '/std:c++17'
+  (compiling source file 'src/GameStates/GameStateBase.cpp')
+  
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,29): error C2864: 'KeyState::keystate': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
+  (compiling source file 'src/GameStates/GameStateBase.cpp')
+      C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,40):
+      type is 'const Uint8 *'
+  
+  GameStateMachine.cpp
+  GSIntro.cpp
+  GSMenu.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameStates\GSMenu.cpp(32,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameStates\GSMenu.cpp(32,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameStates\GSMenu.cpp(43,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameStates\GSMenu.cpp(53,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameStates\GSMenu.cpp(62,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameStates\GSMenu.cpp(76,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GSPlay.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,29): error C7525: inline variables require at least '/std:c++17'
+  (compiling source file 'src/GameStates/GSPlay.cpp')
+  
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,29): error C2864: 'KeyState::keystate': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
+  (compiling source file 'src/GameStates/GSPlay.cpp')
+      C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\GameObject\KeyState.h(15,40):
+      type is 'const Uint8 *'
+  
+  main.cpp
+  AnimationKey.cpp
+  Compiling...
+  Character.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Character.cpp(162,56): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Character.cpp(163,56): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Character.cpp(184,97): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Character.cpp(184,97): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ARMob.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Enemy\ARMob.cpp(123,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Enemy\ARMob.cpp(179,91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Behavior.cpp
+  Enemy.cpp
+  Player.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Player\Player.cpp(121,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Characters\Player\Player.cpp(177,91): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Collision.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(117,29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(118,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(120,29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(121,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(138,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(141,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(145,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(148,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(166,32): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(166,32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(166,59): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(166,59): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(170,27): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(170,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(199,27): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(199,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(206,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(208,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(213,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(215,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(224,32): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(224,32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(224,59): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(224,59): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(228,27): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(228,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(235,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(236,27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(242,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(243,28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(257,27): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(257,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(264,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(265,27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(266,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(271,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(272,28): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Collision\Collision.cpp(273,28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Layer.cpp
+  Map.cpp
+  MapLoader.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Map\MapLoader.cpp(169,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Map\MapLoader.cpp(169,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Pixel.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Map\Pixel.cpp(13,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Map\Pixel.cpp(14,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Map\Pixel.cpp(25,33): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Map\Pixel.cpp(26,33): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  TileSet.cpp
+  tinyxml2.cpp
+  Bullet.cpp
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Projectiles\Bullet.cpp(21,40): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Projectiles\Bullet.cpp(21,40): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Projectiles\Bullet.cpp(21,70): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\GLSchool\Downloads\Internship-main\Internship-main\SDL\src\MainSrc\Projectiles\Bullet.cpp(21,70): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  BulletPool.cpp
