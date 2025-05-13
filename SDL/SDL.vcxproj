@@ -190,6 +190,8 @@
     <ClCompile Include="src\MainSrc\Characters\Enemy\ARMob.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\Behavior.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\Enemy.cpp" />
+    <ClCompile Include="src\MainSrc\Characters\Enemy\RPGMob.cpp" />
+    <ClCompile Include="src\MainSrc\Characters\Enemy\SniperMob.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Player\Player.cpp" />
     <ClCompile Include="src\MainSrc\Collision\Collision.cpp" />
     <ClCompile Include="src\MainSrc\Map\Layer.cpp" />
@@ -230,6 +232,8 @@
     <ClInclude Include="src\MainSrc\Characters\Enemy\ARMob.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\Behavior.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\Enemy.h" />
+    <ClInclude Include="src\MainSrc\Characters\Enemy\RPGMob.h" />
+    <ClInclude Include="src\MainSrc\Characters\Enemy\SniperMob.h" />
     <ClInclude Include="src\MainSrc\Characters\KeyDirection.h" />
     <ClInclude Include="src\MainSrc\Characters\Player\Player.h" />
     <ClInclude Include="src\MainSrc\Collision\Collision.h" />

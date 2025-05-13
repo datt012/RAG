@@ -98,6 +98,10 @@ void Character::ClampPositionToMapBounds(std::shared_ptr<Map> map) {
 
 	SDL_FRect rect = GetColliderFRect();
 
+	if (rect.y + rect.h >= map->GetHeight()) {
+		m_HP = 0;
+	}
+
 	float left = rect.x - Get2DPosition().x;
 	float right = (Get2DPosition().x + GetWidth()) - (rect.x + rect.w);
 	float top = rect.y - Get2DPosition().y;

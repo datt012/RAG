@@ -167,6 +167,7 @@ void ARMob::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 	else if (it != s_AnimationMap.end())
 	{
 		m_animationPlayer->SetFrame(it->second.first, it->second.second);
+		m_animationPlayer->SetLoop(true);
 	}
 
 	m_animationPlayer->Draw(renderer, clip);
@@ -176,7 +177,7 @@ void ARMob::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 	SDL_FRect colliderRect = GetColliderFRect();
 	//DrawCollider(renderer);
 	if (IsAlive()) {
-		DrawHPBar(renderer, { colliderRect.x, colliderRect.y - 5 }, m_HP, m_MAX_HP, colliderRect.w, 3);
+		DrawHPBar(renderer, { colliderRect.x, Get2DPosition().y + static_cast<float>(GetHeight()) * ORIGINAL_ARMOB_Y / ORIGINAL_ARMOB_SIZE_H - 6 }, m_HP, m_MAX_HP, colliderRect.w, 3);
 	}
 }
 
