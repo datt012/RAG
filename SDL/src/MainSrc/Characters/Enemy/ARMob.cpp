@@ -167,6 +167,7 @@ void ARMob::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 	else if (it != s_AnimationMap.end())
 	{
 		m_animationPlayer->SetFrame(it->second.first, it->second.second);
+		m_animationPlayer->SetLoop(true);
 	}
 
 	m_animationPlayer->Draw(renderer, clip);

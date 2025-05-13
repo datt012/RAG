@@ -56,6 +56,10 @@ public:
 	int		GetStartFrame() { return m_frameStartIndex; }
 	int		GetEndFrame() { return m_frameEndIndex; }
 
+	void	SetCurrentFrame(int frame) { m_currentFrame = frame; }
+	void	SetStartFrame(int startFrame) { m_frameStartIndex = startFrame; }
+	void	SetEndFrame(int endFrame) { m_frameEndIndex = endFrame; }
+
 	float	GetFrameTime() { return m_frameTime; }
 	void	SetFrameTime(float frameTime) { m_frameTime = frameTime; }
 

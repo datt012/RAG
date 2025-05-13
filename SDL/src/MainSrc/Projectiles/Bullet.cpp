@@ -53,10 +53,10 @@ SDL_Rect Bullet::getColliderRect()
 SDL_FRect Bullet::getColliderFRect()
 {
 	SDL_FRect rect = {
-		m_position.x,
-		m_position.y,
-		static_cast<float>(GetWidth()),
-		static_cast<float>(GetHeight())
+		m_position.x + 1,
+		m_position.y + 1,
+		static_cast<float>(GetWidth()) - 2,
+		static_cast<float>(GetHeight()) - 2
 	};
 	return rect;
 }
