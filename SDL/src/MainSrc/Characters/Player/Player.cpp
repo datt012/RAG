@@ -194,9 +194,9 @@ SDL_Rect Player::GetColliderRect() {
 SDL_FRect Player::GetColliderFRect() {
 	if (!IsAlive()) return { 
 		Get2DPosition().x, 
-		Get2DPosition().y + GetHeight(),
+		Get2DPosition().y + GetHeight() - 1,
 		static_cast<float>(GetWidth()),
-		0
+		1
 	};
 
 	SDL_FRect rect = {

@@ -18,6 +18,10 @@ int Behavior::GenerateKeyMask(std::shared_ptr<Enemy> enemy, std::shared_ptr<Map>
 	{
 		return GenerateKeyMask(rpgMob, map);
 	}
+	else if (auto boss1 = std::dynamic_pointer_cast<Boss1>(enemy))
+	{
+		return GenerateKeyMask(boss1, map);
+	}
 
 	return 0;
 }
@@ -121,6 +125,27 @@ int foo2(std::shared_ptr<Enemy> enemy, std::shared_ptr<Map> map)
 	return keyMask;
 }
 
+int bossMove(std::shared_ptr<Enemy> enemy, std::shared_ptr<Map> map)
+{
+	int keyMask = 0;
+
+	Vector2 enemyPos = enemy->Get2DPosition();
+	Vector2 playerPos = enemy->GetTarget()->Get2DPosition();
+
+	float x_center_enemy = enemyPos.x + enemy->GetWidth() / 2.0f;
+	float x_center_player = playerPos.x + enemy->GetTarget()->GetWidth() / 2.0f;
+	float epsilon = enemy->GetVelocity().x ? 0.5f : enemy->GetWidth() * 0.17f;
+
+	if (x_center_enemy < x_center_player - epsilon) {
+		keyMask |= KEY_RIGHT;
+	}
+	else if (x_center_enemy > x_center_player + epsilon) {
+		keyMask |= KEY_LEFT;
+	}
+
+	return keyMask;
+}
+
 int Behavior::GenerateKeyMask(std::shared_ptr<ARMob> armob, std::shared_ptr<Map> map)
 {
 	int keyMask = 0;
@@ -144,6 +169,16 @@ int Behavior::GenerateKeyMask(std::shared_ptr<RPGMob> rpgMob, std::shared_ptr<Ma
 	int keyMask = 0;
 
 	keyMask |= foo2(rpgMob, map);
+
+	return keyMask;
+}
+
+int Behavior::GenerateKeyMask(std::shared_ptr<Boss1> boss1, std::shared_ptr<Map> map)
+{
+	int keyMask = 0;
+
+	keyMask |= bossMove(boss1, map);
+	keyMask |= KEY_SHOOT;
 
 	return keyMask;
 }

@@ -42,7 +42,7 @@ void GSPlay::Init() {
 	std::vector<Vector2> armobPositions = {
         {300, 0},
         {500, 0},
-        {700, 0},
+        {698, 0},
         {800, 0},
         {1100, 0},
         {1300, 0},
@@ -74,6 +74,15 @@ void GSPlay::Init() {
     enemy = std::make_shared<RPGMob>(animation);
     enemy->SetSize(RPGMOB_SIZE_WIDTH, RPGMOB_SIZE_HEIGHT);
     enemy->Set2DPosition(466, 0);
+    enemy->SetTarget(player);
+    enemy->Init();
+    m_listEnemy.push_back(enemy);
+
+    texture = ResourceManagers::GetInstance()->GetTexture(BOSS1_SPRITE_PATH);
+    animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 7, 0, 0, 30);
+    enemy = std::make_shared<Boss1>(animation);
+    enemy->SetSize(BOSS1_SIZE_WIDTH, BOSS1_SIZE_HEIGHT);
+    enemy->Set2DPosition(400, 100);
     enemy->SetTarget(player);
     enemy->Init();
     m_listEnemy.push_back(enemy);

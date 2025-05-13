@@ -156,6 +156,9 @@
     <ClCompile Include="src\MainSrc\Characters\Enemy\RPGMob.cpp">
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="src\MainSrc\Characters\Enemy\Boss1.cpp">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject\BaseObject.h">
@@ -279,6 +282,9 @@
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\Enemy\RPGMob.h">
+      <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Characters\Enemy\Boss1.h">
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
