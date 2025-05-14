@@ -313,7 +313,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
         enemy->Set2DPosition(433, 0);
         enemy->SetTarget(m_player);
         enemy->Init();
-        m_listEnemy.push_back(enemy);
+        m_listEnemy.push_back(enemy);   
     }
     if (lv == 3) {
         m_listEnemy.clear();
