@@ -199,9 +199,9 @@ SDL_Rect SniperMob::GetColliderRect() {
 SDL_FRect SniperMob::GetColliderFRect() {
 	if (!IsAlive()) return {
 		Get2DPosition().x,
-		Get2DPosition().y + GetHeight(),
+		Get2DPosition().y + GetHeight() - 1,
 		static_cast<float>(GetWidth()),
-		0
+		1
 	};
 
 	SDL_FRect rect = {

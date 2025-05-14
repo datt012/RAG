@@ -43,6 +43,7 @@ private:
     std::shared_ptr<SpriteAnimationPlayer> animation;
     std::shared_ptr<Player> player;
     std::shared_ptr<Enemy> enemy;
+    std::shared_ptr<Boss1> boss1;
     std::shared_ptr<MouseButton> button;
     std::shared_ptr<Map> m_map; 
 
