@@ -13,6 +13,8 @@
 #include "MainSrc/Characters/Enemy/Enemy.h"
 #include "MainSrc/Characters/Enemy/ARMob.h"
 #include <MainSrc/Characters/Enemy/Behavior.h>
+#include "MainSrc/Characters/Enemy/Boss1.h"
+
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
@@ -44,6 +46,7 @@ private:
     std::list<std::shared_ptr<MouseButton>> m_listButton;
     std::list<std::shared_ptr<SpriteAnimation>> m_listAnimation;
     std::list<std::shared_ptr<Enemy>> m_listEnemy;
+    std::shared_ptr<Boss1> boss1;
     int m_KeyPress;
     float time = 0.0f;
     float m_Velocity = 10.0f;

@@ -1,6 +1,9 @@
 ﻿#include "GSPlay.h"
 #include "MainSrc/Level/Level.h"
 #include "GSMenu.h"
+#include "Sound.h"
+#include <iostream>
+
 GSPlay::GSPlay() : m_KeyPress(0) {}
 
 GSPlay::~GSPlay() {}
@@ -49,11 +52,13 @@ void GSPlay::Init() {
     m_player->Set2DPosition(150, 0);
     m_player->Init();
     Init2(m_player);
-    
+
 
     // Set up camera
     Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
     Camera::GetInstance()->SetTarget(m_player);
+
+    
 }
 
 void GSPlay::Exit() {}
@@ -222,7 +227,7 @@ void GSPlay::Update(float deltaTime) {
     // Update camera
     Camera::GetInstance()->Update(deltaTime);
     IsComplete();
-    
+
 }
 
 void GSPlay::Draw(SDL_Renderer* renderer) {
@@ -297,23 +302,56 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
             enemy->Init();
             m_listEnemy.push_back(enemy);
         }
+        texture = ResourceManagers::GetInstance()->GetTexture(SNIPER_SPRITE_PATH);
+        animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 14, 0, 0, 30);
+        enemy = std::make_shared<SniperMob>(animation);
+        enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
+        enemy->Set2DPosition(1000, 0);
+        enemy->SetTarget(m_player);
+        enemy->Init();
+        m_listEnemy.push_back(enemy);
+
+
+        texture = ResourceManagers::GetInstance()->GetTexture(RPGMOB_SPRITE_PATH);
+        animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 11, 0, 0, 30);
+        enemy = std::make_shared<RPGMob>(animation);
+        enemy->SetSize(RPGMOB_SIZE_WIDTH, RPGMOB_SIZE_HEIGHT);
+        enemy->Set2DPosition(466, 0);
+        enemy->SetTarget(m_player);
+        enemy->Init();
+        m_listEnemy.push_back(enemy);
     }
     if (lv == 2) {
-        m_map = NULL;
+        
         m_listEnemy.clear();
         m_map = std::make_shared<Map>();
         if (!m_map->LoadFromFile("Data/Asset/test2/main.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
             return;
         }
-        auto texture = ResourceManagers::GetInstance()->GetTexture(SNIPER_SPRITE_PATH);
-        animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 14, 0, 0, 30);
-        enemy = std::make_shared<SniperMob>(animation);
-        enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
-        enemy->Set2DPosition(433, 0);
-        enemy->SetTarget(m_player);
-        enemy->Init();
-        m_listEnemy.push_back(enemy);   
+        std::vector<Vector2> Pos{ {735,600} };
+        for (auto pos : Pos) {
+            auto texture = ResourceManagers::GetInstance()->GetTexture(SNIPER_SPRITE_PATH);
+            animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 14, 0, 0, 30);
+            enemy = std::make_shared<SniperMob>(animation);
+            enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
+            enemy->Set2DPosition(pos.x, pos.y);
+            enemy->SetTarget(m_player);
+            enemy->Init();
+            m_listEnemy.push_back(enemy);
+        }
+
+        for (auto pos : Pos) {
+            auto texture = ResourceManagers::GetInstance()->GetTexture(ARMOB_SPRITE_PATH);
+            animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 26, 0, 0, 30);
+            enemy = std::make_shared<ARMob>(animation);
+            enemy->SetSize(ARMOB_SIZE_WIDTH, ARMOB_SIZE_HEIGHT);
+            enemy->Set2DPosition(pos.x, pos.y);
+            enemy->SetTarget(m_player);
+            enemy->Init();
+            m_listEnemy.push_back(enemy);
+        }
+        
     }
     if (lv == 3) {
         m_listEnemy.clear();
@@ -330,8 +368,17 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
         enemy->SetTarget(m_player);
         enemy->Init();
         m_listEnemy.push_back(enemy);
+
+        texture = ResourceManagers::GetInstance()->GetTexture(BOSS1_SPRITE_PATH);
+        animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 7, 0, 0, 30);
+        enemy = std::make_shared<Boss1>(animation);
+        enemy->SetSize(BOSS1_SIZE_WIDTH, BOSS1_SIZE_HEIGHT);
+        enemy->Set2DPosition(400, 100);
+        enemy->SetTarget(m_player);
+        enemy->Init();
+        m_listEnemy.push_back(enemy);
     }
-   
+
 }
 void GSPlay::IsComplete() {
     if (!m_player || !m_map) return;
@@ -339,8 +386,18 @@ void GSPlay::IsComplete() {
     Vector2 playerPos = m_player->Get2DPosition();
     float mapWidth = m_map->GetWidth();
     float playerRightEdge = playerPos.x;
-
-    if (playerRightEdge >= mapWidth - 100) { 
+    
+    bool allEnemiesDefeated = true;
+    for (const auto& enemy : m_listEnemy) {
+        if (enemy->IsAlive()) {
+            allEnemiesDefeated = false;
+            break;
+        }
+    }
+    if (Level::GetInstance()->GetLevel() == 3 && allEnemiesDefeated) {
+        GameStateMachine::GetInstance()->ChangeState(StateType::STATE_COMPLETE);
+    }
+    if (playerRightEdge >= mapWidth - 100 && allEnemiesDefeated) {
         // kieem tra thêm điều kiện tiêu diệt hết quái, update sau
         int currentLevel = Level::GetInstance()->GetLevel();
         Level::GetInstance()->SetLevel(currentLevel + 1);

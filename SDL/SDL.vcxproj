@@ -193,6 +193,7 @@
     <ClCompile Include="src\MainSrc\Characters\Character.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\ARMob.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\Behavior.cpp" />
+    <ClCompile Include="src\MainSrc\Characters\Enemy\Boss1.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\Enemy.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\RPGMob.cpp" />
     <ClCompile Include="src\MainSrc\Characters\Enemy\SniperMob.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="src\MainSrc\Characters\DirectionGun.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\ARMob.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\Behavior.h" />
+    <ClInclude Include="src\MainSrc\Characters\Enemy\Boss1.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\Enemy.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\RPGMob.h" />
     <ClInclude Include="src\MainSrc\Characters\Enemy\SniperMob.h" />

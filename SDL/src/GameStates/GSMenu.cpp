@@ -37,6 +37,7 @@ void GSMenu::Init()
 		btnPlay->SetOnClick([]() {
 
 			GameStateMachine::GetInstance()->PopState();  // Resume game
+			Sound::GetInstance()->StopSound();
 			});
 		SetPauseFlag(false);
 		m_listButton.push_back(btnPlay);

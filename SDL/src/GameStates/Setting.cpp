@@ -148,8 +148,19 @@ void Setting::HandleTouchEvents(SDL_Event& e) {
         if (x >= sfxRect.x && x <= sfxRect.x + sfxRect.w &&
             y >= sfxRect.y && y <= sfxRect.y + sfxRect.h) {
 
-            /* auto tex = ResourceManagers::GetInstance()->GetTexture(m_sfxFlag ? "on.png" : "off.png");
-             m_SFXIMG->SetTexture(tex);*/
+            bool flag = Sound::GetInstance()->GetSFXFlag();
+            Sound::GetInstance()->SetSFXFlag(!flag);
+
+            // Lấy flag mới sau khi cập nhật
+            bool newFlag = Sound::GetInstance()->GetSFXFlag();
+
+            auto tex = ResourceManagers::GetInstance()->GetTexture(newFlag ? "on.png" : "off.png");
+            m_SFXIMG->SetTexture(tex);
+
+            
+
+            std::cout << "New Flag: " << newFlag << std::endl;
+            
 
         }
     }
