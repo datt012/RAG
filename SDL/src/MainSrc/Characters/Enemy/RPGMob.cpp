@@ -199,9 +199,9 @@ SDL_Rect RPGMob::GetColliderRect() {
 SDL_FRect RPGMob::GetColliderFRect() {
 	if (!IsAlive()) return {
 		Get2DPosition().x,
-		Get2DPosition().y + GetHeight() - 1,
+		Get2DPosition().y + GetHeight(),
 		static_cast<float>(GetWidth()),
-		1
+		0
 	};
 
 	SDL_FRect rect = {

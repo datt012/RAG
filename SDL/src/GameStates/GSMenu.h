@@ -3,6 +3,7 @@
 
 #include"GameObject/Text.h"
 #include "GameObject/Sound.h"
+#include "SpriteAnimation.h"
 class MouseButton;
 class GSMenu :
 	public GameStateBase
@@ -23,13 +24,16 @@ public:
 	void	HandleMouseMoveEvents(int x, int y) override;
 	void	Update(float deltaTime) override;
 	void	Draw(SDL_Renderer* renderer) override;
-
+	static void	SetPauseFlag(bool v) {
+		m_isPause = v;
+	}
 private:
 	std::shared_ptr<Sprite2D>				m_background;
 	std::list<std::shared_ptr<MouseButton>>	m_listButton;
 	std::shared_ptr<Text>					m_textGameName;
 	SDL_Color m_textColor;
 	std::shared_ptr<MouseButton> btnCredit;
+	std::shared_ptr<SpriteAnimation> m_animation;
 	int score = 0;
-	
+	static bool m_isPause;
 };

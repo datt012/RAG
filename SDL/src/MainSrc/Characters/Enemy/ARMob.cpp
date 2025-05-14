@@ -195,9 +195,9 @@ SDL_Rect ARMob::GetColliderRect() {
 SDL_FRect ARMob::GetColliderFRect() {
 	if (!IsAlive()) return {
 		Get2DPosition().x,
-		Get2DPosition().y + GetHeight() - 1,
+		Get2DPosition().y + GetHeight(),
 		static_cast<float>(GetWidth()),
-		1
+		0
 	};
 
 	SDL_FRect rect = {
