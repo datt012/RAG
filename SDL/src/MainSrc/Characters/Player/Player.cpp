@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Sound.h"
+#include "Define.h"
 
 const std::unordered_map<AnimationKey, std::pair<int, int>> Player::s_AnimationMap = {
 	{{true, false, DirectionGun::NONE}, {0, 5}},
@@ -123,6 +125,11 @@ void Player::Shoot()
 		bullet->Set2DPosition(p.x, p.y);
 		bullet->SetVelocity(velocityBullet);
 		bullet->SetRotation(atan2(velocityBullet.y, velocityBullet.x) * (180.0 / M_PI));
+
+		// sfx
+		Sound::GetInstance()->LoadSfx(Player_Sound);
+		Sound::GetInstance()->PlaySfx(Player_Sound);
+		
 	}
 }
 
@@ -194,9 +201,9 @@ SDL_Rect Player::GetColliderRect() {
 SDL_FRect Player::GetColliderFRect() {
 	if (!IsAlive()) return { 
 		Get2DPosition().x, 
-		Get2DPosition().y + GetHeight() - 1,
+		Get2DPosition().y + GetHeight(),
 		static_cast<float>(GetWidth()),
-		1
+		0
 	};
 
 	SDL_FRect rect = {

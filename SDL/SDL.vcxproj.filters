@@ -46,6 +46,9 @@
     <Filter Include="Source Files\MainSrc\Projectiles">
       <UniqueIdentifier>{085380df-8093-4171-8e39-8c07d41c7b76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MainSrc\Level">
+      <UniqueIdentifier>{b853df66-8f37-4baa-ab05-9f19cdb3557f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\Camera.cpp">
@@ -155,6 +158,18 @@
     </ClCompile>
     <ClCompile Include="src\MainSrc\Characters\Enemy\RPGMob.cpp">
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\Complete.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\Credit.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\Setting.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameStates\GameOver.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
     <ClCompile Include="src\MainSrc\Characters\Enemy\Boss1.cpp">
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
@@ -283,6 +298,21 @@
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\Enemy\RPGMob.h">
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainSrc\Level\Level.h">
+      <Filter>Source Files\MainSrc\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\Complete.h">
+      <Filter>Source Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\Credit.h">
+      <Filter>Source Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\Setting.h">
+      <Filter>Source Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameStates\GameOver.h">
+      <Filter>Source Files\GameState</Filter>
     </ClInclude>
     <ClInclude Include="src\MainSrc\Characters\Enemy\Boss1.h">
       <Filter>Source Files\MainSrc\Characters\Enemy</Filter>

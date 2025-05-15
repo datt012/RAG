@@ -202,7 +202,7 @@ SDL_Rect Boss1::GetColliderRect() {
 SDL_FRect Boss1::GetColliderFRect() {
 	if (!IsAlive()) return {
 		Get2DPosition().x,
-		Get2DPosition().y + GetHeight(),
+		Get2DPosition().y + GetHeight() - 1,
 		static_cast<float>(GetWidth()),
 		1
 	};

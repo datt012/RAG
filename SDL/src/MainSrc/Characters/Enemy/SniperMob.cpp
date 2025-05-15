@@ -1,4 +1,5 @@
 #include "SniperMob.h"
+#include "Sound.h"
 
 const std::unordered_map<AnimationKey, std::pair<int, int>> SniperMob::s_AnimationMap = {
 	{{true, false, DirectionGun::NONE}, {0, 0}},
@@ -128,6 +129,9 @@ void SniperMob::Shoot()
 		bullet->SetVelocity(velocityBullet);
 		bullet->SetRotation(atan2(velocityBullet.y, velocityBullet.x) * (180.0 / M_PI));
 	}
+        //sfx
+	Sound::GetInstance()->LoadSfx(Sniper_Sound);
+	Sound::GetInstance()->PlaySfx(Sniper_Sound);
 
 	m_animationPlayer->SetCurrentFrame(m_animationPlayer->GetStartFrame());
 }

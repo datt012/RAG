@@ -205,6 +205,10 @@ bool Character::IsAlive() const {
 	return m_HP > 0;
 }
 
+int Character::GetMAXHP() const {
+	return m_MAX_HP;
+}
+
 bool Character::IsOnGround() const {
 	return m_IsOnGround;
 }

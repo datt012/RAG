@@ -1,3 +1,4 @@
+//new
 #pragma once
 #include"Singleton.h"
 #define SCREEN_WIDTH 960
@@ -30,7 +31,7 @@
 #define ORIGINAL_PLAYER_CROUCH_W 17
 #define ORIGINAL_PLAYER_CROUCH_H 17
 
-#define PLAYER_MAX_HP 20
+#define PLAYER_MAX_HP 30
 #define PLAYER_SPEED_X 0.17f
 #define PLAYER_JUMP_FORCE 0.3f
 
@@ -42,9 +43,9 @@
 #define PLAYER_BULLET_DAMAGE 1
 #define PLAYER_SHOOT_COOLDOWN_TIME 300
 
-/*
- *	AR Mob
- */
+ /*
+  *	AR Mob
+  */
 
 #define ARMOB_SPRITE_PATH "SpriteSheet_enemy_1_26.png"
 #define ARMOB_SIZE_WIDTH 48
@@ -75,9 +76,9 @@
 #define ARMOB_BULLET_DAMAGE 1
 #define ARMOB_SHOOT_COOLDOWN_TIME 500
 
-/*
- *	Sniper Mob
- */
+  /*
+   *	Sniper Mob
+   */
 
 #define SNIPER_SPRITE_PATH "SpriteSheet_SniperMob_1_14.png"
 #define SNIPER_SIZE_WIDTH 62
@@ -108,9 +109,9 @@
 #define SNIPER_BULLET_DAMAGE 3
 #define SNIPER_SHOOT_COOLDOWN_TIME 1500
 
-/*
- *	RPG Mob
- */
+   /*
+	*	RPG Mob
+	*/
 
 #define RPGMOB_SPRITE_PATH "SpriteSheet_RPGmob_1_11.png"
 #define RPGMOB_SIZE_WIDTH 62
@@ -127,7 +128,7 @@
 #define ORIGINAL_RPGMOB_CROUCH_W 25
 #define ORIGINAL_RPGMOB_CROUCH_H 15
 
-#define RPGMOB_MAX_HP 10
+#define RPGMOB_MAX_HP 5
 #define RPGMOB_SPEED_X 0.17f
 #define RPGMOB_JUMP_FORCE 0.3f
 #define RPGMOB_SIGHT_RANGE 0.0f
@@ -141,9 +142,9 @@
 #define RPGMOB_BULLET_DAMAGE 10
 #define RPGMOB_SHOOT_COOLDOWN_TIME 5000
 
- /*
-  *	Boss 1
-  */
+	/*
+	 *	Boss 1
+	 */
 
 #define BOSS1_SPRITE_PATH "SpriteSheet_Boss_1_7.png"
 #define BOSS1_SIZE_WIDTH 128
@@ -160,7 +161,7 @@
 #define ORIGINAL_BOSS1_CROUCH_W 27
 #define ORIGINAL_BOSS1_CROUCH_H 19
 
-#define BOSS1_MAX_HP 100
+#define BOSS1_MAX_HP 50
 #define BOSS1_SPEED_X 0.05f
 #define BOSS1_JUMP_FORCE 0.3f
 #define BOSS1_SIGHT_RANGE 0.0f
@@ -173,3 +174,9 @@
 #define BOSS1_BULLET_SPEED 0.125f
 #define BOSS1_BULLET_DAMAGE 1
 #define BOSS1_SHOOT_COOLDOWN_TIME 800
+
+//sfx sound
+#define Player_Sound "mixkit-game-gun-shot-1662.mp3"
+#define ARMob_Sound "mixkit-short-laser-gun-shot-1670.wav"
+#define Sniper_Sound "mixkit-laser-cannon-shot-1678.wav"
+#define RPG_Sound "rpg.mp3"

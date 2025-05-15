@@ -17,6 +17,9 @@ void Pixel::Init() {
 
 void Pixel::Draw(SDL_Renderer* renderer, SDL_Rect* clip) {
     if (m_pTexture) {
+        if (m_DestRect.x > SCREEN_WIDTH || m_DestRect.y > SCREEN_HEIDHT ||
+            m_DestRect.x + m_DestRect.w < 0 || m_DestRect.y + m_DestRect.h < 0) return;
+
         SDL_RenderCopy(renderer, m_pTexture->GetTextureObj(), &m_SrcRect, &m_DestRect);
     }
 }
