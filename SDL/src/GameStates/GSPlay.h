@@ -34,7 +34,7 @@ public:
     void HandleMouseMoveEvents(int x, int y) override;
     void Update(float deltaTime) override;
     void Draw(SDL_Renderer* renderer) override;
-    void IsComplete();
+    void IsComplete(float deltaTime);
 private:
     std::shared_ptr<Sprite2D> m_background;
     std::shared_ptr<SpriteAnimation> obj;
@@ -50,4 +50,7 @@ private:
     int m_KeyPress;
     float time = 0.0f;
     float m_Velocity = 10.0f;
+    
+    int m_revivalTime = 20000;  // 10s
+    int m_revivalTimeCountDown = 10000;
 };

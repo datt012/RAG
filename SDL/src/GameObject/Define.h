@@ -31,7 +31,7 @@
 #define ORIGINAL_PLAYER_CROUCH_W 17
 #define ORIGINAL_PLAYER_CROUCH_H 17
 
-#define PLAYER_MAX_HP 200
+#define PLAYER_MAX_HP 30
 #define PLAYER_SPEED_X 0.17f
 #define PLAYER_JUMP_FORCE 0.3f
 
@@ -43,9 +43,9 @@
 #define PLAYER_BULLET_DAMAGE 1
 #define PLAYER_SHOOT_COOLDOWN_TIME 300
 
-/*
- *	AR Mob
- */
+ /*
+  *	AR Mob
+  */
 
 #define ARMOB_SPRITE_PATH "SpriteSheet_enemy_1_26.png"
 #define ARMOB_SIZE_WIDTH 48
@@ -76,9 +76,9 @@
 #define ARMOB_BULLET_DAMAGE 1
 #define ARMOB_SHOOT_COOLDOWN_TIME 500
 
-/*
- *	Sniper Mob
- */
+  /*
+   *	Sniper Mob
+   */
 
 #define SNIPER_SPRITE_PATH "SpriteSheet_SniperMob_1_14.png"
 #define SNIPER_SIZE_WIDTH 62
@@ -91,9 +91,9 @@
 #define ORIGINAL_SNIPER_W 25
 #define ORIGINAL_SNIPER_H 28
 #define ORIGINAL_SNIPER_CROUCH_X 10
-#define ORIGINAL_SNIPER_CROUCH_Y 27
+#define ORIGINAL_SNIPER_CROUCH_Y 28
 #define ORIGINAL_SNIPER_CROUCH_W 25
-#define ORIGINAL_SNIPER_CROUCH_H 16
+#define ORIGINAL_SNIPER_CROUCH_H 15
 
 #define SNIPER_MAX_HP 3
 #define SNIPER_SPEED_X 0.17f
@@ -109,9 +109,9 @@
 #define SNIPER_BULLET_DAMAGE 3
 #define SNIPER_SHOOT_COOLDOWN_TIME 1500
 
-/*
- *	RPG Mob
- */
+   /*
+	*	RPG Mob
+	*/
 
 #define RPGMOB_SPRITE_PATH "SpriteSheet_RPGmob_1_11.png"
 #define RPGMOB_SIZE_WIDTH 62
@@ -124,11 +124,11 @@
 #define ORIGINAL_RPGMOB_W 25
 #define ORIGINAL_RPGMOB_H 28
 #define ORIGINAL_RPGMOB_CROUCH_X 10
-#define ORIGINAL_RPGMOB_CROUCH_Y 27
+#define ORIGINAL_RPGMOB_CROUCH_Y 28
 #define ORIGINAL_RPGMOB_CROUCH_W 25
-#define ORIGINAL_RPGMOB_CROUCH_H 16
+#define ORIGINAL_RPGMOB_CROUCH_H 15
 
-#define RPGMOB_MAX_HP 10
+#define RPGMOB_MAX_HP 5
 #define RPGMOB_SPEED_X 0.17f
 #define RPGMOB_JUMP_FORCE 0.3f
 #define RPGMOB_SIGHT_RANGE 0.0f
@@ -142,9 +142,9 @@
 #define RPGMOB_BULLET_DAMAGE 10
 #define RPGMOB_SHOOT_COOLDOWN_TIME 5000
 
- /*
-  *	Boss 1
-  */
+	/*
+	 *	Boss 1
+	 */
 
 #define BOSS1_SPRITE_PATH "SpriteSheet_Boss_1_7.png"
 #define BOSS1_SIZE_WIDTH 128
@@ -161,7 +161,7 @@
 #define ORIGINAL_BOSS1_CROUCH_W 27
 #define ORIGINAL_BOSS1_CROUCH_H 19
 
-#define BOSS1_MAX_HP 100
+#define BOSS1_MAX_HP 50
 #define BOSS1_SPEED_X 0.05f
 #define BOSS1_JUMP_FORCE 0.3f
 #define BOSS1_SIGHT_RANGE 0.0f

@@ -83,6 +83,7 @@ public:
     // Getters
     int GetHP() const;
 	bool IsAlive() const;
+    int GetMAXHP() const;
     std::shared_ptr<BulletPool> GetBulletPool() const;
     bool IsOnGround() const;
     bool IsJumping() const;
