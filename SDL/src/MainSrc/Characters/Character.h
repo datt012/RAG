@@ -83,6 +83,9 @@ public:
     // Getters
     int GetHP() const;
 	bool IsAlive() const;
+    int GetMAXHP() const;
+    int GetShootCooldown() const;
+    int GetShootCooldownTime() const;
     std::shared_ptr<BulletPool> GetBulletPool() const;
     bool IsOnGround() const;
     bool IsJumping() const;
@@ -91,6 +94,7 @@ public:
 	// Setters
     void SetHP(int hp);
     void TakeDamage(int damage);
+    void SetShootCooldown(int time);
     void SetOnGround(bool isOnGround);
     void SetJumping(bool isJumping);
     void SetShooting(bool isShooting);

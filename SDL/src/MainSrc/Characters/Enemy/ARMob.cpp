@@ -1,5 +1,6 @@
 #include "ARMob.h"
-
+#include "Sound.h"
+#include "Define.h"
 const std::unordered_map<AnimationKey, std::pair<int, int>> ARMob::s_AnimationMap = {
 	{{true, false, DirectionGun::NONE}, {0, 4}},
 	{{true, false, DirectionGun::LEFT}, {13, 20}},
@@ -125,6 +126,9 @@ void ARMob::Shoot()
 		bullet->Set2DPosition(p.x, p.y);
 		bullet->SetVelocity(velocityBullet);
 		bullet->SetRotation(atan2(velocityBullet.y, velocityBullet.x) * (180.0 / M_PI));
+		//sfx
+		Sound::GetInstance()->LoadSfx(ARMob_Sound);
+		Sound::GetInstance()->PlaySfx(ARMob_Sound);
 	}
 }
 
@@ -195,9 +199,9 @@ SDL_Rect ARMob::GetColliderRect() {
 SDL_FRect ARMob::GetColliderFRect() {
 	if (!IsAlive()) return {
 		Get2DPosition().x,
-		Get2DPosition().y + GetHeight(),
+		Get2DPosition().y + GetHeight() - 1,
 		static_cast<float>(GetWidth()),
-		0
+		1
 	};
 
 	SDL_FRect rect = {

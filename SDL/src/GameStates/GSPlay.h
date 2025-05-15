@@ -13,45 +13,48 @@
 #include "MainSrc/Characters/Enemy/Enemy.h"
 #include "MainSrc/Characters/Enemy/ARMob.h"
 #include <MainSrc/Characters/Enemy/Behavior.h>
+#include "MainSrc/Characters/Enemy/Boss1.h"
 
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
 class Sound;
-
 class GSPlay : public GameStateBase {
 public:
     GSPlay();
     ~GSPlay();
-
     void Init() override;
+    void Init2(std::shared_ptr<Player> p);
     void Exit() override;
-
     void Pause() override;
     void Resume() override;
-
     void HandleEvents() override;
     void HandleKeyEvents(SDL_Event& e) override;
     void HandleTouchEvents(SDL_Event& e) override;
     void HandleMouseMoveEvents(int x, int y) override;
     void Update(float deltaTime) override;
     void Draw(SDL_Renderer* renderer) override;
-
+    void IsComplete(float deltaTime);
 private:
     std::shared_ptr<Sprite2D> m_background;
     std::shared_ptr<SpriteAnimation> obj;
     std::shared_ptr<SpriteAnimationPlayer> animation;
-    std::shared_ptr<Player> player;
+    std::shared_ptr<Player> m_player;
     std::shared_ptr<Enemy> enemy;
     std::shared_ptr<MouseButton> button;
-    std::shared_ptr<Map> m_map; 
-
+    std::shared_ptr<Map> m_map;
     std::list<std::shared_ptr<MouseButton>> m_listButton;
     std::list<std::shared_ptr<SpriteAnimation>> m_listAnimation;
-    std::list<std::shared_ptr<Player>> m_listPlayer;
     std::list<std::shared_ptr<Enemy>> m_listEnemy;
-
+    std::shared_ptr<Boss1> boss1;
     int m_KeyPress;
     float time = 0.0f;
     float m_Velocity = 10.0f;
+    
+    int m_revivalTime = 20000;  // 20s
+    int m_revivalTimeCountDown = 10000;
+
+    int countDownDeadAll = 3000;
+    int countDownComplete = 5000;
+    int countDownGameOver = 3000;
 };

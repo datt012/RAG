@@ -40,6 +40,10 @@ void SpriteAnimationPlayer::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 
 		SDL_Rect srcRect = { srcWidth * colFrame, srcHeight * rowFrame, srcWidth, srcHeight }; //pointer to source rect(the area and position where you get the sprite on the texture).
 		SDL_Rect dstRect = { m_position.x - Camera::GetInstance()->GetPosition().x, m_position.y - Camera::GetInstance()->GetPosition().y, m_iWidth , m_iHeight }; // pointer to dest rect(the area and position on the renderer you are going to draw).
+
+		if (dstRect.x > SCREEN_WIDTH || dstRect.y > SCREEN_HEIDHT ||
+			dstRect.x + dstRect.w < 0 || dstRect.y + dstRect.h < 0) return;
+		
 		SDL_RenderCopyEx(Renderer::GetInstance()->GetRenderer(), m_pTexture->GetTextureObj(), &srcRect, &dstRect, m_angle, nullptr, m_flip);
 	}
 }

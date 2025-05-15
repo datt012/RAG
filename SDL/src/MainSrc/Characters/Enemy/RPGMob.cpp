@@ -1,5 +1,5 @@
 #include "RPGMob.h"
-
+#include "Sound.h"
 const std::unordered_map<AnimationKey, std::pair<int, int>> RPGMob::s_AnimationMap = {
 	{{true, false, DirectionGun::NONE}, {0, 0}},
 	{{true, false, DirectionGun::LEFT}, {0, 0}},
@@ -130,6 +130,11 @@ void RPGMob::Shoot()
 	}
 
 	m_animationPlayer->SetCurrentFrame(m_animationPlayer->GetStartFrame());
+
+	//sfx
+	Sound::GetInstance()->LoadSfx(RPG_Sound);
+	Sound::GetInstance()->PlaySfx(RPG_Sound);
+
 }
 
 void RPGMob::Update(float deltatime)
@@ -199,9 +204,9 @@ SDL_Rect RPGMob::GetColliderRect() {
 SDL_FRect RPGMob::GetColliderFRect() {
 	if (!IsAlive()) return {
 		Get2DPosition().x,
-		Get2DPosition().y + GetHeight(),
+		Get2DPosition().y + GetHeight() - 1,
 		static_cast<float>(GetWidth()),
-		0
+		1
 	};
 
 	SDL_FRect rect = {

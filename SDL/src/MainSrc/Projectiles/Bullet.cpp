@@ -25,6 +25,10 @@ void Bullet::Draw(SDL_Renderer* renderer, SDL_Rect* clip)
 			renderQuad.h = clip->h;
 		}
 		SDL_Point center = { renderQuad.w / 2, renderQuad.h / 2 };
+
+		if (renderQuad.x > SCREEN_WIDTH || renderQuad.y > SCREEN_HEIDHT ||
+			renderQuad.x + renderQuad.w < 0 || renderQuad.y + renderQuad.h < 0) return;
+
 		SDL_RenderCopyEx(Renderer::GetInstance()->GetRenderer(), m_pTexture->GetTextureObj(), clip, &renderQuad, m_angle, &center, m_flip);
 	}
 }
