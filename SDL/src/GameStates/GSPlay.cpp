@@ -152,21 +152,22 @@ void GSPlay::Update(float deltaTime) {
     if (Level::GetInstance()->GetLevel() == 3) {
         bool mobDead = false;
         for (auto it : m_listEnemy) {
-            if (!it->IsAlive() && it->GetMAXHP() != BOSS1_MAX_HP) {
-                mobDead = true;
-                break;
-            }
-
-            else if (!it->IsAlive() && it->GetMAXHP() == BOSS1_MAX_HP) {
-                static int countDown = 3000;
-                if (countDown <= 0) {
+            if (!it->IsAlive() && it->GetMAXHP() == BOSS1_MAX_HP) {
+                if (countDownDeadAll <= 0) {
                     for (auto it : m_listEnemy) {
                         it->SetHP(it->GetHP() - 1);
                     }
                 }
                 else {
-                    countDown -= static_cast<int>(deltaTime);
+                    countDownDeadAll -= static_cast<int>(deltaTime);
                 }
+            }
+        }
+
+        for (auto it : m_listEnemy) {
+            if (!it->IsAlive() && it->GetMAXHP() != BOSS1_MAX_HP) {
+                mobDead = true;
+                break;
             }
         }
 
@@ -175,6 +176,7 @@ void GSPlay::Update(float deltaTime) {
                 for (auto it : m_listEnemy) {
                     if (!it->IsAlive() && it->GetMAXHP() < BOSS1_MAX_HP) {
                         it->SetHP(it->GetMAXHP());
+                        it->SetShootCooldown(it->GetShootCooldownTime());
                         auto p = it->Get2DPosition();
                         it->Set2DPosition(p.x, p.y - it->GetHeight() - 2);
                     }
@@ -206,12 +208,11 @@ void GSPlay::Update(float deltaTime) {
     printf("hp player : %d\n", m_player->GetHP());
 
     if (m_player->GetHP() <= 0) {
-        static int countDown = 3000;
-        if (countDown <= 0) {
+        if (countDownGameOver <= 0) {
             GameStateMachine::GetInstance()->ChangeState(StateType::STATE_OVER);
         }
         else {
-            countDown -= static_cast<int>(deltaTime);
+            countDownGameOver -= static_cast<int>(deltaTime);
         }
     }
 
@@ -280,11 +281,6 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
     // Draw map
     m_map->Draw(renderer);
 
-    // Draw buttons
-    for (auto it : m_listButton) {
-        it->Draw(renderer);
-    }
-
     // Draw animations
     for (auto it : m_listAnimation) {
         it->Draw(renderer);
@@ -310,6 +306,11 @@ void GSPlay::Draw(SDL_Renderer* renderer) {
         if (bulletPool) {
             bulletPool->Draw(renderer);
         }
+    }
+
+    // Draw buttons
+    for (auto it : m_listButton) {
+        it->Draw(renderer);
     }
 }
 void GSPlay::Init2(std::shared_ptr<Player> p) {
@@ -410,10 +411,10 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
 
         rpgMobPositions = {
             {198, 312},
-            {390, 363},
-            {535, 370},
-            {720, 370},
-            {861, 363},
+            {390, 360},
+            {535, 361},
+            {720, 361},
+            {861, 360},
             {1038, 312},
         };
 
@@ -468,6 +469,11 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     }
 
     m_player->Set2DPosition(initPosition.x, initPosition.y);
+
+    m_revivalTimeCountDown = 10000;
+    countDownDeadAll = 3000;
+    countDownComplete = 5000;
+    countDownGameOver = 3000;
 }
 void GSPlay::IsComplete(float deltatime) {
     if (!m_player || !m_map) return;
@@ -483,12 +489,11 @@ void GSPlay::IsComplete(float deltatime) {
         }
     }
     if (Level::GetInstance()->GetLevel() == 3 && allEnemiesDefeated) {
-        static int countDown = 5000;
-        if (countDown <= 0) {
+        if (countDownComplete <= 0) {
             GameStateMachine::GetInstance()->ChangeState(StateType::STATE_COMPLETE);
         }
         else {
-            countDown -= deltatime;
+            countDownComplete -= deltatime;
         }
     }
     if (playerRightEdge >= mapWidth && allEnemiesDefeated) {
