@@ -209,6 +209,14 @@ int Character::GetMAXHP() const {
 	return m_MAX_HP;
 }
 
+int Character::GetShootCooldown() const {
+	return m_ShootCooldown;
+}
+
+int Character::GetShootCooldownTime() const {
+	return m_ShootCooldownTime;
+}
+
 bool Character::IsOnGround() const {
 	return m_IsOnGround;
 }
@@ -233,6 +241,10 @@ void Character::SetHP(int hp) {
 
 void Character::TakeDamage(int damage) {
 	SetHP(m_HP - damage);
+}
+
+void Character::SetShootCooldown(int time) {
+	m_ShootCooldown = time;
 }
 
 void Character::SetOnGround(bool isOnGround) {

@@ -51,6 +51,10 @@ private:
     float time = 0.0f;
     float m_Velocity = 10.0f;
     
-    int m_revivalTime = 20000;  // 10s
+    int m_revivalTime = 20000;  // 20s
     int m_revivalTimeCountDown = 10000;
+
+    int countDownDeadAll = 3000;
+    int countDownComplete = 5000;
+    int countDownGameOver = 3000;
 };
