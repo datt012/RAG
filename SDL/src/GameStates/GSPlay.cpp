@@ -28,7 +28,8 @@ void GSPlay::Init() {
     button->SetSize(50, 50);
     button->Set2DPosition(SCREEN_WIDTH - 50, 10);
     button->SetOnClick([this]() {
-        GameStateMachine::GetInstance()->PopState();
+       
+        GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
         });
     m_listButton.push_back(button);
     auto texture2 = ResourceManagers::GetInstance()->GetTexture("pause.png");
@@ -325,6 +326,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
 
     if (lv == 1) {
         m_listEnemy.clear();
+        
         m_map = std::make_shared<Map>();
         if (!m_map->LoadFromFile("Data/Asset/test/main2.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
@@ -357,6 +359,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     if (lv == 2) {
         m_map = NULL;
         m_listEnemy.clear();
+       
         m_map = std::make_shared<Map>();
         if (!m_map->LoadFromFile("Data/Asset/test2/main.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
@@ -394,13 +397,14 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     }
     if (lv == 3) {
         m_listEnemy.clear();
+       
         m_map = std::make_shared<Map>();
-        if (!m_map->LoadFromFile("Data/Asset/test3/main.tmx", Renderer::GetInstance()->GetRenderer())) {
+        if (!m_map->LoadFromFile("Data/Asset/test3new/main.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
             return;
         }
 
-        initPosition = { 622, 371 };
+        initPosition = { 770, 371 };
 
         // Initialize enemy
         armobPositions = {
@@ -410,7 +414,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
         };
 
         rpgMobPositions = {
-            {198, 312},
+            {198, 360},
             {390, 360},
             {535, 361},
             {720, 361},
@@ -419,7 +423,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
         };
 
         boss1Positions = {
-            {570, 50},
+            {570, 30},
         };
     }
 
@@ -458,6 +462,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     }
 
     for (const auto& pos : boss1Positions) {
+        
         auto texture = ResourceManagers::GetInstance()->GetTexture(BOSS1_SPRITE_PATH);
         animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 7, 0, 0, 30);
         enemy = std::make_shared<Boss1>(animation);

@@ -87,6 +87,8 @@ public:
     int GetShootCooldown() const;
     int GetShootCooldownTime() const;
     std::shared_ptr<BulletPool> GetBulletPool() const;
+
+
     bool IsOnGround() const;
     bool IsJumping() const;
     bool IsShooting() const;
@@ -98,5 +100,8 @@ public:
     void SetOnGround(bool isOnGround);
     void SetJumping(bool isJumping);
     void SetShooting(bool isShooting);
+
+    
+
 };
 

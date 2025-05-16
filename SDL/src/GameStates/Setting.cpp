@@ -50,10 +50,10 @@ void Setting::Init() {
     m_SFXIMG->Set2DPosition(530, 300);
 
 
-    texture = ResourceManagers::GetInstance()->GetTexture("button_red.png");
+    texture = ResourceManagers::GetInstance()->GetTexture("ok.png");
     auto btnBack = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
-    btnBack->SetSize(100, 60);
-    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2, SCREEN_HEIDHT - 120);
+    btnBack->SetSize(80, 80);
+    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 120);
     btnBack->SetOnClick([]() {
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
 
@@ -61,15 +61,7 @@ void Setting::Init() {
     m_listBtn.push_back(btnBack);
 
 
-    m_backText = std::make_shared<Text>("OK", fontBig, white);
-    m_backText->SetSize(50, 50);
-    float btnX = btnBack->Get2DPosition().x;
-    float btnY = btnBack->Get2DPosition().y;
-    float btnW = btnBack->GetWidth();
-    float btnH = btnBack->GetHeight();
-    float textW = m_backText->GetWidth();
-    float textH = m_backText->GetHeight();
-    m_backText->Set2DPosition(btnX + (btnW - textW) / 2, btnY + (btnH - textH) / 2);
+   
 
 
     Sound::GetInstance()->StopSound();

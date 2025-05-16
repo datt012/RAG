@@ -28,33 +28,21 @@ void GameOver::Init() {
     m_titleText->Set2DPosition((SCREEN_WIDTH - 300) / 2, 100);
 
 
-    texture = ResourceManagers::GetInstance()->GetTexture("button_red.png");
+    texture = ResourceManagers::GetInstance()->GetTexture("ok.png");
     auto btnBack = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
-    btnBack->SetSize(100, 60);
-    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2, SCREEN_HEIDHT - 140);
+    btnBack->SetSize(80, 80);
+    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 140);
     btnBack->SetOnClick([]() {
-        printf("[GameOver] Back to menu clicked.\n");
+       
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
         Level::GetInstance()->SetLevel(1);
+       
+
         });
     m_listBtn.push_back(btnBack);
 
 
-    m_backText = std::make_shared<Text>("OK", fontMid, white);
-    m_backText->SetSize(50, 50);
-
-    float btnX = btnBack->Get2DPosition().x;
-    float btnY = btnBack->Get2DPosition().y;
-    float btnW = btnBack->GetWidth();
-    float btnH = btnBack->GetHeight();
-    float textW = m_backText->GetWidth();
-    float textH = m_backText->GetHeight();
-
-    m_backText->Set2DPosition(
-        btnX + (btnW - textW) / 2,
-        btnY + (btnH - textH) / 2
-    );
-
+    
 
     Sound::GetInstance()->StopSound();
     Sound::GetInstance()->LoadSound("over.wav");
@@ -76,7 +64,7 @@ void GameOver::HandleEvents() {}
 
 void GameOver::HandleKeyEvents(SDL_Event& e) {
     if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN) {
-        GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
+        GameStateMachine::GetInstance()->PushState(StateType::STATE_MENU);
     }
 }
 

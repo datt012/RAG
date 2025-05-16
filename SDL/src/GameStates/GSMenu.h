@@ -29,6 +29,7 @@ public:
 	}
 private:
 	std::shared_ptr<Sprite2D>				m_background;
+	std::shared_ptr<Sprite2D>				m_okImg;
 	std::list<std::shared_ptr<MouseButton>>	m_listButton;
 	std::shared_ptr<Text>					m_textGameName;
 	SDL_Color m_textColor;

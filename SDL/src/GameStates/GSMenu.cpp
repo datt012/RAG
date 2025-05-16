@@ -19,7 +19,7 @@ bool GSMenu::m_isPause = false;
 void GSMenu::Init()
 {
 	//auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("navyblue.jpg");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("menu1.jpg");
 
 	// background
 	//auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -83,7 +83,7 @@ void GSMenu::Init()
 	btnCredit->SetSize(100, 100);
 	btnCredit->SetOnClick([]() {
 		GameStateMachine::GetInstance()->PushState(StateType::STATE_CREDIT);
-
+		Sound::GetInstance()->StopSound();
 		});
 	m_listButton.push_back(btnCredit);
 
@@ -97,13 +97,8 @@ void GSMenu::Init()
 	m_textGameName->Set2DPosition((SCREEN_WIDTH - m_textGameName->GetWidth()) / 2, SCREEN_HEIDHT / 2 - 300);
 
 
-	auto texture2 = ResourceManagers::GetInstance()->GetTexture("RPGmob2.png");
-	m_animation = std::make_shared<SpriteAnimation>(texture2, 1, 5, 1, 100.0f);
-	m_animation->SetSize(200, 200);
-	int dx = Camera::GetInstance()->GetViewBox().x;
-	m_animation->Set2DPosition(SCREEN_WIDTH / 2 - 100 + 10 + dx, SCREEN_HEIDHT / 2 - 150);
+	
 	/// sound
-	Sound::GetInstance()->StopSound();
 
 	Sound::GetInstance()->LoadSound("Alarm01.wav");
 	Sound::GetInstance()->PlaySound("Alarm01.wav");
@@ -128,7 +123,7 @@ void GSMenu::Pause()
 
 void GSMenu::Resume()
 {
-
+	
 }
 
 
@@ -158,7 +153,7 @@ void GSMenu::HandleMouseMoveEvents(int x, int y)
 void GSMenu::Update(float deltaTime)
 {
 	m_background->Update(deltaTime);
-	m_animation->Update(deltaTime);
+	
 	for (auto it : m_listButton)
 	{
 		it->Update(deltaTime);
@@ -169,7 +164,7 @@ void GSMenu::Update(float deltaTime)
 void GSMenu::Draw(SDL_Renderer* renderer)
 {
 	m_background->Draw(renderer);
-	m_animation->Draw(renderer);
+	
 	for (auto it : m_listButton)
 	{
 		it->Draw(renderer);
