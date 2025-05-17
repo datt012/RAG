@@ -19,7 +19,7 @@ bool GSMenu::m_isPause = false;
 void GSMenu::Init()
 {
 	//auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D.nfg");
-	auto texture = ResourceManagers::GetInstance()->GetTexture("menu1.jpg");
+	auto texture = ResourceManagers::GetInstance()->GetTexture("menu.png");
 
 	// background
 	//auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
@@ -90,9 +90,9 @@ void GSMenu::Init()
 	// game title
 	///Set Font
 
-	m_textColor = { 255,153,0 };
-	auto font = ResourceManagers::GetInstance()->GetFont("f1.ttf", 28);
-	m_textGameName = std::make_shared<Text>(" GAME LORD", font, m_textColor);
+	m_textColor = { 76,185,23 };
+	auto font = ResourceManagers::GetInstance()->GetFont("f1.ttf", 20);
+	m_textGameName = std::make_shared<Text>("RUN AND GUN", font, m_textColor);
 	m_textGameName->SetSize(300, 150);
 	m_textGameName->Set2DPosition((SCREEN_WIDTH - m_textGameName->GetWidth()) / 2, SCREEN_HEIDHT / 2 - 300);
 
@@ -100,8 +100,8 @@ void GSMenu::Init()
 	
 	/// sound
 
-	Sound::GetInstance()->LoadSound("Alarm01.wav");
-	Sound::GetInstance()->PlaySound("Alarm01.wav");
+	Sound::GetInstance()->LoadSound("Alarm01.mp3");
+	Sound::GetInstance()->PlaySound("Alarm01.mp3");
 
 
 

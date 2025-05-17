@@ -18,13 +18,13 @@ void Complete::Init() {
     m_background->Set2DPosition(0, 0);
 
     // Load font and color
-    SDL_Color red = { 255, 0, 0 };
+    SDL_Color main = { 76, 185, 23 };
     SDL_Color white = { 255, 255, 255 };
     auto fontBig = ResourceManagers::GetInstance()->GetFont("f1.ttf", 60);
     auto fontMid = ResourceManagers::GetInstance()->GetFont("f1.ttf", 40);
 
     // Title text: "Game Over"
-    m_titleText = std::make_shared<Text>("Game Complete!", fontBig, red);
+    m_titleText = std::make_shared<Text>("Game Complete!", fontBig, main);
     m_titleText->SetSize(300, 70);
     m_titleText->Set2DPosition((SCREEN_WIDTH - 300) / 2, 100);
 
@@ -34,15 +34,11 @@ void Complete::Init() {
     btnBack->SetSize(80, 80);
     btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 140);
     btnBack->SetOnClick([]() {
-        printf("[GameOver] Back to menu clicked.\n");
+        Sound::GetInstance()->StopSound();
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
         Level::GetInstance()->SetLevel(1);
-        });
+    });
     m_listBtn.push_back(btnBack);
-
-   
-
-
     Sound::GetInstance()->StopSound();
     Sound::GetInstance()->LoadSound("victory.mp3");
     Sound::GetInstance()->PlaySound("victory.mp3");
@@ -53,7 +49,6 @@ void Complete::Exit() {
     m_titleText = nullptr;
     m_backText = nullptr;
     m_listBtn.clear();
-    Sound::GetInstance()->StopSound();
 }
 
 void Complete::Pause() {

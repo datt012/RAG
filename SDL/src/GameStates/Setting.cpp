@@ -56,17 +56,11 @@ void Setting::Init() {
     btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 120);
     btnBack->SetOnClick([]() {
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
-
-        });
+    });
     m_listBtn.push_back(btnBack);
-
-
-   
-
-
     Sound::GetInstance()->StopSound();
-    Sound::GetInstance()->LoadSound("Alarm01.wav");
-    Sound::GetInstance()->PlaySound("Alarm01.wav");
+    Sound::GetInstance()->LoadSound("Alarm01.mp3");
+    Sound::GetInstance()->PlaySound("Alarm01.mp3");
 }
 
 void Setting::Exit() {

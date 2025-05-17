@@ -40,7 +40,7 @@ void Credit::Init() {
 
 
     // Author name 2
-    m_name2 = std::make_shared<Text>("Tran Tien Dat", fontMid, white);
+    m_name2 = std::make_shared<Text>("Nguyen Van Duy", fontMid, white);
     m_name2->SetSize(200, 40);
     m_name2->Set2DPosition((SCREEN_WIDTH - m_name2->GetWidth()) / 2, SCREEN_HEIDHT / 2 - 100);
 
@@ -69,8 +69,8 @@ void Credit::Init() {
     
 
 
-    Sound::GetInstance()->LoadSound("Alarm01.wav");
-    Sound::GetInstance()->PlaySound("Alarm01.wav");
+    Sound::GetInstance()->LoadSound("Alarm01.mp3");
+    Sound::GetInstance()->PlaySound("Alarm01.mp3");
 }
 
 

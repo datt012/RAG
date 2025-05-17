@@ -17,13 +17,13 @@ void GameOver::Init() {
     m_background->Set2DPosition(0, 0);
 
 
-    SDL_Color red = { 255, 0, 0 };
+    SDL_Color main = { 76, 185, 23 };
     SDL_Color white = { 255, 255, 255 };
     auto fontBig = ResourceManagers::GetInstance()->GetFont("f1.ttf", 60);
     auto fontMid = ResourceManagers::GetInstance()->GetFont("f1.ttf", 40);
 
 
-    m_titleText = std::make_shared<Text>("Game Over", fontBig, red);
+    m_titleText = std::make_shared<Text>("Game Over", fontBig, main);
     m_titleText->SetSize(300, 70);
     m_titleText->Set2DPosition((SCREEN_WIDTH - 300) / 2, 100);
 
@@ -33,17 +33,11 @@ void GameOver::Init() {
     btnBack->SetSize(80, 80);
     btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 140);
     btnBack->SetOnClick([]() {
-       
+        Sound::GetInstance()->StopSound();
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
-        Level::GetInstance()->SetLevel(1);
-       
-
-        });
+        Level::GetInstance()->SetLevel(1); 
+    });
     m_listBtn.push_back(btnBack);
-
-
-    
-
     Sound::GetInstance()->StopSound();
     Sound::GetInstance()->LoadSound("over.wav");
     Sound::GetInstance()->PlaySound("over.wav");
@@ -64,6 +58,7 @@ void GameOver::HandleEvents() {}
 
 void GameOver::HandleKeyEvents(SDL_Event& e) {
     if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN) {
+        Sound::GetInstance()->StopSound();
         GameStateMachine::GetInstance()->PushState(StateType::STATE_MENU);
     }
 }
