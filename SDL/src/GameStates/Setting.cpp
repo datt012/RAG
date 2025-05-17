@@ -41,7 +41,6 @@ void Setting::Init() {
     m_soundIMG = std::make_shared<Sprite2D>(texture, SDL_FLIP_NONE);
     m_soundIMG->SetSize(100, 50);
     m_soundIMG->Set2DPosition(530, 200);
-    std::cout << "init: " << Sound::GetInstance()->GetFlag() << std::endl;
 
 
     texture = ResourceManagers::GetInstance()->GetTexture(Sound::GetInstance()->GetSFXFlag() ? "on.png" : "off.png");
