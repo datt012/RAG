@@ -527,6 +527,6 @@ void GSPlay::IsComplete(float deltatime) {
         Init2(m_player);
         Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
         //Camera::GetInstance()->SetTarget(m_player);
-        m_player->SetHP(m_player->GetHP() + m_player->GetMAXHP() / 2);
+        m_player->SetHP(m_player->GetHP() + m_player->GetMAXHP());
     }
 }
