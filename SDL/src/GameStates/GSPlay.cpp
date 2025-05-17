@@ -144,7 +144,6 @@ void GSPlay::Update(float deltaTime) {
 
     // Update key press events
     m_player->HandleInput(m_KeyPress);
-    printf("KeyPress: %d\n", m_KeyPress);
 
     for (auto it : m_listEnemy) {
         it->HandleInput(Behavior::GenerateKeyMask(it, m_map));
@@ -206,7 +205,6 @@ void GSPlay::Update(float deltaTime) {
     // Update player
     m_player->Update(deltaTime);
     m_player->SolveCollision(m_map);
-    printf("hp player : %d\n", m_player->GetHP());
 
     if (m_player->GetHP() <= 0) {
         if (countDownGameOver <= 0) {
