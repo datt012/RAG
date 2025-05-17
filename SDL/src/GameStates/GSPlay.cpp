@@ -404,7 +404,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
             return;
         }
 
-        initPosition = { 770, 371 };
+        initPosition = { 740, 390 };
 
         // Initialize enemy
         armobPositions = {
@@ -414,16 +414,18 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
         };
 
         rpgMobPositions = {
-            {198, 360},
-            {390, 360},
-            {535, 361},
-            {720, 361},
-            {861, 360},
-            {1038, 312},
+            {129, 256},
+            {400, 320},
+            {628, 384},
+            {740, 390},
+            {818, 390},
+            {932, 384},
+            {1156, 320},
+            {1416, 256},
         };
 
         boss1Positions = {
-            {570, 30},
+            {900, 30},
         };
     }
 
@@ -480,6 +482,23 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     countDownComplete = 5000;
     countDownGameOver = 3000;
 }
+
+void GSPlay::DeactivateBullets() {
+    std::shared_ptr<BulletPool> bulletPool;
+
+    bulletPool = m_player->GetBulletPool();
+    for (auto& bullet : bulletPool->GetBullets()) {
+        bullet->Deactivate();
+    }
+
+    for (auto it : m_listEnemy) {
+        bulletPool = m_player->GetBulletPool();
+        for (auto& bullet : bulletPool->GetBullets()) {
+            bullet->Deactivate();
+        }
+    }
+}
+
 void GSPlay::IsComplete(float deltatime) {
     if (!m_player || !m_map) return;
 
@@ -506,6 +525,7 @@ void GSPlay::IsComplete(float deltatime) {
         int currentLevel = Level::GetInstance()->GetLevel();
         Level::GetInstance()->SetLevel(currentLevel + 1);
         m_map = nullptr;
+        DeactivateBullets();
         Init2(m_player);
         Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
         //Camera::GetInstance()->SetTarget(m_player);

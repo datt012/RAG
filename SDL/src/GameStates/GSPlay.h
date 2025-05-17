@@ -34,6 +34,7 @@ public:
     void HandleMouseMoveEvents(int x, int y) override;
     void Update(float deltaTime) override;
     void Draw(SDL_Renderer* renderer) override;
+    void DeactivateBullets();
     void IsComplete(float deltaTime);
 private:
     std::shared_ptr<Sprite2D> m_background;
