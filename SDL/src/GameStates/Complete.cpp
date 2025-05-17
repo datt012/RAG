@@ -12,7 +12,7 @@ Complete::~Complete() {
 
 void Complete::Init() {
     // Load background
-    auto texture = ResourceManagers::GetInstance()->GetTexture("paper.png");
+    auto texture = ResourceManagers::GetInstance()->GetTexture("complete.png");
     m_background = std::make_shared<Sprite2D>(texture, SDL_FLIP_NONE);
     m_background->SetSize(SCREEN_WIDTH, SCREEN_HEIDHT);
     m_background->Set2DPosition(0, 0);
@@ -40,8 +40,8 @@ void Complete::Init() {
     });
     m_listBtn.push_back(btnBack);
     Sound::GetInstance()->StopSound();
-    Sound::GetInstance()->LoadSound("victory.mp3");
-    Sound::GetInstance()->PlaySound("victory.mp3");
+    Sound::GetInstance()->LoadSound("victory.wav");
+    Sound::GetInstance()->PlaySound("victory.wav");
 }
 
 void Complete::Exit() {

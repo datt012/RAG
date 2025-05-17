@@ -33,7 +33,6 @@ private:
 	std::list<std::shared_ptr<MouseButton>>	m_listButton;
 	std::shared_ptr<Text>					m_textGameName;
 	SDL_Color m_textColor;
-	std::shared_ptr<MouseButton> btnCredit;
 	std::shared_ptr<SpriteAnimation> m_animation;
 	int score = 0;
 	static bool m_isPause;

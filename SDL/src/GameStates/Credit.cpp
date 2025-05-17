@@ -49,13 +49,7 @@ void Credit::Init() {
     m_ReferenceText = std::make_shared<Text>("Special thanks to everyone!", fontMid, white);
     m_ReferenceText->SetSize(400, 40);
     m_ReferenceText->Set2DPosition((SCREEN_WIDTH - m_ReferenceText->GetWidth()) / 2, SCREEN_HEIDHT / 2 + 80);
-
-
-
     texture = ResourceManagers::GetInstance()->GetTexture("ok.png");
-
-
-
     auto btnBack = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
     btnBack->SetSize(80, 80);
     btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 120);
@@ -63,18 +57,9 @@ void Credit::Init() {
         GameStateMachine::GetInstance()->PopState();
         });
     m_listBtn.push_back(btnBack);
-
-
-
-    
-
-
-    Sound::GetInstance()->LoadSound("Alarm01.mp3");
-    Sound::GetInstance()->PlaySound("Alarm01.mp3");
+    Sound::GetInstance()->LoadSound("Intro.mp3");
+    Sound::GetInstance()->PlaySound("Intro.mp3");
 }
-
-
-
 
 void Credit::Exit() {
     m_background = nullptr;

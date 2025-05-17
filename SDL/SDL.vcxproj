@@ -211,6 +211,7 @@
     <ClCompile Include="src\MainSrc\Projectiles\BulletPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameManager\ResourceManagers.h" />
     <ClInclude Include="src\GameManager\Singleton.h" />
@@ -258,6 +259,12 @@
     <ClInclude Include="src\MainSrc\Map\Tinyxml2\tinyxml2.h" />
     <ClInclude Include="src\MainSrc\Projectiles\Bullet.h" />
     <ClInclude Include="src\MainSrc\Projectiles\BulletPool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RunAndGun.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Data\Textures\exe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
