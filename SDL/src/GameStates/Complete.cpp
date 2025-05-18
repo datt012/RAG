@@ -12,54 +12,36 @@ Complete::~Complete() {
 
 void Complete::Init() {
     // Load background
-    auto texture = ResourceManagers::GetInstance()->GetTexture("paper.png");
+    auto texture = ResourceManagers::GetInstance()->GetTexture("complete.png");
     m_background = std::make_shared<Sprite2D>(texture, SDL_FLIP_NONE);
     m_background->SetSize(SCREEN_WIDTH, SCREEN_HEIDHT);
     m_background->Set2DPosition(0, 0);
 
     // Load font and color
-    SDL_Color red = { 255, 0, 0 };
+    SDL_Color main = { 76, 185, 23 };
     SDL_Color white = { 255, 255, 255 };
     auto fontBig = ResourceManagers::GetInstance()->GetFont("f1.ttf", 60);
     auto fontMid = ResourceManagers::GetInstance()->GetFont("f1.ttf", 40);
 
     // Title text: "Game Over"
-    m_titleText = std::make_shared<Text>("Game Complete!", fontBig, red);
+    m_titleText = std::make_shared<Text>("Game Complete!", fontBig, main);
     m_titleText->SetSize(300, 70);
     m_titleText->Set2DPosition((SCREEN_WIDTH - 300) / 2, 100);
 
     // Back button
-    texture = ResourceManagers::GetInstance()->GetTexture("button_red.png");
+    texture = ResourceManagers::GetInstance()->GetTexture("ok.png");
     auto btnBack = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
-    btnBack->SetSize(100, 60);
-    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2, SCREEN_HEIDHT - 140);
+    btnBack->SetSize(80, 80);
+    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 140);
     btnBack->SetOnClick([]() {
-        printf("[GameOver] Back to menu clicked.\n");
+        Sound::GetInstance()->StopSound();
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
         Level::GetInstance()->SetLevel(1);
-        });
+    });
     m_listBtn.push_back(btnBack);
-
-    // Back text: "OK"
-    m_backText = std::make_shared<Text>("OK", fontMid, white);
-    m_backText->SetSize(50, 50);
-
-    float btnX = btnBack->Get2DPosition().x;
-    float btnY = btnBack->Get2DPosition().y;
-    float btnW = btnBack->GetWidth();
-    float btnH = btnBack->GetHeight();
-    float textW = m_backText->GetWidth();
-    float textH = m_backText->GetHeight();
-
-    m_backText->Set2DPosition(
-        btnX + (btnW - textW) / 2,
-        btnY + (btnH - textH) / 2
-    );
-
-
     Sound::GetInstance()->StopSound();
-    Sound::GetInstance()->LoadSound("victory.mp3");
-    Sound::GetInstance()->PlaySound("victory.mp3");
+    Sound::GetInstance()->LoadSound("victory.wav");
+    Sound::GetInstance()->PlaySound("victory.wav");
 }
 
 void Complete::Exit() {
@@ -67,7 +49,6 @@ void Complete::Exit() {
     m_titleText = nullptr;
     m_backText = nullptr;
     m_listBtn.clear();
-    Sound::GetInstance()->StopSound();
 }
 
 void Complete::Pause() {

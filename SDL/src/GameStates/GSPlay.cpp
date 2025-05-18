@@ -28,7 +28,8 @@ void GSPlay::Init() {
     button->SetSize(50, 50);
     button->Set2DPosition(SCREEN_WIDTH - 50, 10);
     button->SetOnClick([this]() {
-        GameStateMachine::GetInstance()->PopState();
+       
+        GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
         });
     m_listButton.push_back(button);
     auto texture2 = ResourceManagers::GetInstance()->GetTexture("pause.png");
@@ -143,7 +144,6 @@ void GSPlay::Update(float deltaTime) {
 
     // Update key press events
     m_player->HandleInput(m_KeyPress);
-    printf("KeyPress: %d\n", m_KeyPress);
 
     for (auto it : m_listEnemy) {
         it->HandleInput(Behavior::GenerateKeyMask(it, m_map));
@@ -205,7 +205,6 @@ void GSPlay::Update(float deltaTime) {
     // Update player
     m_player->Update(deltaTime);
     m_player->SolveCollision(m_map);
-    printf("hp player : %d\n", m_player->GetHP());
 
     if (m_player->GetHP() <= 0) {
         if (countDownGameOver <= 0) {
@@ -325,6 +324,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
 
     if (lv == 1) {
         m_listEnemy.clear();
+        
         m_map = std::make_shared<Map>();
         if (!m_map->LoadFromFile("Data/Asset/test/main2.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
@@ -357,6 +357,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     if (lv == 2) {
         m_map = NULL;
         m_listEnemy.clear();
+       
         m_map = std::make_shared<Map>();
         if (!m_map->LoadFromFile("Data/Asset/test2/main.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
@@ -394,13 +395,14 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     }
     if (lv == 3) {
         m_listEnemy.clear();
+       
         m_map = std::make_shared<Map>();
-        if (!m_map->LoadFromFile("Data/Asset/test3/main.tmx", Renderer::GetInstance()->GetRenderer())) {
+        if (!m_map->LoadFromFile("Data/Asset/test3new/main.tmx", Renderer::GetInstance()->GetRenderer())) {
             printf("Failed to load map!\n");
             return;
         }
 
-        initPosition = { 622, 371 };
+        initPosition = { 740, 390 };
 
         // Initialize enemy
         armobPositions = {
@@ -410,16 +412,18 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
         };
 
         rpgMobPositions = {
-            {198, 312},
-            {390, 360},
-            {535, 361},
-            {720, 361},
-            {861, 360},
-            {1038, 312},
+            {129, 256},
+            {400, 320},
+            {628, 384},
+            {740, 390},
+            {818, 390},
+            {932, 384},
+            {1156, 320},
+            {1416, 256},
         };
 
         boss1Positions = {
-            {570, 50},
+            {900, 30},
         };
     }
 
@@ -458,6 +462,7 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     }
 
     for (const auto& pos : boss1Positions) {
+        
         auto texture = ResourceManagers::GetInstance()->GetTexture(BOSS1_SPRITE_PATH);
         animation = std::make_shared<SpriteAnimationPlayer>(texture, 1, 7, 0, 0, 30);
         enemy = std::make_shared<Boss1>(animation);
@@ -475,6 +480,23 @@ void GSPlay::Init2(std::shared_ptr<Player> p) {
     countDownComplete = 5000;
     countDownGameOver = 3000;
 }
+
+void GSPlay::DeactivateBullets() {
+    std::shared_ptr<BulletPool> bulletPool;
+
+    bulletPool = m_player->GetBulletPool();
+    for (auto& bullet : bulletPool->GetBullets()) {
+        bullet->Deactivate();
+    }
+
+    for (auto it : m_listEnemy) {
+        bulletPool = m_player->GetBulletPool();
+        for (auto& bullet : bulletPool->GetBullets()) {
+            bullet->Deactivate();
+        }
+    }
+}
+
 void GSPlay::IsComplete(float deltatime) {
     if (!m_player || !m_map) return;
 
@@ -501,9 +523,10 @@ void GSPlay::IsComplete(float deltatime) {
         int currentLevel = Level::GetInstance()->GetLevel();
         Level::GetInstance()->SetLevel(currentLevel + 1);
         m_map = nullptr;
+        DeactivateBullets();
         Init2(m_player);
         Camera::GetInstance()->SetLevelDimension(m_map->GetWidth(), m_map->GetHeight());
         //Camera::GetInstance()->SetTarget(m_player);
-        m_player->SetHP(m_player->GetHP() + m_player->GetMAXHP() / 2);
+        m_player->SetHP(m_player->GetHP() + m_player->GetMAXHP());
     }
 }

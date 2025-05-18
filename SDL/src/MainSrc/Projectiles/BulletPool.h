@@ -14,7 +14,6 @@ public:
     std::shared_ptr<Bullet> SpawnBullet(int damage);
     void Update(float deltaTime);
     void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL);
-
     void SolveCollision(std::shared_ptr<Map> map);
 
     // Getters

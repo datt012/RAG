@@ -16,7 +16,8 @@ Game::Game()
 	Init();
 }
 bool Game::Init()
-{
+{	
+
 	bool success = Renderer::GetInstance()->Init();
 	GameStateMachine::GetInstance()->PushState(StateType::STATE_INTRO);
 	return success;
@@ -66,13 +67,13 @@ void Game::Run()
 		KeyState::HandleKeyState();
 
 		//Calculate and correct fps
-		float avgFPS = countedFrames / (fpsTimer->GetTicks() / 1000.f);
-		if (fpsTimer->GetTicks() > 1000)
-		{
-			fpsTimer->Start();
-			countedFrames = 0;
-		}
-		printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
+		//float avgFPS = countedFrames / (fpsTimer->GetTicks() / 1000.f);
+		//if (fpsTimer->GetTicks() > 1000)
+		//{
+		//	fpsTimer->Start();
+		//	countedFrames = 0;
+		//}
+		//printf("Average Frames Per Second (With Cap): %.2f\n", avgFPS);
 
 		//Update screen
 		Update(frameTicks);

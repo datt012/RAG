@@ -24,7 +24,7 @@ bool Renderer::Init()
 		printf("Warning: Linear texture filtering not enabled!");
 	}
 	//Create window
-	gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIDHT, SDL_WINDOW_SHOWN);
+	gWindow = SDL_CreateWindow("Run and gun", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIDHT, SDL_WINDOW_SHOWN);
 	if (gWindow == NULL)
 	{
 		printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -43,7 +43,10 @@ bool Renderer::Init()
 		{
 			//Initialize renderer color
 			SDL_SetRenderDrawColor(Renderer::GetInstance()->GetRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+			//SDL_RenderSetLogicalSize(gRenderer, 1920, 1080)
 		}
+		SDL_Surface* mainIcon = IMG_Load("Data//Textures//icons8-game-50.png");
+		SDL_SetWindowIcon(gWindow, mainIcon);
 	}
 
 	//	//Initialize PNG loading

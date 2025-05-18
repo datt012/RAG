@@ -154,7 +154,7 @@ void RPGMob::Update(float deltatime)
 	m_Velocity.y = m_Velocity.y * 0.98f;
 
 	Vector2 position = Get2DPosition();
-	position.x += m_Velocity.x * deltatime;
+	//position.x += m_Velocity.x * deltatime;
 	position.y += m_Velocity.y * deltatime;
 	Set2DPosition(position.x, position.y);
 

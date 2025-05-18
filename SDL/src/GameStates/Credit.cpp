@@ -40,7 +40,7 @@ void Credit::Init() {
 
 
     // Author name 2
-    m_name2 = std::make_shared<Text>("Tran Tien Dat", fontMid, white);
+    m_name2 = std::make_shared<Text>("Nguyen Van Duy", fontMid, white);
     m_name2->SetSize(200, 40);
     m_name2->Set2DPosition((SCREEN_WIDTH - m_name2->GetWidth()) / 2, SCREEN_HEIDHT / 2 - 100);
 
@@ -49,42 +49,17 @@ void Credit::Init() {
     m_ReferenceText = std::make_shared<Text>("Special thanks to everyone!", fontMid, white);
     m_ReferenceText->SetSize(400, 40);
     m_ReferenceText->Set2DPosition((SCREEN_WIDTH - m_ReferenceText->GetWidth()) / 2, SCREEN_HEIDHT / 2 + 80);
-
-
-
-    texture = ResourceManagers::GetInstance()->GetTexture("button_red.png");
-
-
-
+    texture = ResourceManagers::GetInstance()->GetTexture("ok.png");
     auto btnBack = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
-    btnBack->SetSize(100, 60);
-    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2, SCREEN_HEIDHT - 120);
+    btnBack->SetSize(80, 80);
+    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 120);
     btnBack->SetOnClick([]() {
         GameStateMachine::GetInstance()->PopState();
         });
     m_listBtn.push_back(btnBack);
-
-
-
-    m_homeText = std::make_shared<Text>("OK", fontBig, white);
-    m_homeText->SetSize(50, 50);
-
-
-    float btnX = btnBack->Get2DPosition().x;
-    float btnY = btnBack->Get2DPosition().y;
-    float btnW = btnBack->GetWidth();
-    float btnH = btnBack->GetHeight();
-    float textW = m_homeText->GetWidth();
-    float textH = m_homeText->GetHeight();
-
-    m_homeText->Set2DPosition(
-        btnX + (btnW - textW) / 2,
-        btnY + (btnH - textH) / 2
-    );
+    Sound::GetInstance()->LoadSound("Intro.mp3");
+    Sound::GetInstance()->PlaySound("Intro.mp3");
 }
-
-
-
 
 void Credit::Exit() {
     m_background = nullptr;
@@ -93,15 +68,15 @@ void Credit::Exit() {
     m_name2 = nullptr;
     m_ReferenceText = nullptr;
     m_listBtn.clear();
-    Sound::GetInstance()->StopSound();
+    
 }
 
 void Credit::Pause() {
-    Sound::GetInstance()->PauseSound();
+  
 }
 
 void Credit::Resume() {
-    Sound::GetInstance()->ResumeSound();
+   
 }
 
 void Credit::HandleEvents() {}

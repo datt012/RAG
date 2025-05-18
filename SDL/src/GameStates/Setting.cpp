@@ -41,7 +41,6 @@ void Setting::Init() {
     m_soundIMG = std::make_shared<Sprite2D>(texture, SDL_FLIP_NONE);
     m_soundIMG->SetSize(100, 50);
     m_soundIMG->Set2DPosition(530, 200);
-    std::cout << "init: " << Sound::GetInstance()->GetFlag() << std::endl;
 
 
     texture = ResourceManagers::GetInstance()->GetTexture(Sound::GetInstance()->GetSFXFlag() ? "on.png" : "off.png");
@@ -50,31 +49,16 @@ void Setting::Init() {
     m_SFXIMG->Set2DPosition(530, 300);
 
 
-    texture = ResourceManagers::GetInstance()->GetTexture("button_red.png");
+    texture = ResourceManagers::GetInstance()->GetTexture("ok.png");
     auto btnBack = std::make_shared<MouseButton>(texture, SDL_FLIP_NONE);
-    btnBack->SetSize(100, 60);
-    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2, SCREEN_HEIDHT - 120);
+    btnBack->SetSize(80, 80);
+    btnBack->Set2DPosition((SCREEN_WIDTH - 100) / 2 + btnBack->GetWidth()/4, SCREEN_HEIDHT - 120);
     btnBack->SetOnClick([]() {
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
-
-        });
+    });
     m_listBtn.push_back(btnBack);
-
-
-    m_backText = std::make_shared<Text>("OK", fontBig, white);
-    m_backText->SetSize(50, 50);
-    float btnX = btnBack->Get2DPosition().x;
-    float btnY = btnBack->Get2DPosition().y;
-    float btnW = btnBack->GetWidth();
-    float btnH = btnBack->GetHeight();
-    float textW = m_backText->GetWidth();
-    float textH = m_backText->GetHeight();
-    m_backText->Set2DPosition(btnX + (btnW - textW) / 2, btnY + (btnH - textH) / 2);
-
-
-    Sound::GetInstance()->StopSound();
-    Sound::GetInstance()->LoadSound("Alarm01.wav");
-    Sound::GetInstance()->PlaySound("Alarm01.wav");
+    Sound::GetInstance()->LoadSound("Intro.mp3");
+    Sound::GetInstance()->PlaySound("Intro.mp3");
 }
 
 void Setting::Exit() {
@@ -99,9 +83,9 @@ void Setting::Resume() {
 void Setting::HandleEvents() {}
 
 void Setting::HandleKeyEvents(SDL_Event& e) {
-    /*if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+    if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
         GameStateMachine::GetInstance()->ChangeState(StateType::STATE_MENU);
-    }*/
+    }
 }
 
 void Setting::HandleTouchEvents(SDL_Event& e) {
@@ -133,8 +117,6 @@ void Setting::HandleTouchEvents(SDL_Event& e) {
             m_soundIMG->SetTexture(tex);
 
             newFlag ? Sound::GetInstance()->ResumeSound() : Sound::GetInstance()->PauseSound();
-
-            std::cout << "New Flag: " << newFlag << std::endl;
         }
 
 
@@ -156,12 +138,6 @@ void Setting::HandleTouchEvents(SDL_Event& e) {
 
             auto tex = ResourceManagers::GetInstance()->GetTexture(newFlag ? "on.png" : "off.png");
             m_SFXIMG->SetTexture(tex);
-
-            
-
-            std::cout << "New Flag: " << newFlag << std::endl;
-            
-
         }
     }
 }
@@ -175,9 +151,7 @@ void Setting::Update(float deltaTime) {
 
 void Setting::Draw(SDL_Renderer* renderer) {
     m_background->Draw(renderer);
-
     for (auto& btn : m_listBtn) btn->Draw(renderer);
-
     if (m_titleText) m_titleText->Draw(renderer);
     if (m_backText) m_backText->Draw(renderer);
     if (m_soundText) m_soundText->Draw(renderer);
