@@ -1,14 +1,11 @@
 #pragma once
 #include <SDL.h>
-class KeyState
-{
+class KeyState {
 public:
-	static void HandleKeyState()
-	{
+	static void HandleKeyState() {
 		keystate = SDL_GetKeyboardState(NULL);
 	}
-	static bool IsKeyPressed(SDL_Scancode scancode)
-	{
+	static bool IsKeyPressed(SDL_Scancode scancode) {
 		return keystate[scancode];
 	}
 private:

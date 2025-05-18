@@ -3,8 +3,7 @@
 #include <string>
 #include <map>
 #include "Singleton.h"
-class Sound :public CSingleton<Sound>
-{
+class Sound : public CSingleton<Sound> {
 public:
 	Sound();
 	~Sound();
@@ -31,7 +30,6 @@ public:
 	}
 private:
 	std::string m_PathMusic;
-	//Mix_Music* m_Music = NULL;
 	std::map< std::string, Mix_Chunk*> m_Sfxs;
 	std::map<std::string, Mix_Music*> m_Sounds;
 	bool m_flag;

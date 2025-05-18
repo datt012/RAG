@@ -1,88 +1,52 @@
 #include "Timer.h"
 #include <SDL_timer.h>
-
-Timer::Timer()
-{
-	//Initialize the variable
+Timer::Timer() {
 	mStartTicks = 0;
 	mPausedTicks = 0;
 	mStarted = false;
 	mPaused = false;
 }
-void Timer::Start()
-{
-	//Start the timer
+void Timer::Start() {
 	mStarted = true;
-	//Unpause the timer
 	mPaused = false;
-	//Get the current clock time
 	mStartTicks = SDL_GetTicks();
 	mPausedTicks = 0;
 }
-void Timer::Stop()
-{
-	//Stop the timer
+void Timer::Stop() {
 	mStarted = false;
-	//Unpaused the timer
 	mPaused = false;
-	//Clean tick variables
 	mStartTicks = 0;
 	mPausedTicks = 0;
-
 }
-void Timer::Pause()
-{
-	//IF the timer is running and isn't already paused
-	if (mStarted && !mPaused)
-	{
-		//Pause the timer
+void Timer::Pause() {
+	if (mStarted && !mPaused) {
 		mPaused = true;
-		//Calculate the paused ticks
 		mPausedTicks = SDL_GetTicks() - mStartTicks;
 		mStartTicks = 0;
 	}
 }
-void Timer::UnPause()
-{
-	//IF the timer is running and already paused
-	if (mStarted && mPaused)
-	{
-		//Pause the timer
+void Timer::UnPause() {
+	if (mStarted && mPaused) {
 		mPaused = false;
-		// Reset the starting ticks
 		mStartTicks = SDL_GetTicks() - mPausedTicks;
 		mPausedTicks = 0;
 	}
 }
-Uint32 Timer::GetTicks()
-{
-	//The actual timer time
-
+Uint32 Timer::GetTicks() {
 	Uint32 time = 0;
-	//If the timer is running
-	if (mStarted)
-	{
-		//if the timer is paused
-		if (mPaused)
-		{
-			//Return the number of ticks when the timer was paused
+	if (mStarted) {
+		if (mPaused) {
 			time = mPausedTicks;
 		}
-		else
-		{
-			//Return the current time minus the start time
+		else {
 			time = SDL_GetTicks() - mStartTicks;
 		}
 	}
 	return time;
 }
-bool Timer::IsStarted()
-{
-	//Timer is running and paused or unpaused
+bool Timer::IsStarted() {
 	return mStarted;
 }
-bool Timer::IsPaused()
-{
-	//Timer is running and paused
+bool Timer::IsPaused() {
 	return mPaused && mStarted;
 }

@@ -1,12 +1,9 @@
 #pragma once
 #include "CMath.h"
 #include "SDL.h"
-
 #include "Define.h"
-#include"BaseObject.h"
-
-class Camera : public CSingleton<Camera>
-{
+#include "BaseObject.h"
+class Camera : public CSingleton<Camera> {
 public:
 	Camera() { m_ViewBox = { 0, 0, SCREEN_WIDTH, SCREEN_HEIDHT }; }
 	SDL_Rect GetViewBox();

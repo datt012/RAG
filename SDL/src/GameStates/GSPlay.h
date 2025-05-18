@@ -14,7 +14,6 @@
 #include "MainSrc/Characters/Enemy/ARMob.h"
 #include <MainSrc/Characters/Enemy/Behavior.h>
 #include "MainSrc/Characters/Enemy/Boss1.h"
-
 class Sprite2D;
 class SpriteAnimation;
 class MouseButton;
@@ -24,7 +23,7 @@ public:
     GSPlay();
     ~GSPlay();
     void Init() override;
-    void Init2(std::shared_ptr<Player> p);
+    void Init2(std::shared_ptr<Player>p);
     void Exit() override;
     void Pause() override;
     void Resume() override;
@@ -34,6 +33,7 @@ public:
     void HandleMouseMoveEvents(int x, int y) override;
     void Update(float deltaTime) override;
     void Draw(SDL_Renderer* renderer) override;
+    void DeactivateBullets();
     void IsComplete(float deltaTime);
 private:
     std::shared_ptr<Sprite2D> m_background;
@@ -50,10 +50,8 @@ private:
     int m_KeyPress;
     float time = 0.0f;
     float m_Velocity = 10.0f;
-    
-    int m_revivalTime = 20000;  // 20s
+    int m_revivalTime = 20000; 
     int m_revivalTimeCountDown = 10000;
-
     int countDownDeadAll = 3000;
     int countDownComplete = 5000;
     int countDownGameOver = 3000;
