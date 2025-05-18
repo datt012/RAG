@@ -1,6 +1,5 @@
 #pragma once
 #include "KeyDirection.h"
-
 class DirectionGun {
 public:
     enum Value {
@@ -14,15 +13,12 @@ public:
         RIGHT_UP = RIGHT + UP,
         RIGHT_DOWN = RIGHT + DOWN,
     };
-
     DirectionGun() = default;
     DirectionGun(Value value) : m_Value(value) {}
-
     operator Value() const { return m_Value; }
     bool operator==(DirectionGun other) const { return m_Value == other.m_Value; }
 	bool operator==(Value other) const { return m_Value == other; }
     bool operator!=(DirectionGun other) const { return m_Value != other.m_Value; }
-
     char* to_string() {
 		switch (m_Value) {
 		case NONE: return "NONE";
@@ -37,7 +33,6 @@ public:
 		default: return "UNKNOWN";
 		}
     }
-
 	static DirectionGun FromKeyMask(int keyMask) {
         if (keyMask & KEY_LEFT && keyMask & KEY_RIGHT) {
 			keyMask -= KEY_LEFT;
@@ -47,14 +42,11 @@ public:
             keyMask -= KEY_UP;
             keyMask -= KEY_DOWN;
         }
-
 		Value horizontal = (keyMask & KEY_LEFT) ? LEFT : (keyMask & KEY_RIGHT) ? RIGHT : NONE;
 		Value vertical = (keyMask & KEY_UP) ? UP : (keyMask & KEY_DOWN) ? DOWN : NONE;
-
 		Value value = static_cast<Value>(horizontal + vertical);
-
 		return DirectionGun(value);
 	}
 private:
-    Value m_Value = RIGHT; // Default value
+    Value m_Value = RIGHT;
 };

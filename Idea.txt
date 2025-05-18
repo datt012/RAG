@@ -1,8 +1,0 @@
-Tên game: Gunner
-
-Thể loại: 2D platform, run and gun
-
-Lối chơi: Người chơi điều khiển nhân vật qua các màn chơi 2D, 
-sử dụng kỹ năng nhảy, núp, bắn súng đa hướng để tiêu diệt các vật thể và 
-kẻ thù bắn súng xuất hiện trên đường đi và bay trên không trung 
-

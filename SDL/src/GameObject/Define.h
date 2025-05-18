@@ -1,22 +1,14 @@
-//new
 #pragma once
-#include"Singleton.h"
+#include "Singleton.h"
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIDHT 640
 #define LIMIT_FPS 90
-
 #define PIXEL_WIDTH 16
 #define PIXEL_HEIGHT 16
-
 #define MAP_COLLISION_LAYER_NAME "collider"
-
 #define GRAVITY 0.0007f
 
-/*
- *  Player
- */
-
-#define PLAYER_SPRITE_PATH "SpriteSheet_player_12_8.png"
+#define PLAYER_SPRITE_PATH "SpriteSheet_Player.png"
 #define PLAYER_SIZE_WIDTH 60
 #define PLAYER_SIZE_HEIGHT 60
 
@@ -43,11 +35,7 @@
 #define PLAYER_BULLET_DAMAGE 1
 #define PLAYER_SHOOT_COOLDOWN_TIME 300
 
- /*
-  *	AR Mob
-  */
-
-#define ARMOB_SPRITE_PATH "SpriteSheet_enemy_1_26.png"
+#define ARMOB_SPRITE_PATH "SpriteSheet_Enemy.png"
 #define ARMOB_SIZE_WIDTH 48
 #define ARMOB_SIZE_HEIGHT 57
 
@@ -76,11 +64,7 @@
 #define ARMOB_BULLET_DAMAGE 1
 #define ARMOB_SHOOT_COOLDOWN_TIME 500
 
-  /*
-   *	Sniper Mob
-   */
-
-#define SNIPER_SPRITE_PATH "SpriteSheet_SniperMob_1_14.png"
+#define SNIPER_SPRITE_PATH "SpriteSheet_SniperMob.png"
 #define SNIPER_SIZE_WIDTH 62
 #define SNIPER_SIZE_HEIGHT 62
 
@@ -109,11 +93,7 @@
 #define SNIPER_BULLET_DAMAGE 3
 #define SNIPER_SHOOT_COOLDOWN_TIME 1500
 
-   /*
-	*	RPG Mob
-	*/
-
-#define RPGMOB_SPRITE_PATH "SpriteSheet_RPGmob_1_11.png"
+#define RPGMOB_SPRITE_PATH "SpriteSheet_RPGMob.png"
 #define RPGMOB_SIZE_WIDTH 62
 #define RPGMOB_SIZE_HEIGHT 62
 
@@ -134,7 +114,7 @@
 #define RPGMOB_SIGHT_RANGE 0.0f
 #define RPGMOB_SHOOT_RANGE 500.0f
 
-#define RPGMOB_BULLET_SPRITE_PATH "Bullet_RPGmob.png"
+#define RPGMOB_BULLET_SPRITE_PATH "Bullet_RPGMob.png"
 #define RPGMOB_BULLET_WIDTH 9
 #define RPGMOB_BULLET_HEIGHT 9
 #define RPGMOB_BULLET_POOL_SIZE 1000
@@ -142,11 +122,7 @@
 #define RPGMOB_BULLET_DAMAGE 10
 #define RPGMOB_SHOOT_COOLDOWN_TIME 5000
 
-	/*
-	 *	Boss 1
-	 */
-
-#define BOSS1_SPRITE_PATH "SpriteSheet_Boss_1_7.png"
+#define BOSS1_SPRITE_PATH "SpriteSheet_Boss.png"
 #define BOSS1_SIZE_WIDTH 128
 #define BOSS1_SIZE_HEIGHT 128
 
@@ -175,9 +151,8 @@
 #define BOSS1_BULLET_DAMAGE 1
 #define BOSS1_SHOOT_COOLDOWN_TIME 800
 
-//sfx sound
-#define Player_Sound "mixkit-game-gun-shot-1662.mp3"
-#define ARMob_Sound "mixkit-short-laser-gun-shot-1670.wav"
-#define Sniper_Sound "mixkit-laser-cannon-shot-1678.wav"
-#define RPG_Sound "rpg.mp3"
+#define Player_Sound "player.wav"
+#define ARMob_Sound "ar.wav"
+#define Sniper_Sound "sniper.wav"
+#define RPG_Sound "rpg.wav"
 

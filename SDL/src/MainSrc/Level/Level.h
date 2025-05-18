@@ -1,6 +1,5 @@
 #pragma once
 #include <Singleton.h>
-
 class Level : public CSingleton<Level> {
 private:
 	int level = 1;

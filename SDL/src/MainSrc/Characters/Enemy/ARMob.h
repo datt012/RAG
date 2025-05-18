@@ -7,24 +7,17 @@
 #include "MainSrc/Characters/AnimationKey.h"
 #include "Enemy.h"
 #include "ResourceManagers.h"
-
-class ARMob : public Enemy
-{
+class ARMob : public Enemy {
 public:
 	ARMob(std::shared_ptr<SpriteAnimationPlayer> sprite);
 	~ARMob();
-
 	void Init() override;
 	void Draw(SDL_Renderer* renderer, SDL_Rect* clip = NULL) override;
 	void Update(float deltatime) override;
-
 	void HandleInput(int keyMask) override;
 	void Shoot() override;
-
-	// Collider
 	virtual SDL_Rect GetColliderRect() override;
 	virtual SDL_FRect GetColliderFRect() override;
-
 private:
 	static const std::unordered_map<AnimationKey, std::pair<int, int>> s_AnimationMap;
 };

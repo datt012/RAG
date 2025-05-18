@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "GameManager/Singleton.h"
-class Renderer :public CSingleton<Renderer>{
+class Renderer : public CSingleton<Renderer> {
 public:
 	Renderer();
 	~Renderer();
